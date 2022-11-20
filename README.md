@@ -1,9 +1,20 @@
+# Goal
+
+This project is to compare several C libraries that provide some STL like capabilities of the C++ but targetting classic C.
+A STL like library for C is a C library providing several classic generic containers for the C language,
+like vector, list, map, unordered_map, and so on.
+
+The goal is not to compare their performance but their other caractheristics.
+
+To do this, the same simple program using vector will be implemented by the libraries and the resulted programs will be compared each other.
+
 
 # Disclaimer
 
-I am the main author of M\*LIB
+I am the main author of M\*LIB, one of theses libraries.
 
-# Constraints
+
+# Program Constraints
 
 The test of a C container library shall respect the following conditions:
 
@@ -14,24 +25,27 @@ The test of a C container library shall respect the following conditions:
 * it shall not leak any memoryn
 * it shall abort on error,
 * it shall link statically with the library.
+* it shall link dynamically with the GMP library (https://gmplib.org/).
+* optional assertions are turned off
 
 It shall perform the following operations:
 
-* declare a dynamic array of mpz_t
+* declare a dynamic array of mpz_t (non POD data),
 * initialize this array with the small unsigned integers values 17, 42 and 9 (performing a conversion from unsigned integer to mpz_t)
 * sort this array
 * iterate the array to print the values.
+
 
 # Analysis
 
 The following critera are used to compare the different C libraries. The C++ STL is also included as as reference.
 
+* supported C language (C89, C99, C11 or C23)
 * number of characters
 * number of line of codes
 * size of the executable
 * number of implemented workarounds
 * type safe (using a wrong type produces at least a warning)
-* performance: fast (no overhead) / normal (small overhead) / slow (huge overhead)
 * support of integer/floats as basic type,
 * support of struct POD data as basic type,
 * support of C++ class as basic type,
@@ -61,12 +75,12 @@ The following critera are used to compare the different C libraries. The C++ STL
 
 | Criteria                          | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC |
 |-----------------------------------|-----------|--------|---------|---------|-------|--------------|
+| C language                        | NA        | >=C99  | >=C99   | >=C99   | >=C99 | >= C99       |
 | number of characters              | 261       | 500    | 1152    | 1859    | 1456  | 1288         |
 | number of line of codes           | 13        | 18     | 36      | 52      | 37    | 58           |
 | size of the executable            | 19264     | 17168  | 17032   | 18600   | 17400 | 23192        |
 | number of implemented workarounds | 0         | 0      | 3       | 8       | 6     | 1            |
 | type safe                         | Y         | Y      | Y       | Y       | Y     | N            |
-| performance                       | fast      | fast   | fast    | fast    | fast  | normal       |
 | integer/float support             | Y         | Y      | Y       | Y       | Y     | Y            |
 | struct POD support                | Y         | Y      | Y       | Y       | Y     | N            |
 | class support                     | Y         | Y      | N       | N       | N     | N            |
@@ -90,3 +104,7 @@ The following critera are used to compare the different C libraries. The C++ STL
 | memory handling                   | exception | abort  | retcode | retcode | none  | retcode      |
 | custom memory support             | Y         | Y      | Y       | Y       | N     | Y            |
 | RAII                              | exception | nojump | nojump  | N       | N     | N            |
+
+
+If you see any errors in this report, feel free to open a pull request.
+

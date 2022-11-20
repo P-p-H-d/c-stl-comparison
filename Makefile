@@ -20,7 +20,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-CC=cc -std=c11
+CC=cc -std=c99
 CXX=c++ -std=c++11
 CFLAGS=-Os -march=native -Wall -DNDEBUG
 #-fsanitize=address,undefined,leak
