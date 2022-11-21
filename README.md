@@ -1,11 +1,11 @@
 # Introduction
 
 This project is to compare several C libraries
-that provide some STL like capabilities of the C++ but targetting classic C.
+that provide some STL like capabilities of the C++ but targeting classic C.
 A STL like library for C is a C library providing several classic generic containers for the C language,
 like vector, list, map, unordered_map, and so on.
 
-The goal is not to compare their performance (multiple benchamrk already exist) but their other caractheristics.
+The goal is not to compare their performance (multiple benchmark already exist) but their other characteristics.
 
 To do this, the same simple program using vector will be implemented by the libraries
 in the more straight-forward way possible,
@@ -25,7 +25,7 @@ The test of a C container library shall respect the following conditions:
 * it shall not comment the code (the code is assumed to be clear on what it does by itself),
 * it shall not produce any compilation warnings,
 * it shall execute properly,
-* it shall not leak any memoryn
+* it shall not leak any memory
 * it shall abort on error,
 * it shall link statically with the library.
 * it shall link dynamically with the GMP library (https://gmplib.org/).
@@ -41,7 +41,7 @@ It shall perform the following operations:
 
 # Analysis
 
-The following critera are used to compare the different C libraries. The C++ STL is also included as as reference.
+The following criteria are used to compare the different C libraries. The C++ STL is also included as as reference.
 
 * supported C language (C89, C99, C11 or C23)
 * pure C program (no need for external preprocessor),
@@ -56,9 +56,9 @@ The following critera are used to compare the different C libraries. The C++ STL
 * support of array as basic type,
 * support of object like data (constructor, ...),
 * association of the provided methods of the basic type to the needed operators of the container library can be defined basic type level (ensuring spatial coherency),
-* support of API adaptator to automatically transform the interface of the provided method to the expected interface of the required operator, 
+* support of API adapter to automatically transform the interface of the provided method to the expected interface of the required operator, 
 * support of basic 'emplace'
-* support of enhanced 'emplace' based on the initializer arguments,
+* support of enhanced 'emplace' based on the initialized arguments,
 * support of iterator abstraction
 * support of sort algorithm
 * support of sort algorithm with custom comparison,
@@ -117,7 +117,7 @@ and generate the different executables.
 | Basic type is stored              | Y         | Y      | Y       | Y       | Y     | N            |
 | No explicit instanciation         | Y         | N      | N       | N       | N     | Y            |
 | prefixed function                 | Y         | Y      | Y       | Y       | Y     | Y            |
-| memory handling                   | exception | abort  | retcode | retcode | none  | retcode      |
+OA| memory handling                   | exception | abort  | retcode | retcode | none  | retcode      |
 | custom memory support             | Y         | Y      | Y       | Y       | N     | Y            |
 | RAII                              | exception | nojump | nojump  | N       | N     | N            |
 
@@ -136,6 +136,6 @@ CTL            | 3923e6776a231e5d58cf91225ca8a1d61879401b
 CollectionsC   | ff1be366329e2c82cd85b2c803114ef8d2115f7f
 
 If you see any errors in this report,
-or want to include antoher C library,
+or want to include another C library,
 feel free to open a pull request.
 
