@@ -1,12 +1,15 @@
-# Goal
+# Introduction
 
-This project is to compare several C libraries that provide some STL like capabilities of the C++ but targetting classic C.
+This project is to compare several C libraries
+that provide some STL like capabilities of the C++ but targetting classic C.
 A STL like library for C is a C library providing several classic generic containers for the C language,
 like vector, list, map, unordered_map, and so on.
 
-The goal is not to compare their performance but their other caractheristics.
+The goal is not to compare their performance (multiple benchamrk already exist) but their other caractheristics.
 
-To do this, the same simple program using vector will be implemented by the libraries and the resulted programs will be compared each other.
+To do this, the same simple program using vector will be implemented by the libraries
+in the more straight-forward way possible,
+and the resulted programs will be compared each other.
 
 
 # Disclaimer
@@ -41,18 +44,19 @@ It shall perform the following operations:
 The following critera are used to compare the different C libraries. The C++ STL is also included as as reference.
 
 * supported C language (C89, C99, C11 or C23)
+* pure C program (no need for external preprocessor),
 * number of characters
 * number of line of codes
 * size of the executable
 * number of implemented workarounds
-* type safe (using a wrong type produces at least a warning)
+* type safe (using a wrong type produces at least a compilation warning)
 * support of integer/floats as basic type,
 * support of struct POD data as basic type,
 * support of C++ class as basic type,
 * support of array as basic type,
 * support of object like data (constructor, ...),
-* association of needed operators of the library and the exported methods of the basic type API can be defined at the same time as the type (and not on template instantation),
-* support of API adaptator to match the one of data,
+* association of the provided methods of the basic type to the needed operators of the container library can be defined basic type level (ensuring spatial coherency),
+* support of API adaptator to automatically transform the interface of the provided method to the expected interface of the required operator, 
 * support of basic 'emplace'
 * support of enhanced 'emplace' based on the initializer arguments,
 * support of iterator abstraction
@@ -68,14 +72,26 @@ The following critera are used to compare the different C libraries. The C++ STL
 * functions are properly prefixed,
 * memory error handling (return code, exception, abort, none)
 * custom memory functions
-* support of RAII (no, no jump, exception safe) potentially through macro.
+* support of RAII (no, no jump, exception safe) -- potentially through macro.
 
 
-# Result
+# Execution
+
+The different programs are available in this repository.
+To build then, you just need to have
+a working C compiler, a make tool and git
+to build it.
+
+Simply run "make" to perform a clone of the projects
+and generate the different executables.
+
+
+# Synthesis
 
 | Criteria                          | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC |
 |-----------------------------------|-----------|--------|---------|---------|-------|--------------|
 | C language                        | NA        | >=C99  | >=C99   | >=C99   | >=C99 | >= C99       |
+| Pure C                            | NA        | Y      | Y       | Y       | Y     | Y            |
 | number of characters              | 261       | 500    | 1152    | 1859    | 1456  | 1288         |
 | number of line of codes           | 13        | 18     | 36      | 52      | 37    | 58           |
 | size of the executable            | 19264     | 17168  | 17032   | 18600   | 17400 | 23192        |
@@ -105,6 +121,21 @@ The following critera are used to compare the different C libraries. The C++ STL
 | custom memory support             | Y         | Y      | Y       | Y       | N     | Y            |
 | RAII                              | exception | nojump | nojump  | N       | N     | N            |
 
+The used versions are:
 
-If you see any errors in this report, feel free to open a pull request.
+
+The used versions are:
+
+COMPONENT      | VERSION
+---------------|-----------------------------------------
+GCC            | 10.2
+M\*LIB         | d17fa4530bffb23c2eb4cb0658b4cfec9bed1ae9
+STC            | 5fb5ed08250b5ad4eadd6e7a9fdc44f4519b15ff
+C Macro Collections | v0.23.1
+CTL            | 3923e6776a231e5d58cf91225ca8a1d61879401b
+CollectionsC   | ff1be366329e2c82cd85b2c803114ef8d2115f7f
+
+If you see any errors in this report,
+or want to include antoher C library,
+feel free to open a pull request.
 
