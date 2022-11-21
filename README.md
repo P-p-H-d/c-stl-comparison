@@ -117,7 +117,7 @@ and generate the different executables.
 | Basic type is stored              | Y         | Y      | Y       | Y       | Y     | N            |
 | No explicit instanciation         | Y         | N      | N       | N       | N     | Y            |
 | prefixed function                 | Y         | Y      | Y       | Y       | Y     | Y            |
-OA| memory handling                   | exception | abort  | retcode | retcode | none  | retcode      |
+| memory handling                   | exception | abort  | retcode | retcode | none  | retcode      |
 | custom memory support             | Y         | Y      | Y       | Y       | N     | Y            |
 | RAII                              | exception | nojump | nojump  | N       | N     | N            |
 
