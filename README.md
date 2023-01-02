@@ -129,13 +129,18 @@ The used versions are:
 COMPONENT      | VERSION
 ---------------|-----------------------------------------
 GCC            | 10.2
+C Macro Collections | v0.23.1
+CollectionsC   | ff1be366329e2c82cd85b2c803114ef8d2115f7f
+CTL            | 3923e6776a231e5d58cf91225ca8a1d61879401b
 M\*LIB         | d17fa4530bffb23c2eb4cb0658b4cfec9bed1ae9
 STC            | 5fb5ed08250b5ad4eadd6e7a9fdc44f4519b15ff
-C Macro Collections | v0.23.1
-CTL            | 3923e6776a231e5d58cf91225ca8a1d61879401b
-CollectionsC   | ff1be366329e2c82cd85b2c803114ef8d2115f7f
+
+* [C-Macro-Collections](https://github.com/LeoVen/C-Macro-Collections)
+* [COLLECTIONS-C](https://github.com/srdja/Collections-C)
+* CTL [by glouw](https://github.com/glouw/ctl) or [by rurban](https://github.com/rurban/ctl)
+* [M\*LIB](https://github.com/P-p-H-d/mlib)
+* [STC - Smart Template Container for C](https://github.com/tylov/STC)
 
 If you see any errors in this report,
 or want to include another C library,
 feel free to open a pull request.
-
