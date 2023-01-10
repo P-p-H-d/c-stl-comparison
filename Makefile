@@ -21,6 +21,7 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 CC=cc -std=c99
+C11=cc -std=c11
 CXX=c++ -std=c++11
 CFLAGS=-Os -march=native -Wall -DNDEBUG
 #-fsanitize=address,undefined,leak
@@ -46,6 +47,7 @@ distclean: clean
 	$(RM) ctl
 	$(RM) C-Macro-Collections
 	$(RM) Collections-C
+	$(RM) CC
 
 mlib:
 	git clone https://github.com/P-p-H-d/mlib.git
@@ -62,6 +64,9 @@ C-Macro-Collections:
 Collections-C:
 	git clone https://github.com/srdja/Collections-C.git
 
+CC:
+	git clone https://github.com/JacksonAllan/CC.git
+
 ###########################################################
 # 		Build external Libraries
 ###########################################################
@@ -74,7 +79,7 @@ Collections-C/src/libCollections-C.a: Collections-C
 # 		Build example for array
 ###########################################################
 
-array: array-mlib.exe array-stc.exe array-ctl.exe array-cmc.exe array-stl.exe array-collectionsC.exe
+array: array-mlib.exe array-stc.exe array-ctl.exe array-cmc.exe array-stl.exe array-collectionsC.exe array-CC.exe
 
 array-mlib.exe: mlib array-mlib.c
 	$(CC) $(CFLAGS) -Imlib array-mlib.c -o array-mlib.exe $(LDFLAGS)
@@ -93,3 +98,6 @@ array-stl.exe: array-stl.cc
 
 array-collectionsC.exe: Collections-C Collections-C/src/libCollections-C.a array-collectionsC.c
 	$(CC) $(CFLAGS) -ICollections-C/src/include array-collectionsC.c -o array-collectionsC.exe $(LDFLAGS) Collections-C/src/libCollections-C.a
+
+array-CC.exe: CC array-CC.c
+	$(C11) $(CFLAGS) -ICC array-CC.c -o array-CC.exe $(LDFLAGS)
