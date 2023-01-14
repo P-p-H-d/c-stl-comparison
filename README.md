@@ -99,8 +99,8 @@ and generate the different executables.
 | type safe                         | Y         | Y      | Y       | Y       | Y     | N            |
 | integer/float support             | Y         | Y      | Y       | Y       | Y     | Y            |
 | struct POD support                | Y         | Y      | Y       | Y       | Y     | N            |
-| class support                     | Y         | Y      | N       | N       | N     | N            |
-| object support                    | Y         | Y      | Y       | Y       | Y     | N            |
+| C++ class support                 | Y         | Y      | N       | N       | N     | N            |
+| C object support                  | Y         | Y      | Y       | Y       | Y     | N            |
 | operators / methods association   | Y         | Y      | N       | N       | N     | N            |
 | API adaptator                     | N         | Y      | N       | N       | N     | N            |
 | basic emplace support             | Y         | Y      | Y       | N       | N     | N            |
