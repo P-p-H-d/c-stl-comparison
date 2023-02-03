@@ -23,8 +23,8 @@
 CC=cc -std=c99
 C11=cc -std=c11
 CXX=c++ -std=c++11
-CFLAGS=-Os -march=native -Wall -DNDEBUG
-#-fsanitize=address,undefined,leak
+# To mesure code size, we need to remove the sanitizers
+CFLAGS=-Os -march=native -Wall -DNDEBUG -fsanitize=address,undefined,leak
 LDFLAGS=-lgmp
 RM=rm -rf
 AR=ar
@@ -79,25 +79,47 @@ Collections-C/src/libCollections-C.a: Collections-C
 # 		Build example for array
 ###########################################################
 
-array: array-mlib.exe array-stc.exe array-ctl.exe array-cmc.exe array-stl.exe array-collectionsC.exe array-CC.exe
+array: array-mpz-mlib.exe array-mpz-stc.exe array-mpz-ctl.exe array-mpz-cmc.exe array-mpz-stl.exe array-mpz-collectionsC.exe array-mpz-CC.exe \
+       array-int-mlib.exe array-int-stc.exe array-int-ctl.exe array-int-cmc.exe array-int-stl.exe array-int-collectionsC.exe array-int-CC.exe
 
-array-mlib.exe: mlib array-mlib.c
-	$(CC) $(CFLAGS) -Imlib array-mlib.c -o array-mlib.exe $(LDFLAGS)
+array-mpz-stl.exe: test-mpz/array-stl.cc
+	$(CXX) $(CFLAGS) $< -o $@ -lgmpxx $(LDFLAGS)
 
-array-stc.exe: STC array-stc.c
-	$(CC) $(CFLAGS) -ISTC/include array-stc.c -o array-stc.exe $(LDFLAGS)
+array-int-stl.exe: test-int/array-stl.cc
+	$(CXX) $(CFLAGS) $< -o $@ -lgmpxx $(LDFLAGS)
 
-array-ctl.exe: ctl array-ctl.c
-	$(CC) $(CFLAGS) -Ictl/ array-ctl.c -o array-ctl.exe $(LDFLAGS)
+array-mpz-mlib.exe: test-mpz/array-mlib.c mlib 
+	$(CC) $(CFLAGS) -Imlib $< -o $@ $(LDFLAGS)
 
-array-cmc.exe: C-Macro-Collections array-cmc.c
-	$(CC) $(CFLAGS) -IC-Macro-Collections/src array-cmc.c -o array-cmc.exe $(LDFLAGS)
+array-int-mlib.exe: test-int/array-mlib.c mlib 
+	$(CC) $(CFLAGS) -Imlib $< -o $@ $(LDFLAGS)
 
-array-stl.exe: array-stl.cc
-	$(CXX) $(CFLAGS) array-stl.cc -o array-stl.exe -lgmpxx $(LDFLAGS)
+array-mpz-stc.exe: test-mpz/array-stc.c STC 
+	$(CC) $(CFLAGS) -ISTC/include $< -o $@ $(LDFLAGS)
 
-array-collectionsC.exe: Collections-C Collections-C/src/libCollections-C.a array-collectionsC.c
-	$(CC) $(CFLAGS) -ICollections-C/src/include array-collectionsC.c -o array-collectionsC.exe $(LDFLAGS) Collections-C/src/libCollections-C.a
+array-int-stc.exe: test-int/array-stc.c STC 
+	$(CC) $(CFLAGS) -ISTC/include $< -o $@ $(LDFLAGS)
 
-array-CC.exe: CC array-CC.c
-	$(C11) $(CFLAGS) -ICC array-CC.c -o array-CC.exe $(LDFLAGS)
+array-mpz-ctl.exe: test-mpz/array-ctl.c ctl 
+	$(CC) $(CFLAGS) -Ictl/ $< -o $@ $(LDFLAGS)
+
+array-int-ctl.exe: test-int/array-ctl.c ctl 
+	$(CC) $(CFLAGS) -Ictl/ $< -o $@ $(LDFLAGS)
+
+array-mpz-cmc.exe: test-mpz/array-cmc.c C-Macro-Collections 
+	$(CC) $(CFLAGS) -IC-Macro-Collections/src $< -o $@ $(LDFLAGS)
+
+array-int-cmc.exe: test-int/array-cmc.c C-Macro-Collections 
+	$(CC) $(CFLAGS) -IC-Macro-Collections/src $< -o $@ $(LDFLAGS)
+
+array-mpz-collectionsC.exe: test-mpz/array-collectionsC.c Collections-C Collections-C/src/libCollections-C.a 
+	$(CC) $(CFLAGS) -ICollections-C/src/include $< -o $@ $(LDFLAGS) Collections-C/src/libCollections-C.a
+
+array-int-collectionsC.exe: test-int/array-collectionsC.c Collections-C Collections-C/src/libCollections-C.a 
+	$(CC) $(CFLAGS) -ICollections-C/src/include $< -o $@ $(LDFLAGS) Collections-C/src/libCollections-C.a
+
+array-mpz-CC.exe: test-mpz/array-CC.c CC 
+	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
+
+array-int-CC.exe: test-int/array-CC.c CC 
+	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
