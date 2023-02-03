@@ -54,7 +54,7 @@ The following criteria are used to compare the different C libraries. The C++ ST
 * support of C++ class as basic type,
 * support of array as basic type,
 * support of object like data (constructor, ...),
-* association of the provided methods of the basic type to the needed operators of the container library can be defined basic type level (ensuring spatial coherency),
+* association of the provided methods of the basic type to the needed operators of the container library can be defined when the basic type is defined (ensuring spatial coherency),
 * support of API adapter to automatically transform the interface of the provided method to the expected interface of the required operator, 
 * support of basic 'emplace'
 * support of enhanced 'emplace' based on the initialized arguments,
