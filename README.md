@@ -119,7 +119,7 @@ and generate the different executables.
 | prefixed function                 | Y         | Y      | Y       | Y       | Y     | Y            | N      |
 | memory handling                   | exception | abort  | retcode | retcode | none  | retcode      | retcode|
 | custom memory support             | Y         | Y      | Y       | Y       | N     | Y            | Y      |
-| RAII                              | exception | nojump | nojump  | N       | N     | N            | N      |
+| RAII                              | Y         | nojump | nojump  | N       | N     | N            | N      |
 
 
 The used versions are:
