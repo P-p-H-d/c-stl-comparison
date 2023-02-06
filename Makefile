@@ -80,12 +80,16 @@ Collections-C/src/libCollections-C.a: Collections-C
 ###########################################################
 
 array: array-mpz-mlib.exe array-mpz-stc.exe array-mpz-ctl.exe array-mpz-cmc.exe array-mpz-stl.exe array-mpz-collectionsC.exe array-mpz-CC.exe \
-       array-int-mlib.exe array-int-stc.exe array-int-ctl.exe array-int-cmc.exe array-int-stl.exe array-int-collectionsC.exe array-int-CC.exe
+       array-int-mlib.exe array-int-stc.exe array-int-ctl.exe array-int-cmc.exe array-int-stl.exe array-int-collectionsC.exe array-int-CC.exe \
+       array-str-mlib.exe array-str-stc.exe array-str-ctl.exe array-str-cmc.exe array-str-stl.exe array-str-collectionsC.exe array-str-CC.exe
 
 array-mpz-stl.exe: test-mpz/array-stl.cc
 	$(CXX) $(CFLAGS) $< -o $@ -lgmpxx $(LDFLAGS)
 
 array-int-stl.exe: test-int/array-stl.cc
+	$(CXX) $(CFLAGS) $< -o $@ -lgmpxx $(LDFLAGS)
+
+array-str-stl.exe: test-str/array-stl.cc
 	$(CXX) $(CFLAGS) $< -o $@ -lgmpxx $(LDFLAGS)
 
 array-mpz-mlib.exe: test-mpz/array-mlib.c mlib 
@@ -94,10 +98,16 @@ array-mpz-mlib.exe: test-mpz/array-mlib.c mlib
 array-int-mlib.exe: test-int/array-mlib.c mlib 
 	$(CC) $(CFLAGS) -Imlib $< -o $@ $(LDFLAGS)
 
+array-str-mlib.exe: test-str/array-mlib.c mlib 
+	$(CC) $(CFLAGS) -Imlib $< -o $@ $(LDFLAGS)
+
 array-mpz-stc.exe: test-mpz/array-stc.c STC 
 	$(CC) $(CFLAGS) -ISTC/include $< -o $@ $(LDFLAGS)
 
 array-int-stc.exe: test-int/array-stc.c STC 
+	$(CC) $(CFLAGS) -ISTC/include $< -o $@ $(LDFLAGS)
+
+array-str-stc.exe: test-str/array-stc.c STC 
 	$(CC) $(CFLAGS) -ISTC/include $< -o $@ $(LDFLAGS)
 
 array-mpz-ctl.exe: test-mpz/array-ctl.c ctl 
@@ -106,10 +116,16 @@ array-mpz-ctl.exe: test-mpz/array-ctl.c ctl
 array-int-ctl.exe: test-int/array-ctl.c ctl 
 	$(CC) $(CFLAGS) -Ictl/ $< -o $@ $(LDFLAGS)
 
+array-str-ctl.exe: test-str/array-ctl.c ctl 
+	$(CC) $(CFLAGS) -Ictl/ $< -o $@ $(LDFLAGS)
+
 array-mpz-cmc.exe: test-mpz/array-cmc.c C-Macro-Collections 
 	$(CC) $(CFLAGS) -IC-Macro-Collections/src $< -o $@ $(LDFLAGS)
 
 array-int-cmc.exe: test-int/array-cmc.c C-Macro-Collections 
+	$(CC) $(CFLAGS) -IC-Macro-Collections/src $< -o $@ $(LDFLAGS)
+
+array-str-cmc.exe: test-str/array-cmc.c C-Macro-Collections 
 	$(CC) $(CFLAGS) -IC-Macro-Collections/src $< -o $@ $(LDFLAGS)
 
 array-mpz-collectionsC.exe: test-mpz/array-collectionsC.c Collections-C Collections-C/src/libCollections-C.a 
@@ -118,8 +134,14 @@ array-mpz-collectionsC.exe: test-mpz/array-collectionsC.c Collections-C Collecti
 array-int-collectionsC.exe: test-int/array-collectionsC.c Collections-C Collections-C/src/libCollections-C.a 
 	$(CC) $(CFLAGS) -ICollections-C/src/include $< -o $@ $(LDFLAGS) Collections-C/src/libCollections-C.a
 
+array-str-collectionsC.exe: test-str/array-collectionsC.c Collections-C Collections-C/src/libCollections-C.a 
+	$(CC) $(CFLAGS) -ICollections-C/src/include $< -o $@ $(LDFLAGS) Collections-C/src/libCollections-C.a
+
 array-mpz-CC.exe: test-mpz/array-CC.c CC 
 	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
 
 array-int-CC.exe: test-int/array-CC.c CC 
+	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
+
+array-str-CC.exe: test-str/array-CC.c CC 
 	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
