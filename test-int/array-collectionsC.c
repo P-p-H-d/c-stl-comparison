@@ -39,7 +39,7 @@ int main(void)
   void *next;
   cc_array_iter_init(&ai, array);
   while (cc_array_iter_next(&ai, &next) != CC_ITER_END) {
-    printf("%d\n", (int) next);
+    printf("%d\n", (int) (intptr_t) next);
   }
   
   cc_array_destroy(array);
