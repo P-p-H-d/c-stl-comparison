@@ -106,7 +106,7 @@ and generate the different executables.
 | mpz:number of characters          | 261       | 500    | 1152    | 1859    | 1456  | 1288         | 1108   |
 | mpz:number of line of codes       | 13        | 18     | 36      | 52      | 37    | 58           | 39     |
 | mpz:number of workarounds         | 0         | 0      | 3       | 8       | 6     | 1            | 2      |
-| type safe                         | Y         | Y      | Y       | Y       | Y     | N            | N (TBC)|
+| type safe                         | Y         | Y      | Y       | Y       | Y     | N            | T      |
 | integer/float support             | Y         | Y      | Y       | Y       | Y     | Y            | Y      |
 | struct POD support                | Y         | Y      | Y       | Y       | Y     | N            | Y      |
 | C++ class support                 | Y         | Y      | N       | N       | N     | N            | N      |
