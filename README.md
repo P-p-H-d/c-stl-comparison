@@ -1,7 +1,7 @@
 # Introduction
 
-This project is to compare several C libraries
-that provide some STL like capabilities of the C++ but targeting classic C.
+The goal of this project is to compare several C libraries
+that provide some STL like capabilities of the C++ (container template) but are targeting classic C language.
 A STL like library for C is a C library providing several classic generic containers for the C language,
 like vector, list, map, unordered_map, and so on.
 
@@ -21,40 +21,45 @@ I am the main author of M\*LIB, one of theses libraries.
 
 The test of a C container library shall respect the following conditions:
 
-* it shall use a basic type and a non POD type, aka the int type of the C and type mpz\_t of the GMP library, as the primary type of a dynamic array.
-* it shall not comment the code (the code is assumed to be clear on what it does by itself),
+* it shall use a basic type (int), a non POD type (the type mpz\_t of the GMP library) and a string as the primary type of a dynamic array.
+* it shall not comment the code (the code is assumed to be clear on what it does by itself) except if there is some workaround,
 * it shall not produce any compilation warnings,
 * it shall execute properly,
 * it shall not leak any memory
 * it shall abort on error,
-* it shall link statically with the library.
 * it shall link dynamically with the GMP library (https://gmplib.org/).
-* optional assertions are turned off
+* the optional assertions shall be turned off.
 
-It shall perform the following operations:
+The program shall perform the following operations:
 
-* declare a dynamic array of int (resp. mpz_t - non POD data),
-* initialize this array with the small unsigned integers values 17, 42 and 9 (performing a conversion from unsigned integer to mpz_t for GMP)
+* declare a dynamic array of int (resp. mpz_t, a string of the container library),
+* initialize this array with the small unsigned integers values 17, 42 and 9 (performing a conversion from unsigned integer to mpz_t for GMP) or the constant strings "Hello", "World" and "!" for strings,
 * sort this array
 * iterate the array to print the values.
+
+A workaround is defined as a way to implement this program which is not natural to the library. This typically includes:
+
+* create wrapper structure,
+* create wrapper functions or macros,
+* accessing internal fields of the containers (typically for using the qsort function).
 
 
 # Analysis
 
 The following criteria are used to compare the different C libraries. The C++ STL is also included as as reference.
 
-* supported C language (C89, C99, C11 or C23)
-* pure C program (no need for external preprocessor),
+* What is the supported C language (C89, C99, C11 or C23)
+* Is it a pure C program (no need for external preprocessor),
 * number of characters
 * number of line of codes
 * number of implemented workarounds
-* type safe (using a wrong type produces at least a compilation warning)
+* Is-it type safe (aka. using an incompatible type produces at least a compilation warning)
 * support of integer/floats as basic type,
 * support of struct POD data as basic type,
-* support of C++ class as basic type,
 * support of array as basic type,
 * support of object like data (constructor, ...),
-* association of the provided methods of the basic type to the needed operators of the container library can be defined when the basic type is defined (ensuring spatial coherency),
+* support of C++ class as basic type,
+* association of the provided methods of the basic type to the needed operators of the container library can be defined when the basic type is defined (ensuring spatial coherency of the basic type),
 * support of API adapter to automatically transform the interface of the provided method to the expected interface of the required operator, 
 * support of basic 'emplace'
 * support of enhanced 'emplace' based on the initialized arguments,
