@@ -37,11 +37,13 @@ The program shall perform the following operations:
 * sort this array
 * iterate the array to print the values.
 
-A workaround is defined as a way to implement this program which is not natural to the library. This typically includes:
+A workaround is defined as a way to implement this program which is **not natural** for the library. This typically includes:
 
 * create wrapper structure,
 * create wrapper functions or macros,
 * accessing internal fields of the containers (typically for using the qsort function).
+
+For example, if a container library manual requests to define some macro for its use, then it won't be considered as a workaround. 
 
 
 # Analysis
@@ -76,7 +78,9 @@ The following criteria are used to compare the different C libraries. The C++ ST
 * functions are properly prefixed,
 * memory error handling (return code, exception, abort, none)
 * custom memory functions
-* support of RAII (no, no jump, exception safe) -- potentially through macro.
+* support of serialization
+* support of JSON serialization
+* support of XML serialization
 
 
 # Execution
@@ -102,7 +106,7 @@ and generate the different executables.
 | mpz:number of characters          | 261       | 500    | 1152    | 1859    | 1456  | 1288         | 1108   |
 | mpz:number of line of codes       | 13        | 18     | 36      | 52      | 37    | 58           | 39     |
 | mpz:number of workarounds         | 0         | 0      | 3       | 8       | 6     | 1            | 2      |
-| type safe                         | Y         | Y      | Y       | Y       | Y     | N            | N      |
+| type safe                         | Y         | Y      | Y       | Y       | Y     | N            | N (TBC)|
 | integer/float support             | Y         | Y      | Y       | Y       | Y     | Y            | Y      |
 | struct POD support                | Y         | Y      | Y       | Y       | Y     | N            | Y      |
 | C++ class support                 | Y         | Y      | N       | N       | N     | N            | N      |
@@ -124,7 +128,9 @@ and generate the different executables.
 | prefixed function                 | Y         | Y      | Y       | Y       | Y     | Y            | N      |
 | memory handling                   | exception | abort  | retcode | retcode | none  | retcode      | retcode|
 | custom memory support             | Y         | Y      | Y       | Y       | N     | Y            | Y      |
-| RAII                              | Y         | nojump | nojump  | N       | N     | N            | N      |
+| Serialization                     | N         | Y      | N       | N       | N     | N            | N      |
+| JSON Serialization                | N         | Y      | N       | N       | N     | N            | N      |
+| XML Serialization                 | N         | N      | N       | N       | N     | N            | N      |
 
 
 The used versions are:
@@ -148,4 +154,5 @@ CC             | 2012d9d2eb8f035d7dc69f36ec03ca3199ede1bf
 
 If you see any errors in this report,
 or want to include another C library,
-feel free to open a pull request.
+or want to include another point of comparison,
+do not hesitate to open a pull request.
