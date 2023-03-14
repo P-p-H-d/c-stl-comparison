@@ -77,6 +77,7 @@ The following criteria are used to compare the different C libraries. The C++ ST
 * don't need explicit instanciation of the array with the basic type,
 * functions are properly prefixed,
 * memory error handling (return code, exception, abort, none)
+* On exception, destructors of objects on stack are properly called.
 * custom memory functions
 * support of serialization
 * support of JSON serialization
@@ -126,7 +127,8 @@ and generate the different executables.
 | Basic type is stored              | Y         | Y      | Y       | Y       | Y     | N            | Y      |
 | No explicit instanciation         | Y         | N      | N       | N       | N     | Y            | Y      |
 | prefixed function                 | Y         | Y      | Y       | Y       | Y     | Y            | N      |
-| memory handling                   | exception | abort, exception  | retcode | retcode | none  | retcode      | retcode|
+| memory handling                   | exception | abort, exception | retcode | retcode | none  | retcode | retcode|
+| destructors on exception          | Y         | Y(*)   | NA      | NA      | NA    | NA           | NA     |
 | custom memory support             | Y         | Y      | Y       | Y       | N     | Y            | Y      |
 | Serialization                     | N         | Y      | N       | N       | N     | N            | N      |
 | JSON Serialization                | N         | Y      | N       | N       | N     | N            | N      |
