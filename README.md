@@ -72,7 +72,7 @@ The following criteria are used to compare the different C libraries. The C++ ST
 * full abstraction of the dynamic array type (no use of internal fields)
 * contract violation checks (assertions on invalid inputs, on input contract violation)
 * natural usage of array (using of [] operator on the object)
-* natural usage of ownership (non-implicit lost of ownership),
+* natural usage of ownership (non-implicit lost of ownership when passing a value object to a method),
 * basic type is stored in the array, not a pointer to it.
 * don't need explicit instanciation of the array with the basic type,
 * functions are properly prefixed,
@@ -126,7 +126,7 @@ and generate the different executables.
 | Basic type is stored              | Y         | Y      | Y       | Y       | Y     | N            | Y      |
 | No explicit instanciation         | Y         | N      | N       | N       | N     | Y            | Y      |
 | prefixed function                 | Y         | Y      | Y       | Y       | Y     | Y            | N      |
-| memory handling                   | exception | abort  | retcode | retcode | none  | retcode      | retcode|
+| memory handling                   | exception | abort, exception  | retcode | retcode | none  | retcode      | retcode|
 | custom memory support             | Y         | Y      | Y       | Y       | N     | Y            | Y      |
 | Serialization                     | N         | Y      | N       | N       | N     | N            | N      |
 | JSON Serialization                | N         | Y      | N       | N       | N     | N            | N      |
