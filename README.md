@@ -184,6 +184,7 @@ and generate the different executables.
 | concurrent<>                      | N         | Y      | N       | N       | N     | N            | N |
 | Skip List                         | N         | N      | N       | Y       | N     | N            | N |
 | Sorted Bidirectional Map          | N         | N      | N       | Y       | N     | N            | N |
+| Tree                              | N         | Y      | N       | N       | N     | N            | N |
 
 
 | Algorithms                        | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     |
