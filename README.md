@@ -16,6 +16,8 @@ and the resulted programs will be compared each other.
 
 I am the main author of M\*LIB, one of theses libraries.
 
+This work is still a WIP.
+
 
 # Program Constraints
 
@@ -28,13 +30,14 @@ The test of a C container library shall respect the following conditions:
 * it shall not leak any memory
 * it shall abort on error,
 * it shall link dynamically with the GMP library (https://gmplib.org/).
+* it shall link statically with the container library,
 * the optional assertions shall be turned off.
 
 The program shall perform the following operations:
 
 * declare a dynamic array of int (resp. mpz_t, a string of the container library),
 * initialize this array with the small unsigned integers values 17, 42 and 9 (performing a conversion from unsigned integer to mpz_t for GMP) or the constant strings "Hello", "World" and "!" for strings,
-* sort this array
+* sort this array,
 * iterate the array to print the values.
 
 A workaround is defined as a way to implement this program which is **not natural** for the library. This typically includes:
@@ -50,21 +53,21 @@ For example, if a container library manual requests to define some macro for its
 
 The following criteria are used to compare the different C libraries. The C++ STL is also included as as reference.
 
-* What is the supported C language (C89, C99, C11 or C23)
-* Is it a pure C program (no need for external preprocessor),
-* number of characters
-* number of line of codes
-* number of implemented workarounds
+* What is the supported C language (C89, C99, C11 or C23),
+* Is it a pure C program (no need for external preprocessor)?
+* number of characters / number of line of codes / of the test programs
+* number of implemented workarounds of the test programs
 * Is-it type safe (aka. using an incompatible type produces at least a compilation warning)
 * support of integer/floats as basic type,
 * support of struct POD data as basic type,
+* natural usage of object: passing an object data to a container will create a copy of the object data (non-implicit lost of ownership),
 * support of array as basic type,
-* support of object like data (constructor, ...),
+* support of object like data (needing custom constructor, destructor...),
 * support of C++ class as basic type,
-* association of the provided methods of the basic type to the needed operators of the container library can be defined when the basic type is defined (ensuring spatial coherency of the basic type),
-* support of API adapter to automatically transform the interface of the provided method to the expected interface of the required operator, 
+* container / basic type spatial separation: the association of the methods of the basic type to the needed operators of the container library can be defined when the basic type is defined (ensuring spatial coherency of the basic type) and not only when the container is defined,
+* support of API Interface Adapter to automatically transform the interface of the provided method to the expected interface of the required operator, 
 * support of basic 'emplace'
-* support of enhanced 'emplace' based on the initialized arguments,
+* support of multiple, enhanced 'emplace' based on the initialized arguments,
 * support of iterator abstraction
 * support of sort algorithm
 * support of sort algorithm with custom comparison,
@@ -72,7 +75,6 @@ The following criteria are used to compare the different C libraries. The C++ ST
 * full abstraction of the dynamic array type (no use of internal fields)
 * contract violation checks (assertions on invalid inputs, on input contract violation)
 * natural usage of array (using of [] operator on the object)
-* natural usage of ownership (non-implicit lost of ownership when passing a value object to a method),
 * basic type is stored in the array, not a pointer to it.
 * don't need explicit instanciation of the array with the basic type,
 * functions are properly prefixed,
@@ -110,10 +112,11 @@ and generate the different executables.
 | type safe                         | Y         | Y      | Y       | Y       | Y     | N            | T      |
 | integer/float support             | Y         | Y      | Y       | Y       | Y     | Y            | Y      |
 | struct POD support                | Y         | Y      | Y       | Y       | Y     | N            | Y      |
+| Natural usage of object           | Y         | Y      | Y       | N       | N     | Y            | N      |
 | C++ class support                 | Y         | Y      | N       | N       | N     | N            | N      |
 | C object support                  | Y         | Y      | Y       | Y       | Y     | N            | Y      |
-| operators / methods association   | Y         | Y      | N       | N       | N     | N            | N      |
-| API adaptator                     | N         | Y      | N       | N       | N     | N            | N      |
+| container/basic spatial separation | Y        | Y      | N       | N       | N     | N            | N      |
+| API Interface Adaptator           | N         | Y      | N       | N       | N     | N            | N      |
 | basic emplace support             | Y         | Y      | Y       | N       | N     | N            | N      |
 | Enhance emplace support           | Y         | Y      | N       | N       | N     | N            | N      |
 | Iterator support                  | Y         | Y      | Y       | N       | Y     | Y            | Y      |
@@ -123,7 +126,6 @@ and generate the different executables.
 | Full abstraction                  | Y         | Y      | N       | Y       | N     | Y            | Y      |
 | Contract violation checks         | Y         | Y      | N       | N       | N     | N            | N      |
 | Natural usage                     | Y         | N      | N       | N       | N     | N            | N      |
-| Natural usage of ownership        | Y         | Y      | Y       | N       | N     | Y            | N      |
 | Basic type is stored              | Y         | Y      | Y       | Y       | Y     | N            | Y      |
 | No explicit instanciation         | Y         | N      | N       | N       | N     | Y            | Y      |
 | prefixed function                 | Y         | Y      | Y       | Y       | Y     | Y            | N      |
@@ -134,6 +136,59 @@ and generate the different executables.
 | JSON Serialization                | N         | Y      | N       | N       | N     | N            | N      |
 | XML Serialization                 | N         | N      | N       | N       | N     | N            | N      |
 
+
+| Containers                        | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     |
+|-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|
+| Singly Linked Non-Intrusive list  | Y         | Y      | N       | N       | Y     | Y            | N |
+| Doubly Linked Non-Intrusive list  | Y         | N      | N       | N       | Y     | Y            | Y |
+| Singly Linked, Dualy Push Non-Intrusive list  | N | Y  | Y       | N       | N     | N            | N |
+| Singly Linked Intrusive list      | N         | N      | N       | N       | N     | N            | N |
+| Doubly Linked Intrusive list      | N         | Y      | N       | N       | N     | N            | N |
+| Dynamic array                     | Y         | Y      | Y       | Y       | Y     | Y            | Y |
+| Static array                      | Y         | N      | N       | N       | Y     | N            | N |
+| pair                              | Y         | Y      | N       | N       | N     | N            | N |
+| tuple                             | Y         | Y      | N       | N       | N     | N            | N |
+| optional                          | Y         | Y      | N       | N       | N     | N            | N |
+| variant                           | Y         | Y      | N       | N       | N     | N            | N |
+| bitset                            | Y         | Y      | Y       | Y       | N     | N            | N |
+| char string                       | Y         | Y      | Y       | N       | Y     | N            | N |
+| string_view                       | Y         | N      | Y       | N       | N     | N            | N |
+| deque                             | Y         | Y      | Y       | Y       | Y     | Y            | N |
+| queue                             | Y         | Y      | Y       | Y       | Y     | Y            | N |
+| priority queue                    | Y         | Y      | Y       | Y       | Y     | Y            | N |
+| stack                             | Y         | Y      | Y       | N       | Y     | Y            | N |
+| Bounded Queue                     | N         | Y      | N       | N       | N     | N            | N |
+| set                               | Y         | Y      | Y       | N       | N     | Y            | N |
+| multiset                          | Y         | Y      | N       | N       | N     | N            | N |
+| map                               | Y         | Y      | N       | N       | Y     | Y            | N |
+| multimap                          | Y         | Y      | N       | N       | N     | N            | N |
+| unordered_set                     | Y         | Y      | Y       | Y       | Y     | Y            | Y |
+| unordered_multiset                | Y         | N      | N       | Y       | N     | N            | N |
+| unordered_map                     | Y         | Y      | Y       | Y       | Y     | Y            | Y |
+| unordered_multimap                | Y         | N      | N       | Y       | N     | N            | N |
+| flat_set                          | Y         | N      | N       | Y       | N     | N            | N |
+| flat_multiset                     | Y         | N      | N       | Y       | N     | N            | N |
+| flat_map                          | Y         | N      | N       | Y       | N     | N            | N |
+| flat_multimap                     | Y         | N      | N       | Y       | N     | N            | N |
+| unique_ptr                        | Y         | N      | Y       | N       | N     | N            | N |
+| shared_ptr                        | Y         | Y      | Y       | N       | N     | N            | N |
+| weak_ptr                          | Y         | N      | N       | N       | N     | N            | N |
+| Function Object                   | Y         | Y      | N       | N       | N     | N            | N |
+| Span                              | Y         | N      | Y       | N       | N     | N            | N |
+| MDSpan                            | Y         | N      | Y       | N       | N     | N            | N |
+| Bounded String                    | N         | Y      | N       | N       | N     | N            | N |
+| Atomic Shared Register SPSC       | N         | Y      | N       | N       | N     | N            | N |
+| Atomic Shared Register MPSC       | N         | Y      | N       | N       | N     | N            | N |
+| Atomic Shared Register SPMC       | N         | Y      | N       | N       | N     | N            | N |
+| Atomic Shared Register MPMC       | N         | Y      | N       | N       | N     | N            | N |
+| concurrent<>                      | N         | Y      | N       | N       | N     | N            | N |
+| Skip List                         | N         | N      | N       | Y       | N     | N            | N |
+| Sorted Bidirectional Map          | N         | N      | N       | Y       | N     | N            | N |
+
+
+| Algorithms                        | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     |
+|-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|
+| TODO                              | Y         | Y      | Y       | N       | Y     | Y            | Y |
 
 The used versions are:
 
