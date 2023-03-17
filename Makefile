@@ -59,7 +59,7 @@ ctl:
 	git clone https://github.com/rurban/ctl.git
 
 C-Macro-Collections:
-	git clone https://github.com/LeoVen/C-Macro-Collections.git
+	git clone https://github.com/LeoVen/C-Macro-Collections.git -b v0.25.0
 
 Collections-C:
 	git clone https://github.com/srdja/Collections-C.git
