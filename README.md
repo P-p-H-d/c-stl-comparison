@@ -60,7 +60,8 @@ The following criteria are used to compare the different C libraries. The C++ ST
 * Is-it type safe (aka. using an incompatible type produces at least a compilation warning)
 * support of integer/floats as basic type,
 * support of struct POD data as basic type,
-* natural usage of object: passing an object data to a container will create a copy of the object data (non-implicit lost of ownership),
+* container doesn't steal ownership of object parameter by default: passing an object data to a container will create a copy of the object data,
+* support of optional move semantics to/from containers, 
 * support of array as basic type,
 * support of object like data (needing custom constructor, destructor...),
 * support of C++ class as basic type,
@@ -112,7 +113,8 @@ and generate the different executables.
 | type safe                         | Y         | Y      | Y       | Y       | Y     | N            | T      |
 | integer/float support             | Y         | Y      | Y       | Y       | Y     | Y            | Y      |
 | struct POD support                | Y         | Y      | Y       | Y       | Y     | N            | Y      |
-| Natural usage of object           | Y         | Y      | Y       | N       | N     | Y            | N      |
+| No default steal of ownership     | Y         | Y      | Y       | N       | N     | Y            | N      |
+| Optional move semantics           | Y         | Y      | N       | N       | N     | N            | N      |
 | C++ class support                 | Y         | Y      | N       | N       | N     | N            | N      |
 | C object support                  | Y         | Y      | Y       | Y       | Y     | N            | Y      |
 | container/basic spatial separation | Y        | Y      | N       | N       | N     | N            | N      |
@@ -209,6 +211,8 @@ CC             | 2012d9d2eb8f035d7dc69f36ec03ca3199ede1bf
 * [M\*LIB](https://github.com/P-p-H-d/mlib)
 * [STC - Smart Template Container for C](https://github.com/tylov/STC)
 * [CC](https://github.com/JacksonAllan/CC.git)
+
+This is a WIP, and some reviews are needed to help this comparison.
 
 If you see any errors in this report,
 or want to include another C library,
