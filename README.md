@@ -153,7 +153,7 @@ and generate the different executables.
 | optional                          | Y         | Y      | N       | N       | N     | N            | N |
 | variant                           | Y         | Y      | N       | N       | N     | N            | N |
 | bitset                            | Y         | Y      | Y       | Y       | N     | N            | N |
-| char string                       | Y         | Y      | Y       | N       | Y     | N            | N |
+| Dynamic character string          | Y         | Y      | Y       | N       | Y     | N            | N |
 | string_view                       | Y         | N      | Y       | N       | N     | N            | N |
 | deque                             | Y         | Y      | Y       | Y       | Y     | Y            | N |
 | queue                             | Y         | Y      | Y       | Y       | Y     | Y            | N |
