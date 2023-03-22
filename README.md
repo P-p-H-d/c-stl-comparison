@@ -60,20 +60,20 @@ The following criteria are used to compare the different C libraries. The C++ ST
 * Is-it type safe (aka. using an incompatible type produces at least a compilation warning)
 * support of integer/floats as basic type,
 * support of struct POD data as basic type,
-* container doesn't steal ownership of object parameter by default: passing an object data to a container will create a copy of the object data,
-* support of optional move semantics to/from containers, 
+* containers don't steal ownership of object given as parameter by default: passing an object data to a container will create a copy of the object data,
+* support of optional move semantics, 
 * support of array as basic type,
 * support of object like data (needing custom constructor, destructor...),
 * support of C++ class as basic type,
 * container / basic type spatial separation: the association of the methods of the basic type to the needed operators of the container library can be defined when the basic type is defined (ensuring spatial coherency of the basic type) and not only when the container is defined,
-* support of API Interface Adapter to automatically transform the interface of the provided method to the expected interface of the required operator, 
+* support of API Interface Adapter to transform the interface of the provided method to the expected interface of the operator, 
 * support of basic 'emplace'
 * support of multiple, enhanced 'emplace' based on the initialized arguments,
 * support of iterator abstraction
 * support of sort algorithm
 * support of sort algorithm with custom comparison,
 * support of separate declaration and definition (external linkage definition),
-* full abstraction of the dynamic array type (no use of internal fields)
+* full abstraction of the dynamic array type (user shall not use internal fields)
 * contract violation checks (assertions on invalid inputs, on input contract violation)
 * natural usage of array (using of [] operator on the object)
 * basic type is stored in the array, not a pointer to it.
@@ -85,7 +85,6 @@ The following criteria are used to compare the different C libraries. The C++ ST
 * support of serialization
 * support of JSON serialization
 * support of XML serialization
-
 
 # Execution
 
@@ -110,14 +109,14 @@ and generate the different executables.
 | mpz:number of characters          | 261       | 500    | 1152    | 1859    | 1456  | 1288         | 1108   |
 | mpz:number of line of codes       | 13        | 18     | 36      | 52      | 37    | 58           | 39     |
 | mpz:number of workarounds         | 0         | 0      | 3       | 8       | 6     | 1            | 2      |
-| type safe                         | Y         | Y      | Y       | Y       | Y     | N            | T      |
+| type safe                         | Y         | Y      | Y       | Y       | Y     | N            | Y      |
 | integer/float support             | Y         | Y      | Y       | Y       | Y     | Y            | Y      |
 | struct POD support                | Y         | Y      | Y       | Y       | Y     | N            | Y      |
 | No default steal of ownership     | Y         | Y      | Y       | N       | N     | Y            | N      |
 | Optional move semantics           | Y         | Y      | N       | N       | N     | N            | N      |
 | C++ class support                 | Y         | Y      | N       | N       | N     | N            | N      |
 | C object support                  | Y         | Y      | Y       | Y       | Y     | N            | Y      |
-| container/basic spatial separation | Y        | Y      | N       | N       | N     | N            | N      |
+| container/basic spatial separation | Y        | Y      | N       | N       | N     | N            | Y      |
 | API Interface Adaptator           | N         | Y      | N       | N       | N     | N            | N      |
 | basic emplace support             | Y         | Y      | Y       | N       | N     | N            | N      |
 | Enhance emplace support           | Y         | Y      | N       | N       | N     | N            | N      |
@@ -137,7 +136,6 @@ and generate the different executables.
 | Serialization                     | N         | Y      | N       | N       | N     | N            | N      |
 | JSON Serialization                | N         | Y      | N       | N       | N     | N            | N      |
 | XML Serialization                 | N         | N      | N       | N       | N     | N            | N      |
-
 
 | Containers                        | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     |
 |-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|
