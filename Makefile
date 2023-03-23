@@ -79,9 +79,9 @@ Collections-C/src/libCollections-C.a: Collections-C
 # 		Build example for array
 ###########################################################
 
-array: array-mpz-mlib.exe array-mpz-stc.exe array-mpz-ctl.exe array-mpz-cmc.exe array-mpz-stl.exe array-mpz-collectionsC.exe array-mpz-CC.exe \
-       array-int-mlib.exe array-int-stc.exe array-int-ctl.exe array-int-cmc.exe array-int-stl.exe array-int-collectionsC.exe array-int-CC.exe \
-       array-str-mlib.exe array-str-stc.exe array-str-ctl.exe array-str-cmc.exe array-str-stl.exe array-str-collectionsC.exe array-str-CC.exe
+array: array-mpz-mlib.exe array-mpz-stc.exe array-mpz-ctl.exe array-mpz-cmc.exe array-mpz-stl.exe array-mpz-collectionsC.exe array-mpz-CC.exe array-mpz-glib.exe \
+       array-int-mlib.exe array-int-stc.exe array-int-ctl.exe array-int-cmc.exe array-int-stl.exe array-int-collectionsC.exe array-int-CC.exe array-int-glib.exe \
+       array-str-mlib.exe array-str-stc.exe array-str-ctl.exe array-str-cmc.exe array-str-stl.exe array-str-collectionsC.exe array-str-CC.exe array-str-glib.exe 
 
 array-mpz-stl.exe: test-mpz/array-stl.cc
 	$(CXX) $(CFLAGS) $< -o $@ -lgmpxx $(LDFLAGS)
@@ -145,3 +145,12 @@ array-int-CC.exe: test-int/array-CC.c CC
 
 array-str-CC.exe: test-str/array-CC.c CC 
 	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
+
+array-mpz-glib.exe: test-mpz/array-glib.c
+	$(CC) $(CFLAGS) `pkg-config --cflags --libs glib-2.0` $< -o $@ $(LDFLAGS)
+
+array-int-glib.exe: test-int/array-glib.c
+	$(CC) $(CFLAGS) `pkg-config --cflags --libs glib-2.0` $< -o $@ $(LDFLAGS)
+
+array-str-glib.exe: test-str/array-glib.c
+	$(CC) $(CFLAGS) `pkg-config --cflags --libs glib-2.0` $< -o $@ $(LDFLAGS)
