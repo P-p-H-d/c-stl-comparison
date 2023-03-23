@@ -99,97 +99,97 @@ and generate the different executables.
 
 # Synthesis
 
-| Criteria                          | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     |
-|-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|
-| C language                        | NA        | >=C99  | >=C99   | >=C99   | >=C99 | >= C99       | >= C11 |
-| Pure C                            | NA        | Y      | Y       | Y       | Y     | Y            | Y      |
-| int:number of characters          | 236       | 370    | 480     | 1011    | 593   | 874          | 604    |
-| int:number of line of codes       | 12        | 16     | 26      | 36      | 22    | 35           | 30     |
-| int:number of workarounds         | 0         | 0      | 0       | 2       | 2     | 1            | 1      |
-| mpz:number of characters          | 261       | 500    | 1152    | 1859    | 1456  | 1288         | 1108   |
-| mpz:number of line of codes       | 13        | 18     | 36      | 52      | 37    | 58           | 39     |
-| mpz:number of workarounds         | 0         | 0      | 3       | 8       | 6     | 1            | 2      |
-| type safe                         | Y         | Y      | Y       | Y       | Y     | N            | Y      |
-| integer/float support             | Y         | Y      | Y       | Y       | Y     | Y            | Y      |
-| struct POD support                | Y         | Y      | Y       | Y       | Y     | N            | Y      |
-| No default steal of ownership     | Y         | Y      | Y       | N       | N     | Y            | N      |
-| Optional move semantics           | Y         | Y      | N       | N       | N     | N            | N      |
-| C++ class support                 | Y         | Y      | N       | N       | N     | N            | N      |
-| C object support                  | Y         | Y      | Y       | Y       | Y     | N            | Y      |
-| container/basic spatial separation | Y        | Y      | N       | N       | N     | N            | Y      |
-| API Interface Adaptator           | N         | Y      | N       | N       | N     | N            | N      |
-| basic emplace support             | Y         | Y      | Y       | N       | N     | N            | N      |
-| Enhance emplace support           | Y         | Y      | N       | N       | N     | N            | N      |
-| Iterator support                  | Y         | Y      | Y       | N       | Y     | Y            | Y      |
-| Sort algorithm                    | Y         | Y      | Y       | N       | Y     | Y            | N      |
-| Enhanced Sort algorithm           | Y         | Y      | Y       | N       | Y     | Y            | N      |
-| separate declare & define         | N         | N      | Y       | Y       | N     | Y            | N      |
-| Full abstraction                  | Y         | Y      | N       | Y       | N     | Y            | Y      |
-| Contract violation checks         | Y         | Y      | N       | N       | N     | N            | N      |
-| Natural usage                     | Y         | N      | N       | N       | N     | N            | N      |
-| Basic type is stored              | Y         | Y      | Y       | Y       | Y     | N            | Y      |
-| No explicit instanciation         | Y         | N      | N       | N       | N     | Y            | Y      |
-| prefixed function                 | Y         | Y      | Y       | Y       | Y     | Y            | Y      |
-| memory handling                   | exception | abort, exception | retcode | retcode | none  | retcode | retcode|
-| destructors on exception          | Y         | Y(*)   | NA      | NA      | NA    | NA           | NA     |
-| custom memory support             | Y         | Y      | Y       | Y       | N     | Y            | Y      |
-| Serialization                     | N         | Y      | N       | N       | N     | N            | N      |
-| JSON Serialization                | N         | Y      | N       | N       | N     | N            | N      |
-| XML Serialization                 | N         | N      | N       | N       | N     | N            | N      |
+| Criteria                          | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     |  GLIB  |
+|-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|--------|
+| C language                        | NA        | >=C99  | >=C99   | >=C99   | >=C99 | >= C99       | >= C11 | >= C89 |
+| Pure C                            | NA        | Y      | Y       | Y       | Y     | Y            | Y      | Y      |
+| int:number of characters          | 236       | 370    | 480     | 1011    | 593   | 874          | 604    | 696    |
+| int:number of line of codes       | 12        | 16     | 26      | 36      | 22    | 35           | 30     | 38     |
+| int:number of workarounds         | 0         | 0      | 0       | 2       | 2     | 1            | 1      | 0      |
+| mpz:number of characters          | 261       | 500    | 1152    | 1859    | 1456  | 1288         | 1108   | 840    |
+| mpz:number of line of codes       | 13        | 18     | 36      | 52      | 37    | 58           | 39     | 47     |
+| mpz:number of workarounds         | 0         | 0      | 3       | 8       | 6     | 1            | 2      | 0      |
+| type safe                         | Y         | Y      | Y       | Y       | Y     | N            | Y      | N      |
+| integer/float support             | Y         | Y      | Y       | Y       | Y     | Y            | Y      | Y*     |
+| struct POD support                | Y         | Y      | Y       | Y       | Y     | N            | Y      | Y*     |
+| No default steal of ownership     | Y         | Y      | Y       | N       | N     | Y            | N      | Y      |
+| Optional move semantics           | Y         | Y      | N       | N       | N     | N            | N      | N      |
+| C++ class support                 | Y         | Y      | N       | N       | N     | N            | N      | N      |
+| C object support                  | Y         | Y      | Y       | Y       | Y     | N            | Y      | Y*     |
+| container/basic spatial separation | Y        | Y      | N       | N       | N     | NA           | Y      | NA     |
+| API Interface Adaptator           | N         | Y      | N       | N       | N     | N            | N      | N      |
+| basic emplace support             | Y         | Y      | Y       | N       | N     | N            | N      | N      |
+| Enhance emplace support           | Y         | Y      | N       | N       | N     | N            | N      | N      |
+| Iterator support                  | Y         | Y      | Y       | N       | Y     | Y            | Y      | N      |
+| Sort algorithm                    | Y         | Y      | Y       | N       | Y     | Y            | N      | Y      |
+| Enhanced Sort algorithm           | Y         | Y      | Y       | N       | Y     | Y            | N      | Y      |
+| separate declare & define         | N         | N      | Y       | Y       | N     | Y            | N      | Y      |
+| Full abstraction                  | Y         | Y      | N       | Y       | N     | Y            | Y      | N      |
+| Contract violation checks         | Y         | Y      | N       | N       | N     | N            | N      | N      |
+| Natural usage                     | Y         | N      | N       | N       | N     | N            | N      | N      |
+| Basic type is stored              | Y         | Y      | Y       | Y       | Y     | N            | Y      | N      |
+| No explicit instanciation         | Y         | N      | N       | N       | N     | Y            | Y      | Y      |
+| prefixed function                 | Y         | Y      | Y       | Y       | Y     | Y            | Y      | Y      |
+| memory handling                   | exception | abort, exception | retcode | retcode | none|retcode |retcode|retcode|
+| destructors on exception          | Y         | Y(*)   | NA      | NA      | NA    | NA           | NA     | N      |
+| custom memory support             | Y         | Y      | Y       | Y       | N     | Y            | Y      | N      |
+| Serialization                     | N         | Y      | N       | N       | N     | N            | N      | N      |
+| JSON Serialization                | N         | Y      | N       | N       | N     | N            | N      | N      |
+| XML Serialization                 | N         | N      | N       | N       | N     | N            | N      | N      |
 
-| Containers                        | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     |
-|-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|
-| Singly Linked Non-Intrusive list  | Y         | Y      | N       | N       | Y     | Y            | N |
-| Doubly Linked Non-Intrusive list  | Y         | N      | N       | N       | Y     | Y            | Y |
-| Singly Linked, Dualy Push Non-Intrusive list  | N | Y  | Y       | N       | N     | N            | N |
-| Singly Linked Intrusive list      | N         | N      | N       | N       | N     | N            | N |
-| Doubly Linked Intrusive list      | N         | Y      | N       | N       | N     | N            | N |
-| Dynamic array                     | Y         | Y      | Y       | Y       | Y     | Y            | Y |
-| Static array                      | Y         | N      | N       | N       | Y     | N            | N |
-| pair                              | Y         | Y      | N       | N       | N     | N            | N |
-| tuple                             | Y         | Y      | N       | N       | N     | N            | N |
-| optional                          | Y         | Y      | N       | N       | N     | N            | N |
-| variant                           | Y         | Y      | N       | N       | N     | N            | N |
-| bitset                            | Y         | Y      | Y       | Y       | N     | N            | N |
-| Dynamic character string          | Y         | Y      | Y       | N       | Y     | N            | N |
-| string_view                       | Y         | N      | Y       | N       | N     | N            | N |
-| deque                             | Y         | Y      | Y       | Y       | Y     | Y            | N |
-| queue                             | Y         | Y      | Y       | Y       | Y     | Y            | N |
-| priority queue                    | Y         | Y      | Y       | Y       | Y     | Y            | N |
-| stack                             | Y         | Y      | Y       | N       | Y     | Y            | N |
-| Bounded Queue                     | N         | Y      | N       | N       | N     | N            | N |
-| set                               | Y         | Y      | Y       | N       | N     | Y            | N |
-| multiset                          | Y         | Y      | N       | N       | N     | N            | N |
-| map                               | Y         | Y      | N       | N       | Y     | Y            | N |
-| multimap                          | Y         | Y      | N       | N       | N     | N            | N |
-| unordered_set                     | Y         | Y      | Y       | Y       | Y     | Y            | Y |
-| unordered_multiset                | Y         | N      | N       | Y       | N     | N            | N |
-| unordered_map                     | Y         | Y      | Y       | Y       | Y     | Y            | Y |
-| unordered_multimap                | Y         | N      | N       | Y       | N     | N            | N |
-| flat_set                          | Y         | N      | N       | Y       | N     | N            | N |
-| flat_multiset                     | Y         | N      | N       | Y       | N     | N            | N |
-| flat_map                          | Y         | N      | N       | Y       | N     | N            | N |
-| flat_multimap                     | Y         | N      | N       | Y       | N     | N            | N |
-| unique_ptr                        | Y         | N      | Y       | N       | N     | N            | N |
-| shared_ptr                        | Y         | Y      | Y       | N       | N     | N            | N |
-| weak_ptr                          | Y         | N      | N       | N       | N     | N            | N |
-| Function Object                   | Y         | Y      | N       | N       | N     | N            | N |
-| Span                              | Y         | N      | Y       | N       | N     | N            | N |
-| MDSpan                            | Y         | N      | Y       | N       | N     | N            | N |
-| Bounded String                    | N         | Y      | N       | N       | N     | N            | N |
-| Atomic Shared Register SPSC       | N         | Y      | N       | N       | N     | N            | N |
-| Atomic Shared Register MPSC       | N         | Y      | N       | N       | N     | N            | N |
-| Atomic Shared Register SPMC       | N         | Y      | N       | N       | N     | N            | N |
-| Atomic Shared Register MPMC       | N         | Y      | N       | N       | N     | N            | N |
-| concurrent<>                      | N         | Y      | N       | N       | N     | N            | N |
-| Skip List                         | N         | N      | N       | Y       | N     | N            | N |
-| Sorted Bidirectional Map          | N         | N      | N       | Y       | N     | N            | N |
-| Tree                              | N         | Y      | N       | N       | N     | N            | N |
+| Containers                        | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     | GLIB |
+|-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|------|
+| Singly Linked Non-Intrusive list  | Y         | Y      | N       | N       | Y     | Y            | N      | Y    |
+| Doubly Linked Non-Intrusive list  | Y         | N      | N       | N       | Y     | Y            | Y      | Y    |
+| Singly Linked, Dualy Push Non-Intrusive list  | N | Y  | Y       | N       | N     | N            | N      | N    |
+| Singly Linked Intrusive list      | N         | N      | N       | N       | N     | N            | N      | N    |
+| Doubly Linked Intrusive list      | N         | Y      | N       | N       | N     | N            | N      | N    |
+| Dynamic array                     | Y         | Y      | Y       | Y       | Y     | Y            | Y      | Y    |
+| Static array                      | Y         | N      | N       | N       | Y     | N            | N      | N    |
+| pair                              | Y         | Y      | N       | N       | N     | N            | N      | N    |
+| tuple                             | Y         | Y      | N       | N       | N     | N            | N      | N    |
+| optional                          | Y         | Y      | N       | N       | N     | N            | N      | N    |
+| variant                           | Y         | Y      | N       | N       | N     | N            | N      | Y    |
+| bitset                            | Y         | Y      | Y       | Y       | N     | N            | N      | N    |
+| Dynamic character string          | Y         | Y      | Y       | N       | Y     | N            | N      | Y    |
+| string_view                       | Y         | N      | Y       | N       | N     | N            | N      | N    |
+| deque                             | Y         | Y      | Y       | Y       | Y     | Y            | N      | Y    |
+| queue                             | Y         | Y      | Y       | Y       | Y     | Y            | N      | Y    |
+| priority queue                    | Y         | Y      | Y       | Y       | Y     | Y            | N      | N    |
+| stack                             | Y         | Y      | Y       | N       | Y     | Y            | N      | N    |
+| Bounded Queue                     | N         | Y      | N       | N       | N     | N            | N      | Y    |
+| set                               | Y         | Y      | Y       | N       | N     | Y            | N      | Y    |
+| multiset                          | Y         | Y      | N       | N       | N     | N            | N      | N    |
+| map                               | Y         | Y      | N       | N       | Y     | Y            | N      | N    |
+| multimap                          | Y         | Y      | N       | N       | N     | N            | N      | N    |
+| unordered_set                     | Y         | Y      | Y       | Y       | Y     | Y            | Y      | N    |
+| unordered_multiset                | Y         | N      | N       | Y       | N     | N            | N      | N    |
+| unordered_map                     | Y         | Y      | Y       | Y       | Y     | Y            | Y      | N    |
+| unordered_multimap                | Y         | N      | N       | Y       | N     | N            | N      | Y    |
+| flat_set                          | Y         | N      | N       | Y       | N     | N            | N      | N    |
+| flat_multiset                     | Y         | N      | N       | Y       | N     | N            | N      | N    |
+| flat_map                          | Y         | N      | N       | Y       | N     | N            | N      | N    |
+| flat_multimap                     | Y         | N      | N       | Y       | N     | N            | N      | N    |
+| unique_ptr                        | Y         | N      | Y       | N       | N     | N            | N      | N    |
+| shared_ptr                        | Y         | Y      | Y       | N       | N     | N            | N      | N    |
+| weak_ptr                          | Y         | N      | N       | N       | N     | N            | N      | N    |
+| Function Object                   | Y         | Y      | N       | N       | N     | N            | N      | N    |
+| Span                              | Y         | N      | Y       | N       | N     | N            | N      | N    |
+| MDSpan                            | Y         | N      | Y       | N       | N     | N            | N      | N    |
+| Bounded String                    | N         | Y      | N       | N       | N     | N            | N      | N    |
+| Atomic Shared Register SPSC       | N         | Y      | N       | N       | N     | N            | N      | N    |
+| Atomic Shared Register MPSC       | N         | Y      | N       | N       | N     | N            | N      | N    |
+| Atomic Shared Register SPMC       | N         | Y      | N       | N       | N     | N            | N      | N    |
+| Atomic Shared Register MPMC       | N         | Y      | N       | N       | N     | N            | N      | N    |
+| concurrent<>                      | N         | Y      | N       | N       | N     | N            | N      | N    |
+| Skip List                         | N         | N      | N       | Y       | N     | N            | N      | N    |
+| Sorted Bidirectional Map          | N         | N      | N       | Y       | N     | N            | N      | N    |
+| Tree                              | N         | Y      | N       | N       | N     | N            | N      | N    |
 
 
-| Algorithms                        | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     |
-|-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|
-| TODO                              | Y         | Y      | Y       | N       | Y     | Y            | Y |
+| Algorithms                        | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     | GLIB |
+|-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|------|
+| TODO                              | Y         | Y      | Y       | N       | Y     | Y            | Y      | Y    |
 
 The used versions are:
 
@@ -202,6 +202,7 @@ CTL            | 3923e6776a231e5d58cf91225ca8a1d61879401b
 M\*LIB         | d17fa4530bffb23c2eb4cb0658b4cfec9bed1ae9
 STC            | 5fb5ed08250b5ad4eadd6e7a9fdc44f4519b15ff
 CC             | 2012d9d2eb8f035d7dc69f36ec03ca3199ede1bf
+GLIB           | 2.74
 
 * [C-Macro-Collections](https://github.com/LeoVen/C-Macro-Collections)
 * [COLLECTIONS-C](https://github.com/srdja/Collections-C)
@@ -209,6 +210,7 @@ CC             | 2012d9d2eb8f035d7dc69f36ec03ca3199ede1bf
 * [M\*LIB](https://github.com/P-p-H-d/mlib)
 * [STC - Smart Template Container for C](https://github.com/tylov/STC)
 * [CC](https://github.com/JacksonAllan/CC.git)
+* [GLIB](https://docs.gtk.org/glib/index.html)
 
 This is a WIP, and some reviews are needed to help this comparison.
 
