@@ -129,7 +129,7 @@ and generate the different executables.
 | Natural usage                     | Y         | N      | N       | N       | N     | N            | N      |
 | Basic type is stored              | Y         | Y      | Y       | Y       | Y     | N            | Y      |
 | No explicit instanciation         | Y         | N      | N       | N       | N     | Y            | Y      |
-| prefixed function                 | Y         | Y      | Y       | Y       | Y     | Y            | N      |
+| prefixed function                 | Y         | Y      | Y       | Y       | Y     | Y            | Y      |
 | memory handling                   | exception | abort, exception | retcode | retcode | none  | retcode | retcode|
 | destructors on exception          | Y         | Y(*)   | NA      | NA      | NA    | NA           | NA     |
 | custom memory support             | Y         | Y      | Y       | Y       | N     | Y            | Y      |
