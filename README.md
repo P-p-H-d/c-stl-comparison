@@ -7,9 +7,12 @@ like vector, list, map, unordered_map, and so on.
 
 The goal is not to compare their performance (multiple benchmark already exist) but their other characteristics.
 
-To do this, the same simple program using vector will be implemented by the libraries
+To do this, the same simple programs will be implemented by the libraries
 in the more straight-forward way possible,
-and the resulted programs will be compared each other.
+for different kind of containers and for different types.
+Then the API ergonomics of each programs can be compared each other according to the user taste.
+
+Objective characteristics of the libraries are directly compared in this file.
 
 
 # Disclaimer
@@ -19,9 +22,9 @@ I am the main author of M\*LIB, one of theses libraries.
 This work is still a WIP.
 
 
-# Program Constraints
+# Comparison Program Constraints
 
-The test of a C container library shall respect the following conditions:
+The array test shall respect the following conditions:
 
 * it shall use a basic type (int), a non POD type (the type mpz\_t of the GMP library) and a string as the primary type of a dynamic array.
 * it shall not comment the code (the code is assumed to be clear on what it does by itself) except if there is some workaround,
@@ -47,6 +50,17 @@ A workaround is defined as a way to implement this program which is **not natura
 * accessing internal fields of the containers (typically for using the qsort function).
 
 For example, if a container library manual requests to define some macro for its use, then it won't be considered as a workaround. 
+
+
+# Execution
+
+The different programs are available in this repository.
+To build then, you just need to have
+a working C compiler, a make tool and git
+to build it.
+
+Simply run "make" to perform a clone of the projects
+and generate the different executables.
 
 
 # Analysis
@@ -86,22 +100,12 @@ The following criteria are used to compare the different C libraries. The C++ ST
 * support of JSON serialization
 * support of XML serialization
 
-# Execution
-
-The different programs are available in this repository.
-To build then, you just need to have
-a working C compiler, a make tool and git
-to build it.
-
-Simply run "make" to perform a clone of the projects
-and generate the different executables.
-
 
 # Synthesis
 
 | Criteria                          | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     |  GLIB  |
 |-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|--------|
-| C language                        | NA        | >=C99  | >=C99   | >=C99   | >=C99 | >= C99       | >= C11 | >= C89 |
+| C language                        | NA        | >=C99  | >=C99   | >=C99   | >=C99 | >=C99        | >=C11* or >=C23 | >= C89 |
 | Pure C                            | NA        | Y      | Y       | Y       | Y     | Y            | Y      | Y      |
 | int:number of characters          | 236       | 370    | 480     | 1011    | 593   | 874          | 604    | 696    |
 | int:number of line of codes       | 12        | 16     | 26      | 36      | 22    | 35           | 30     | 38     |
@@ -131,11 +135,14 @@ and generate the different executables.
 | No explicit instanciation         | Y         | N      | N       | N       | N     | Y            | Y      | Y      |
 | prefixed function                 | Y         | Y      | Y       | Y       | Y     | Y            | Y      | Y      |
 | memory handling                   | exception | abort, exception | retcode | retcode | none|retcode |retcode|retcode|
-| destructors on exception          | Y         | Y(*)   | NA      | NA      | NA    | NA           | NA     | N      |
+| destructors on exception          | Y         | Y*     | NA      | NA      | NA    | NA           | NA     | N      |
 | custom memory support             | Y         | Y      | Y       | Y       | N     | Y            | Y      | N      |
 | Serialization                     | N         | Y      | N       | N       | N     | N            | N      | N      |
 | JSON Serialization                | N         | Y      | N       | N       | N     | N            | N      | N      |
 | XML Serialization                 | N         | N      | N       | N       | N     | N            | N      | N      |
+
+* C11*: means C11 + extension
+* Y*: Yes with some limitations.
 
 | Containers                        | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     | GLIB |
 |-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|------|
