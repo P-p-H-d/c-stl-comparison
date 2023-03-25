@@ -65,12 +65,12 @@ and generate the different executables.
 
 # Analysis
 
-The following criteria are used to compare the different C libraries. The C++ STL is also included as as reference.
+The following characteristics are used to compare the different C libraries. The C++ STL is also included as as reference.
 
 * What is the supported C language (C89, C99, C11 or C23),
 * Is it a pure C program (no need for external preprocessor)?
-* number of characters / number of line of codes / of the test programs
-* number of implemented workarounds of the test programs
+* Header only?
+* Generic mechanism: A)void pointer, B)macro, C)_Generic and macro, D)intrusive field, E)code generation by include, F)code generation by macro
 * Is-it type safe (aka. using an incompatible type produces at least a compilation warning)
 * support of integer/floats as basic type,
 * support of struct POD data as basic type,
@@ -103,16 +103,12 @@ The following criteria are used to compare the different C libraries. The C++ ST
 
 # Synthesis
 
-| Criteria                          | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     |  GLIB  |
+| Characteristics                   | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     |  GLIB  |
 |-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|--------|
-| C language                        | NA        | >=C99  | >=C99   | >=C99   | >=C99 | >=C99        | >=C11* or >=C23 | >= C89 |
+| C language                        | NA        | >=C99  | >=C99   | >=C99  | >=C99 | >=C99| >=C11* or >=C23 | >= C89 |
 | Pure C                            | NA        | Y      | Y       | Y       | Y     | Y            | Y      | Y      |
-| int:number of characters          | 236       | 370    | 480     | 1011    | 593   | 874          | 604    | 696    |
-| int:number of line of codes       | 12        | 16     | 26      | 36      | 22    | 35           | 30     | 38     |
-| int:number of workarounds         | 0         | 0      | 0       | 2       | 2     | 1            | 1      | 0      |
-| mpz:number of characters          | 261       | 500    | 1152    | 1859    | 1456  | 1288         | 1108   | 840    |
-| mpz:number of line of codes       | 13        | 18     | 36      | 52      | 37    | 58           | 39     | 47     |
-| mpz:number of workarounds         | 0         | 0      | 3       | 8       | 6     | 1            | 2      | 0      |
+| Header only                       | Y         | Y      | Y       | Y       | Y     | N            | Y      | N      |
+| Generic mechanism                 | template  | F      | E       | F       | E     | A            | C      | A      |
 | type safe                         | Y         | Y      | Y       | Y       | Y     | N            | Y      | N      |
 | integer/float support             | Y         | Y      | Y       | Y       | Y     | Y            | Y      | Y*     |
 | struct POD support                | Y         | Y      | Y       | Y       | Y     | N            | Y      | Y*     |
@@ -143,6 +139,15 @@ The following criteria are used to compare the different C libraries. The C++ ST
 
 * C11*: means C11 + extension
 * Y*: Yes with some limitations.
+
+| Comparison programs               | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     |  GLIB  |
+|-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|--------|
+| int:number of characters          | 236       | 370    | 480     | 1011    | 593   | 874          | 604    | 696    |
+| int:number of line of codes       | 12        | 16     | 26      | 36      | 22    | 35           | 30     | 38     |
+| int:number of workarounds         | 0         | 0      | 0       | 2       | 2     | 1            | 1      | 0      |
+| mpz:number of characters          | 261       | 500    | 1152    | 1859    | 1456  | 1288         | 1108   | 840    |
+| mpz:number of line of codes       | 13        | 18     | 36      | 52      | 37    | 58           | 39     | 47     |
+| mpz:number of workarounds         | 0         | 0      | 3       | 8       | 6     | 1            | 2      | 0      |
 
 | Containers                        | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     | GLIB |
 |-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|------|
