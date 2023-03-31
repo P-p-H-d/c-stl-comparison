@@ -24,7 +24,7 @@ CC=cc -std=c99
 C11=cc -std=c11
 CXX=c++ -std=c++11
 # To mesure code size, we need to remove the sanitizers
-CFLAGS=-Os -march=native -Wall -DNDEBUG -fsanitize=address,undefined,leak
+CFLAGS=-O0 -march=native -Wall -DNDEBUG -fsanitize=address,undefined,leak -Werror=incompatible-pointer-types -g
 LDFLAGS=-lgmp
 RM=rm -rf
 AR=ar
@@ -32,10 +32,10 @@ ARFLAGS=cr
 
 .PHONY: all array
 
-all: array
+all: array umap
 
 clean:
-	$(RM) *~ *.exe
+	$(RM) *~ *.exe **/*~
 
 ###########################################################
 # 		Get external Libraries
@@ -153,4 +153,86 @@ array-int-glib.exe: array-int/array-glib.c
 	$(CC) $(CFLAGS) `pkg-config --cflags --libs glib-2.0` $< -o $@ $(LDFLAGS)
 
 array-str-glib.exe: array-str/array-glib.c
+	$(CC) $(CFLAGS) `pkg-config --cflags --libs glib-2.0` $< -o $@ $(LDFLAGS)
+
+
+
+###########################################################
+# 		Build example for Unordered map
+###########################################################
+
+umap: umap-mpz-mlib.exe umap-mpz-stc.exe umap-mpz-ctl.exe umap-mpz-cmc.exe umap-mpz-stl.exe umap-mpz-collectionsC.exe umap-mpz-CC.exe umap-mpz-glib.exe \
+      umap-int-mlib.exe umap-int-stc.exe umap-int-ctl.exe umap-int-cmc.exe umap-int-stl.exe umap-int-collectionsC.exe umap-int-CC.exe umap-int-glib.exe \
+      umap-str-mlib.exe umap-str-stc.exe umap-str-ctl.exe umap-str-cmc.exe umap-str-stl.exe umap-str-collectionsC.exe umap-str-CC.exe umap-str-glib.exe 
+
+umap-mpz-stl.exe: umap-mpz/umap-stl.cc
+	$(CXX) $(CFLAGS) $< -o $@ -lgmpxx $(LDFLAGS)
+
+umap-int-stl.exe: umap-int/umap-stl.cc
+	$(CXX) $(CFLAGS) $< -o $@ -lgmpxx $(LDFLAGS)
+
+umap-str-stl.exe: umap-str/umap-stl.cc
+	$(CXX) $(CFLAGS) $< -o $@ -lgmpxx $(LDFLAGS)
+
+umap-mpz-mlib.exe: umap-mpz/umap-mlib.c mlib 
+	$(CC) $(CFLAGS) -Imlib $< -o $@ $(LDFLAGS)
+
+umap-int-mlib.exe: umap-int/umap-mlib.c mlib 
+	$(CC) $(CFLAGS) -Imlib $< -o $@ $(LDFLAGS)
+
+umap-str-mlib.exe: umap-str/umap-mlib.c mlib 
+	$(CC) $(CFLAGS) -Imlib $< -o $@ $(LDFLAGS)
+
+umap-mpz-stc.exe: umap-mpz/umap-stc.c STC 
+	$(CC) $(CFLAGS) -ISTC/include $< -o $@ $(LDFLAGS)
+
+umap-int-stc.exe: umap-int/umap-stc.c STC 
+	$(CC) $(CFLAGS) -ISTC/include $< -o $@ $(LDFLAGS)
+
+umap-str-stc.exe: umap-str/umap-stc.c STC 
+	$(CC) $(CFLAGS) -ISTC/include $< -o $@ $(LDFLAGS)
+
+umap-mpz-ctl.exe: umap-mpz/umap-ctl.c ctl 
+	$(CC) $(CFLAGS) -Ictl/ $< -o $@ $(LDFLAGS)
+
+umap-int-ctl.exe: umap-int/umap-ctl.c ctl 
+	$(CC) $(CFLAGS) -Ictl/ $< -o $@ $(LDFLAGS)
+
+umap-str-ctl.exe: umap-str/umap-ctl.c ctl 
+	$(CC) $(CFLAGS) -Ictl/ $< -o $@ $(LDFLAGS)
+
+umap-mpz-cmc.exe: umap-mpz/umap-cmc.c C-Macro-Collections 
+	$(CC) $(CFLAGS) -IC-Macro-Collections/src $< -o $@ $(LDFLAGS)
+
+umap-int-cmc.exe: umap-int/umap-cmc.c C-Macro-Collections 
+	$(CC) $(CFLAGS) -IC-Macro-Collections/src $< -o $@ $(LDFLAGS)
+
+umap-str-cmc.exe: umap-str/umap-cmc.c C-Macro-Collections 
+	$(CC) $(CFLAGS) -IC-Macro-Collections/src $< -o $@ $(LDFLAGS)
+
+umap-mpz-collectionsC.exe: umap-mpz/umap-collectionsC.c Collections-C Collections-C/src/libCollections-C.a 
+	$(CC) $(CFLAGS) -ICollections-C/src/include $< -o $@ $(LDFLAGS) Collections-C/src/libCollections-C.a
+
+umap-int-collectionsC.exe: umap-int/umap-collectionsC.c Collections-C Collections-C/src/libCollections-C.a 
+	$(CC) $(CFLAGS) -ICollections-C/src/include $< -o $@ $(LDFLAGS) Collections-C/src/libCollections-C.a
+
+umap-str-collectionsC.exe: umap-str/umap-collectionsC.c Collections-C Collections-C/src/libCollections-C.a 
+	$(CC) $(CFLAGS) -ICollections-C/src/include $< -o $@ $(LDFLAGS) Collections-C/src/libCollections-C.a
+
+umap-mpz-CC.exe: umap-mpz/umap-CC.c CC 
+	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
+
+umap-int-CC.exe: umap-int/umap-CC.c CC 
+	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
+
+umap-str-CC.exe: umap-str/umap-CC.c CC 
+	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
+
+umap-mpz-glib.exe: umap-mpz/umap-glib.c
+	$(CC) $(CFLAGS) `pkg-config --cflags --libs glib-2.0` $< -o $@ $(LDFLAGS)
+
+umap-int-glib.exe: umap-int/umap-glib.c
+	$(CC) $(CFLAGS) `pkg-config --cflags --libs glib-2.0` $< -o $@ $(LDFLAGS)
+
+umap-str-glib.exe: umap-str/umap-glib.c
 	$(CC) $(CFLAGS) `pkg-config --cflags --libs glib-2.0` $< -o $@ $(LDFLAGS)
