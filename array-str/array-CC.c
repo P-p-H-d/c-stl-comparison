@@ -24,12 +24,10 @@ int main( void )
   if (!p) {
     abort();
   }
-
-  // LIMITATION: No Sort function
-  qsort( get(&our_vec, 0), size(&our_vec), sizeof (const char *), str_cmp);
-  
+  qsort( get(&our_vec, 0), size(&our_vec), sizeof (const char *), str_cmp);   // LIMITATION: No Sort function
   for_each(&our_vec, ptr) {
     printf("%s\n", *ptr);
   }
   cleanup( &our_vec );
+  return 0;
 }

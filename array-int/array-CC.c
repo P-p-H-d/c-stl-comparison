@@ -13,7 +13,6 @@ int main( void )
 {
   vec( int ) our_vec;
   init( &our_vec );
-
   int *p = push( &our_vec, 17 );
   if (!p) {
     abort();
@@ -26,12 +25,10 @@ int main( void )
   if (!p) {
     abort();
   }
-
-  // LIMITATION: No Sort function
-  qsort( get(&our_vec, 0), size(&our_vec), sizeof (int), int_cmp);
-  
+  qsort( get(&our_vec, 0), size(&our_vec), sizeof (int), int_cmp);   // LIMITATION: No Sort function
   for_each(&our_vec, ptr) {
     printf("%d\n", *ptr);
   }
   cleanup( &our_vec );
+  return 0;
 }

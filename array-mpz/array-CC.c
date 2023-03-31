@@ -45,4 +45,5 @@ int main( void )
     gmp_printf("%Zd\n", ptr->Z);
   }
   cleanup( &our_vec );
+  return 0;
 }
