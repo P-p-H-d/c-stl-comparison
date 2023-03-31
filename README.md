@@ -22,26 +22,22 @@ I am the main author of M\*LIB, one of theses libraries.
 This work is still a WIP.
 
 
-# Comparison Program Constraints
+# Test Program
 
-The array test shall respect the following conditions:
+## Rules
 
-* it shall use a basic type (int), a non POD type (the type mpz\_t of the GMP library) and a string as the primary type of a dynamic array.
+The test program shall respect the following conditions:
+
+* it shall use a basic type (int), a non POD type (the type mpz\_t of the GMP library) and a string as the primary type of the container.
 * it shall not comment the code (the code is assumed to be clear on what it does by itself) except if there is some workaround,
 * it shall not produce any compilation warnings,
 * it shall execute properly,
-* it shall not leak any memory
+* it shall not leak any memory,
 * it shall abort on error,
-* it shall link dynamically with the GMP library (https://gmplib.org/).
-* it shall link statically with the container library,
+* it shall link dynamically with the GMP library (https://gmplib.org/) if needed,
+* it shall link statically with the container library if needed,
+* if a dynamic string container exists in the container library, it shall be used instead of a C string,
 * the optional assertions shall be turned off.
-
-The program shall perform the following operations:
-
-* declare a dynamic array of int (resp. mpz_t, a string of the container library),
-* initialize this array with the small unsigned integers values 17, 42 and 9 (performing a conversion from unsigned integer to mpz_t for GMP) or the constant strings "Hello", "World" and "!" for strings,
-* sort this array,
-* iterate the array to print the values.
 
 A workaround is defined as a way to implement this program which is **not natural** for the library. This typically includes:
 
@@ -51,19 +47,38 @@ A workaround is defined as a way to implement this program which is **not natura
 
 For example, if a container library manual requests to define some macro for its use, then it won't be considered as a workaround. 
 
+## Array tests
 
-# Execution
+The program shall perform the following operations:
+
+* declare a dynamic array of int (resp. mpz_t, a string),
+* initialize this array with the small unsigned integers values 17, 42 and 9 (performing a conversion from unsigned integer to mpz_t for GMP) or the constant strings "Hello", "World" and "!" for strings,
+* sort this array,
+* iterate the array to print the values.
+
+## Associative array tests
+
+The program shall perform the following operations:
+
+* declare a non-ordered associative array from int (resp. mpz_t, a string) to (resp. mpz_t, a string),
+* initialize this array with the association of signed integers values 17 to 4585, 42 to 4856 and -9 to 1452 (performing a conversion from signed integer to mpz_t for GMP) or the strings "Hello" to "LIB", "Welcome" to "Program" and "Sincerely" to "Your map" for strings,
+* search for the key "Hello" and display it if successful,
+* iterate the associative array to print the values.
+
+
+## Execution
 
 The different programs are available in this repository.
 To build then, you just need to have
-a working C compiler, a make tool and git
-to build it.
+a working C11 compiler, a make tool, git
+the GMP library, and the GLIB library
+to build then.
 
 Simply run "make" to perform a clone of the projects
 and generate the different executables.
 
 
-# Analysis
+# Analysis and synthesis
 
 The following characteristics are used to compare the different C libraries. The C++ STL is also included as as reference.
 
