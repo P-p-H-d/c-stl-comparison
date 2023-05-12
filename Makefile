@@ -147,13 +147,13 @@ array-str-CC.exe: array-str/array-CC.c CC
 	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
 
 array-mpz-glib.exe: array-mpz/array-glib.c
-	$(CC) $(CFLAGS) `pkg-config --cflags --libs glib-2.0` $< -o $@ $(LDFLAGS)
+	$(CC) $(CFLAGS) $< -o $@ `pkg-config --cflags --libs glib-2.0` $(LDFLAGS)
 
 array-int-glib.exe: array-int/array-glib.c
-	$(CC) $(CFLAGS) `pkg-config --cflags --libs glib-2.0` $< -o $@ $(LDFLAGS)
+	$(CC) $(CFLAGS) $< -o $@ `pkg-config --cflags --libs glib-2.0` $(LDFLAGS)
 
 array-str-glib.exe: array-str/array-glib.c
-	$(CC) $(CFLAGS) `pkg-config --cflags --libs glib-2.0` $< -o $@ $(LDFLAGS)
+	$(CC) $(CFLAGS) $< -o $@ `pkg-config --cflags --libs glib-2.0` $(LDFLAGS)
 
 
 
@@ -229,10 +229,10 @@ umap-str-CC.exe: umap-str/umap-CC.c CC
 	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
 
 umap-mpz-glib.exe: umap-mpz/umap-glib.c
-	$(CC) $(CFLAGS) `pkg-config --cflags --libs glib-2.0` $< -o $@ $(LDFLAGS)
+	$(CC) $(CFLAGS) $< -o $@ `pkg-config --cflags --libs glib-2.0` $(LDFLAGS)
 
 umap-int-glib.exe: umap-int/umap-glib.c
-	$(CC) $(CFLAGS) `pkg-config --cflags --libs glib-2.0` $< -o $@ $(LDFLAGS)
+	$(CC) $(CFLAGS) $< -o $@ `pkg-config --cflags --libs glib-2.0` $(LDFLAGS)
 
 umap-str-glib.exe: umap-str/umap-glib.c
-	$(CC) $(CFLAGS) `pkg-config --cflags --libs glib-2.0` $< -o $@ $(LDFLAGS)
+	$(CC) $(CFLAGS) $< -o $@ `pkg-config --cflags --libs glib-2.0` $(LDFLAGS)
