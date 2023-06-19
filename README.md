@@ -138,7 +138,7 @@ The following characteristics are used to compare the different C libraries. The
 | Iterator support                  | Y         | Y      | Y       | N       | Y     | Y            | Y      | N      |
 | Sort algorithm                    | Y         | Y      | Y       | N       | Y     | Y            | N      | Y      |
 | Enhanced Sort algorithm           | Y         | Y      | Y       | N       | Y     | Y            | N      | Y      |
-| separate declare & define         | N         | N      | Y       | Y       | N     | Y            | N      | Y      |
+| separate declare & define         | N         | Y      | Y       | Y       | N     | Y            | N      | Y      |
 | Full abstraction                  | Y         | Y      | N       | Y       | N     | Y            | Y      | N      |
 | Contract violation checks         | Y         | Y      | N       | N       | N     | N            | N      | N      |
 | Natural usage                     | Y         | N      | N       | N       | N     | N            | N      | N      |
@@ -241,7 +241,7 @@ GLIB           | 2.74
 
 This is a WIP, and some reviews are needed to help this comparison.
 
-If you see any errors in this report,
+If you see any mistakes in this report,
 or want to include another C library,
 or want to include another point of comparison,
 do not hesitate to open a pull request.
