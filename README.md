@@ -82,17 +82,17 @@ and generate the different executables.
 
 The following characteristics are used to compare the different C libraries. The C++ STL is also included as as reference.
 
-* What is the supported C language (C89, C99, C11 or C23),
+* What is the supported C language (C89, C99, C11 or C23)?
 * Is it a pure C program (no need for external preprocessor)?
-* Header only?
-* Generic mechanism: A)void pointer, B)macro, C)_Generic and macro, D)intrusive field, E)code generation by include, F)code generation by macro
-* Is-it type safe (aka. using an incompatible type produces at least a compilation warning)
+* Is it a Header only library?
+* How is implemented the Generic mechanism? By using  A)void pointer, B)macro, C)_Generic and macro, D)intrusive field, E)code generation by include, F)code generation by macro
+* Is-it type safe (aka. using an incompatible type produces at least a compilation warning)?
 * support of integer/floats as basic type,
 * support of struct POD data as basic type,
-* containers don't steal ownership of object given as parameter by default: passing an object data to a container will create a copy of the object data,
+* containers don't steal ownership of object given as parameter by default (passing an object data to a container will create a proper copy of the object data as per the object semantic),
 * support of optional move semantics, 
 * support of array as basic type,
-* support of object like data (needing custom constructor, destructor...),
+* support of object like data (needing custom constructor, destructor...) as basic type,
 * support of C++ class as basic type,
 * container / basic type spatial separation: the association of the methods of the basic type to the needed operators of the container library can be defined when the basic type is defined (ensuring spatial coherency of the basic type) and not only when the container is defined,
 * support of API Interface Adapter to transform the interface of the provided method to the expected interface of the operator, 
@@ -101,9 +101,9 @@ The following characteristics are used to compare the different C libraries. The
 * support of iterator abstraction
 * support of sort algorithm
 * support of sort algorithm with custom comparison,
-* support of separate declaration and definition (external linkage definition),
-* full abstraction of the dynamic array type (user shall not use internal fields)
-* contract violation checks (assertions on invalid inputs, on input contract violation)
+* support of single linkage definition (use of declaration only for all files except one than include the container definition),
+* full abstraction of the container type (user shall not use internal fields)
+* contract violation checks (assertions on invalid inputs, on input contract violation or error reporting)
 * natural usage of array (using of [] operator on the object)
 * basic type is stored in the array, not a pointer to it.
 * don't need explicit instanciation of the array with the basic type,
@@ -124,7 +124,7 @@ The following characteristics are used to compare the different C libraries. The
 | Pure C                            | NA        | Y      | Y       | Y       | Y     | Y            | Y      | Y      |
 | Header only                       | Y         | Y      | Y       | Y       | Y     | N            | Y      | N      |
 | Generic mechanism                 | template  | F      | E       | F       | E     | A            | C      | A      |
-| type safe                         | Y         | Y      | Y       | Y       | Y     | N            | Y      | N      |
+| type safe                         | Y         | Y      | Y       | Y       | Y     | N            | Y*     | N      |
 | integer/float support             | Y         | Y      | Y       | Y       | Y     | Y            | Y      | Y*     |
 | struct POD support                | Y         | Y      | Y       | Y       | Y     | N            | Y      | Y*     |
 | No default steal of ownership     | Y         | Y      | Y       | N       | N     | Y            | N      | Y      |
@@ -138,7 +138,7 @@ The following characteristics are used to compare the different C libraries. The
 | Iterator support                  | Y         | Y      | Y       | N       | Y     | Y            | Y      | N      |
 | Sort algorithm                    | Y         | Y      | Y       | N       | Y     | Y            | N      | Y      |
 | Enhanced Sort algorithm           | Y         | Y      | Y       | N       | Y     | Y            | N      | Y      |
-| separate declare & define         | N         | Y      | Y       | Y       | N     | Y            | N      | Y      |
+| single linkage definition         | N*        | Y      | Y       | Y       | N     | Y            | N      | Y      |
 | Full abstraction                  | Y         | Y      | N       | Y       | N     | Y            | Y      | N      |
 | Contract violation checks         | Y         | Y      | N       | N       | N     | N            | N      | N      |
 | Natural usage                     | Y         | N      | N       | N       | N     | N            | N      | N      |
