@@ -111,6 +111,8 @@ The following characteristics are used to compare the different C libraries. The
 * memory error handling (return code, exception, abort, none)
 * On exception, destructors of objects on stack are properly called.
 * custom memory functions
+* optional per-container context for custom memory functions
+* support of forward declaration of container
 * support of serialization
 * support of JSON serialization
 * support of XML serialization
@@ -148,6 +150,8 @@ The following characteristics are used to compare the different C libraries. The
 | memory handling                   | exception | abort, exception | retcode | retcode | none|retcode |retcode|retcode|
 | destructors on exception          | Y         | Y*     | NA      | NA      | NA    | NA           | NA     | N      |
 | custom memory support             | Y         | Y      | Y       | Y       | N     | Y            | Y      | N      |
+| context for custom memory support | N         | N      | Y       | N       | N     | N            | N      | N      |
+| Forward declaration support       | N         | N      | Y       | N       | N     | N            | N      | N      |
 | Serialization                     | N         | Y      | N       | N       | N     | N            | N      | N      |
 | JSON Serialization                | N         | Y      | N       | N       | N     | N            | N      | N      |
 | XML Serialization                 | N         | N      | N       | N       | N     | N            | N      | N      |
@@ -226,7 +230,7 @@ GCC            | 10.2
 C Macro Collections | v0.23.1
 CollectionsC   | ff1be366329e2c82cd85b2c803114ef8d2115f7f
 CTL            | 3923e6776a231e5d58cf91225ca8a1d61879401b
-M\*LIB         | d17fa4530bffb23c2eb4cb0658b4cfec9bed1ae9
+M\*LIB         | a0818419ab959e05517336e1bea699c1854b29f3
 STC            | 5fb5ed08250b5ad4eadd6e7a9fdc44f4519b15ff
 CC             | 2012d9d2eb8f035d7dc69f36ec03ca3199ede1bf
 GLIB           | 2.74
