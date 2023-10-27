@@ -1,8 +1,11 @@
 #include <stdio.h>
 
 #define i_type         array_int
-#define i_val          int
+#define i_key          int
+#define i_cmp(a,b)     (*(a) < *(b) ? -1 : *(a) > *(b))
 #include <stc/cvec.h>
+
+#include <stc/algorithm.h>
 
 int main(void)
 {

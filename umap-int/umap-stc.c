@@ -5,6 +5,8 @@
 #define i_val          int
 #include <stc/cmap.h>
 
+#include <stc/algorithm.h>
+
 int main(void)
 {
   c_auto(umap_int, map) {

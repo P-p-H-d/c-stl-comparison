@@ -1,5 +1,8 @@
 #include <stdio.h>
+
+#define i_static
 #include <stc/cstr.h>
+#include <stc/algorithm.h>
 
 #define i_type         umap_str
 #define i_key_str

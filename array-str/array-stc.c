@@ -1,8 +1,12 @@
 #include <stdio.h>
+#define i_static
 #include <stc/cstr.h>
 
 #define i_val_str
+#define i_cmp(a,b)     strcmp(*a,*b)
 #include <stc/cvec.h>
+
+#include <stc/algorithm.h>
 
 int main(void)
 {
