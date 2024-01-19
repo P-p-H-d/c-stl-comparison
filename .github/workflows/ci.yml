@@ -15,5 +15,5 @@ jobs:
       run: make
     - name: make bench
       working-directory: ./bench
-      run: make bench
+      run: make
  
