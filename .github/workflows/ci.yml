@@ -1,0 +1,19 @@
+name: C/C++ CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest    
+    steps:
+    - uses: actions/checkout@v4
+    - name: CPU Information
+      run:  lscpu || echo "CPU information not available"
+    - name: Compiler Information
+      run:  cc -v
+    - name: make
+      run: make
+    - name: make bench
+      working-directory: ./bench
+      run: make bench
+ 
