@@ -56,7 +56,7 @@ plain: bench-plain
 
 # Test if MLIB directory exists, otherwise bootstrap it
 pre-bench:
-	@test -d $(MLIB) || cd .. && make
+	@test -d $(MLIB) || ( cd .. && make )
 
 #########################################################################
 # Directories of the checkout libraries
