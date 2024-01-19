@@ -5,7 +5,7 @@ that provide some STL like capabilities of the C++ (container template) but are 
 A STL like library for C is a C library providing several classic generic containers for the C language,
 like vector, list, map, unordered_map, and so on.
 
-The goal is not to compare their performance (multiple benchmark already exist) but their other characteristics.
+A small benchmark to compare their performance is includes in the bench directory.
 
 To do this, the same simple programs will be implemented by the libraries
 in the more straight-forward way possible,

@@ -1,7 +1,7 @@
 CC=cc -std=c11
 CXX=c++ -std=c++11
 CFLAGS=-O2 -march=native -Wall
-CPPFLAGS=-I../..
+CPPFLAGS=-I../../mlib
 
 all: k-nucleotide
 

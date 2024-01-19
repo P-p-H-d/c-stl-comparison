@@ -24,7 +24,7 @@ CC=cc -std=c99
 C11=cc -std=c11
 CXX=c++ -std=c++11
 # To mesure code size, we need to remove the sanitizers
-CFLAGS=-O0 -march=native -Wall -DNDEBUG -fsanitize=address,undefined,leak -Werror=incompatible-pointer-types -g
+CFLAGS=-O0 -Wall -DNDEBUG -fsanitize=address,undefined,leak -Werror=incompatible-pointer-types -g
 LDFLAGS=-lgmp
 RM=rm -rf
 AR=ar
@@ -36,6 +36,7 @@ all: array umap
 
 clean:
 	$(RM) *~ *.exe **/*~
+	cd bench && $(MAKE) clean
 
 ###########################################################
 # 		Get external Libraries
@@ -74,6 +75,9 @@ CC:
 Collections-C/src/libCollections-C.a: Collections-C
 	cd Collections-C/src && $(CC) $(CFLAGS) -Iinclude -c *.c
 	cd Collections-C/src && $(AR) $(ARFLAGS) libCollections-C.a *.o
+	# Build optimized version
+	cd Collections-C/src && $(CC) -O2 -Wall -march=native -DNDEBUG -Iinclude -c *.c
+	cd Collections-C/src && $(AR) $(ARFLAGS) libCollections-C-fast.a *.o
 
 ###########################################################
 # 		Build example for array

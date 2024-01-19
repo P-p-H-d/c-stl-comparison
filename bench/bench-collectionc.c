@@ -4,10 +4,10 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#include "array.h"
-#include "slist.h"
-#include "treetable.h"
-#include "hashtable.h"
+#include "cc_array.h"
+#include "cc_list.h"
+#include "cc_treetable.h"
+#include "cc_hashtable.h"
 
 #include "common.h"
 
@@ -15,65 +15,65 @@
 
 static void test_array(size_t n)
 {
-  Array *a1, *a2;
+  CC_Array *a1, *a2;
   enum cc_stat stat;
 
-  stat = array_new(&a1);
+  stat = cc_array_new(&a1);
   if (stat != CC_OK) abort();
-  stat = array_new(&a2);
+  stat = cc_array_new(&a2);
   if (stat != CC_OK) abort();
   
   for(size_t i = 0; i < n; i++) {
-    stat = array_add(a1, (void*) (uintptr_t)rand_get() );
+    stat = cc_array_add(a1, (void*) (uintptr_t)rand_get() );
     if (stat != CC_OK) abort();
-    stat = array_add(a2, (void*) (uintptr_t)rand_get() );
+    stat = cc_array_add(a2, (void*) (uintptr_t)rand_get() );
     if (stat != CC_OK) abort();
   }
   unsigned int s = 0;
   for(unsigned long i = 0; i < n; i++) {
     void *e, *f;
-    stat = array_get_at(a1, i, &e);
+    stat = cc_array_get_at(a1, i, &e);
     if (stat != CC_OK) abort();
-    stat = array_get_at(a2, i, &f);
+    stat = cc_array_get_at(a2, i, &f);
     if (stat != CC_OK) abort();
     s += ((unsigned int)(uintptr_t) e) * ((unsigned int)(uintptr_t) f);
   }
   g_result = s;
 
-  array_destroy(a1);
-  array_destroy(a2);
+  cc_array_destroy(a1);
+  cc_array_destroy(a2);
 }
 
 /********************************************************************************************/
 
 static void test_list(size_t n)
 {
-  SList *a1, *a2;
+  CC_List *a1, *a2;
   enum cc_stat stat;
 
-  stat = slist_new(&a1);
+  stat = cc_list_new(&a1);
   if (stat != CC_OK) abort();
-  stat = slist_new(&a2);
+  stat = cc_list_new(&a2);
   if (stat != CC_OK) abort();
   
   for(size_t i = 0; i < n; i++) {
-    stat = slist_add(a1, (void*) (uintptr_t)rand_get() );
+    stat = cc_list_add(a1, (void*) (uintptr_t)rand_get() );
     if (stat != CC_OK) abort();
-    stat = slist_add(a2, (void*) (uintptr_t)rand_get() );
+    stat = cc_list_add(a2, (void*) (uintptr_t)rand_get() );
     if (stat != CC_OK) abort();
   }
   unsigned int s = 0;
-  SListIter iter1, iter2;
+  CC_ListIter iter1, iter2;
     void *e, *f;
-  slist_iter_init(&iter1, a1);
-  slist_iter_init(&iter2, a2);
-  while (slist_iter_next(&iter1, &e) == CC_OK && slist_iter_next(&iter2, &f) == CC_OK) {
+  cc_list_iter_init(&iter1, a1);
+  cc_list_iter_init(&iter2, a2);
+  while (cc_list_iter_next(&iter1, &e) == CC_OK && cc_list_iter_next(&iter2, &f) == CC_OK) {
     s += ((unsigned int)(uintptr_t) e) * ((unsigned int)(uintptr_t) f);
   }
   g_result = s;
 
-  slist_destroy(a1);
-  slist_destroy(a2);
+  cc_list_destroy(a1);
+  cc_list_destroy(a2);
 }
 
 /********************************************************************************************/
@@ -87,14 +87,14 @@ static int compare(const void *a, const void *b)
 
 static void test_rbtree(size_t n)
 {
-  TreeTable *tree;
+  CC_TreeTable *tree;
   enum cc_stat stat;
 
-  stat = treetable_new(compare, &tree);
+  stat = cc_treetable_new(compare, &tree);
   if (stat != CC_OK) abort();
   for (size_t i = 0; i < n; i++) {
     void *key = (void*)(uintptr_t) rand_get();
-    stat = treetable_add(tree, key, key);
+    stat = cc_treetable_add(tree, key, key);
     if (stat != CC_OK) abort();
   }
   rand_init();
@@ -102,12 +102,12 @@ static void test_rbtree(size_t n)
   for (size_t i = 0; i < n; i++) {
     void *e;
     void *key = (void*) (uintptr_t) rand_get();
-    stat = treetable_get(tree, key, &e);
+    stat = cc_treetable_get(tree, key, &e);
     if (stat == CC_OK)
       s += (uintptr_t)e;
   }
   g_result = s;
-  treetable_destroy(tree);
+  cc_treetable_destroy(tree);
 }
 
 /********************************************************************************************/
@@ -128,19 +128,19 @@ static int equal_func(const void *key1, const void *key2)
 static void
 test_dict(size_t  n)
 {
-  HashTable *dict;
+  CC_HashTable *dict;
   enum cc_stat stat;
-  HashTableConf htc;
-  hashtable_conf_init(&htc);
+  CC_HashTableConf htc;
+  cc_hashtable_conf_init(&htc);
   htc.hash = hash_func;
   htc.key_compare = equal_func;
-  stat = hashtable_new_conf(&htc, &dict);
+  stat = cc_hashtable_new_conf(&htc, &dict);
   if (stat != CC_OK) abort();
   
   for (size_t i = 0; i < n; i++) {
     void *value = (void*)(uintptr_t) rand_get();
     void *key = (void*)(uintptr_t) rand_get();
-    stat = hashtable_add(dict, key, value );
+    stat = cc_hashtable_add(dict, key, value );
     if (stat != CC_OK) abort();
   }
   rand_init();
@@ -148,12 +148,12 @@ test_dict(size_t  n)
   for (size_t i = 0; i < n; i++) {
     void *key = (void*)(uintptr_t) rand_get();
     void *r;
-    stat = hashtable_get(dict, key, &r);
+    stat = cc_hashtable_get(dict, key, &r);
     if (stat == CC_OK)
       s += (uintptr_t) r;
   }
   g_result = s;
-  hashtable_destroy(dict);
+  cc_hashtable_destroy(dict);
 }
 
 /********************************************************************************************/
@@ -180,13 +180,13 @@ static size_t char_hash(const void *a, int l, uint32_t seed)
 static void
 test_dict_big(size_t  n)
 {
-  HashTable *dict;
+  CC_HashTable *dict;
   enum cc_stat stat;
-  HashTableConf htc;
-  hashtable_conf_init(&htc);
+  CC_HashTableConf htc;
+  cc_hashtable_conf_init(&htc);
   htc.hash = char_hash;
   htc.key_compare = char_equal;
-  stat = hashtable_new_conf(&htc, &dict);
+  stat = cc_hashtable_new_conf(&htc, &dict);
   if (stat != CC_OK) abort();
 
   char_array_t **tab = malloc (sizeof(char_array_t *)*2*n);
@@ -199,7 +199,7 @@ test_dict_big(size_t  n)
     tab[cpt++] = value;
     sprintf(*key, "%u", rand_get());
     sprintf(*value, "%u", rand_get());
-    stat = hashtable_add(dict, key, value );
+    stat = cc_hashtable_add(dict, key, value );
     if (stat != CC_OK) abort();
   }
   rand_init();
@@ -208,12 +208,12 @@ test_dict_big(size_t  n)
     char_array_t s1;
     void *r;
     sprintf(s1, "%u", rand_get());
-    stat = hashtable_get(dict, s1, &r);
+    stat = cc_hashtable_get(dict, s1, &r);
     if (stat == CC_OK)
       s ++;
   }
   g_result = s;
-  hashtable_destroy(dict);
+  cc_hashtable_destroy(dict);
   if (cpt != 2*n) abort();
   for(size_t i = 0; i < 2*n;i++)
     free(tab[i]);
@@ -229,23 +229,23 @@ static int cmp_float(const void * a, const void *b)
 
 static void test_sort(size_t n)
 {
-  Array *a1;
+  CC_Array *a1;
   enum cc_stat stat;
 
-  stat = array_new(&a1);
+  stat = cc_array_new(&a1);
   if (stat != CC_OK) abort();
   for(size_t i = 0; i < n; i++) {
     float *v = malloc(sizeof(float));
     *v = rand_get();
-    stat = array_add(a1, v );
+    stat = cc_array_add(a1, v );
     if (stat != CC_OK) abort();
   }
-  array_sort(a1, cmp_float);
+  cc_array_sort(a1, cmp_float);
   void *e;
-  stat = array_get_at(a1, 0, &e);
+  stat = cc_array_get_at(a1, 0, &e);
   if (stat != CC_OK) abort();
   g_result = *(float*)e;
-  array_destroy(a1);
+  cc_array_destroy(a1);
 }
 
 /********************************************************************************************/

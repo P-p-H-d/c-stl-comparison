@@ -24,7 +24,7 @@ CC=cc -std=c11
 CXX=c++ -std=c++11
 CFLAGS=-O2 -march=native -Wall
 XCFLAGS=
-CPPFLAGS=-I..
+CPPFLAGS=
 N=4
 BENCH_DEF=
 RM=rm -rf
@@ -54,13 +54,24 @@ string: bench-string
 plain: bench-plain
 	@echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
+# Test if MLIB directory exists, otherwise bootstrap it
+pre-bench:
+	@test -d $(MLIB) || cd .. && make
 
+#########################################################################
+# Directories of the checkout libraries
+# There are always present (no environement option to set)
+MLIB=../mlib
+CMC=../C-Macro-Collections/src/
+STC=../STC/
+CTL=../ctl
+CCLIB=../CC
+COLLECTIONC=../Collections-C
 
 #########################################################################
 
-
-bench-mlib:
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -pthread bench-mlib.c common.c -o bench-mlib.exe
+bench-mlib: pre-bench
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -pthread bench-mlib.c common.c -o bench-mlib.exe
 	@./bench-mlib.exe 10
 	@./bench-mlib.exe 11
 	@./bench-mlib.exe 20
@@ -76,7 +87,7 @@ bench-mlib:
 	@./bench-mlib.exe 51
 
 bench-mlib-mempool:
-	$(CC) $(CFLAGS) $(CPPFLAGS) bench-mlib.c common.c -DUSE_MEMPOOL -pthread -o bench-mlib-mempool.exe
+	$(CC) $(CFLAGS) $(CPPFLAGS) -I $(MLIB) bench-mlib.c common.c -DUSE_MEMPOOL -pthread -o bench-mlib-mempool.exe
 	@./bench-mlib-mempool.exe 10
 	@./bench-mlib-mempool.exe 11
 	@./bench-mlib-mempool.exe 20
@@ -92,7 +103,7 @@ bench-mlib-mempool:
 	@./bench-mlib-mempool.exe 51
 
 bench-mlib-thread:
-	$(CC) $(CFLAGS) $(CPPFLAGS) bench-mlib.c common.c -DMULTI_THREAD_MEASURE -pthread -o bench-mlib-thread.exe
+	$(CC) $(CFLAGS) $(CPPFLAGS) -I $(MLIB) bench-mlib.c common.c -DMULTI_THREAD_MEASURE -pthread -o bench-mlib-thread.exe
 	@./bench-mlib-thread.exe 60
 	@./bench-mlib-thread.exe 61
 	@./bench-mlib-thread.exe 62
@@ -154,10 +165,7 @@ bench-klib0:
 
 # CMC shall point to the directory where the CMC main header is
 bench-cmc:
-	@if test -n "$${CMC}" ; then $(MAKE) bench-cmc0 ; else echo "Nothing to be done for CMC." ; fi
-
-bench-cmc0:
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $${CMC} bench-cmc.c common.c -o bench-cmc.exe
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(CMC) bench-cmc.c common.c -o bench-cmc.exe
 	@./bench-cmc.exe 20
 	@./bench-cmc.exe 30
 	@./bench-cmc.exe 40
@@ -194,10 +202,7 @@ bench-densehashmap0:
 
 # COLLECTIONC shall point to the directory where it is installed
 bench-collectionc:
-	@if test -n "$${COLLECTIONC}" ; then $(MAKE) bench-collectionc0 ; else echo "Nothing to be done for COLLECTIONC." ; fi
-
-bench-collectionc0:
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I "$${COLLECTIONC}/include/collectc"  bench-collectionc.c common.c "$${COLLECTIONC}/lib/libcollectc.a" -o bench-collectionc.exe
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(COLLECTIONC)/src/include/  bench-collectionc.c common.c $(COLLECTIONC)/src/libCollections-C-fast.a -o bench-collectionc.exe
 	@./bench-collectionc.exe 10
 	@./bench-collectionc.exe 20
 	@./bench-collectionc.exe 30
@@ -355,10 +360,7 @@ bench-rigtorp-mpmc-queue0:
 
 # CTL shall point to the source directory (not where the headers are)
 bench-ctl:
-	@if test -n "$${CTL}" ; then $(MAKE) bench-ctl0 ; else echo "Nothing to be done for CTL." ; fi
-
-bench-ctl0:
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $${CTL} bench-ctl.c common.c -o bench-ctl.exe
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -I $(CTL) bench-ctl.c common.c -o bench-ctl.exe
 	@./bench-ctl.exe 10
 	@./bench-ctl.exe 20
 	@./bench-ctl.exe 30
@@ -367,10 +369,7 @@ bench-ctl0:
 
 # STC shall point to the source directory (not where the headers are)
 bench-stc:
-	@if test -n "$${STC}" ; then $(MAKE) bench-stc0 ; else echo "Nothing to be done for STC." ; fi
-
-bench-stc0:
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $${STC}/include bench-stc.c common.c -o bench-stc.exe
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(STC)/include bench-stc.c common.c -o bench-stc.exe
 	@./bench-stc.exe 10
 	@./bench-stc.exe 20
 	@./bench-stc.exe 30
@@ -393,10 +392,7 @@ bench-pottery0:
 
 # CCLIB shall point to the source directory of CC (where the headers are)
 bench-CC:
-	@if test -n "$${CCLIB}" ; then $(MAKE) bench-CC0 ; else echo "Nothing to be done for CC." ; fi
-
-bench-CC0:
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $${CCLIB}/ bench-CC.c common.c -o bench-CC.exe
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(CCLIB) bench-CC.c common.c -o bench-CC.exe
 	@./bench-CC.exe 10
 	@./bench-CC.exe 20
 	@./bench-CC.exe 40
@@ -429,7 +425,7 @@ bench-rapidjson0:
 ############################################################################
 
 bench-plain:
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) bench-plain-c.c -o bench-plain-c.exe
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) bench-plain-c.c -o bench-plain-c.exe
 	@./bench-plain-c.exe
 
 ############################################################################
@@ -437,13 +433,13 @@ bench-plain:
 bench-mempool:
 	@if test -n "$${BOOST}" ; then if test -n "$${GLIB}" ; then make bench-mempool0 BENCH_DEF="-DUSE_BOOST -DUSE_GLIB `pkg-config --libs --cflags glib-2.0` -lboost_system"  ; else make bench-mempool0 BENCH_DEF="-DUSE_BOOST -lboost_system" ; fi ; else if test -n "$${GLIB}" ; then make bench-mempool0 BENCH_DEF="-DUSE_GLIB `pkg-config --libs --cflags glib-2.0`"  ; else make bench-mempool0 ; fi ; fi
 bench-mempool0:
-	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) pool.cc  $(BENCH_DEF) -o bench-mempool.exe
+	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) pool.cc  $(BENCH_DEF) -o bench-mempool.exe
 	@./bench-mempool.exe
 
 ############################################################################
 
 bench-maxdict:
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) max-dict.c -o bench-max-dict.exe
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) max-dict.c -o bench-max-dict.exe
 	@./bench-max-dict.exe
 
 ############################################################################
@@ -467,8 +463,8 @@ bench-string-step5:
 	@if test -n "$${POTTERY}" ; then $(MAKE) bench-string-step6 BENCH_DEF="$(BENCH_DEF) -DBENCH_CAN_USE_POTTERY -I$${POTTERY}/include -I$${POTTERY}/util/ $${POTTERY}/util/pottery/string/string.c" ; else $(MAKE) bench-string-step6 BENCH_DEF="$(BENCH_DEF)"; fi
 
 bench-string-step6:
-	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -DBENCH_CAN_USE_STL -DBENCH_CAN_USE_MSTARLIB bench-string.cpp common.c $(BENCH_DEF) -o bench-string.exe 
-	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -DBENCH_CAN_USE_STL -DBENCH_CAN_USE_MSTARLIB bench-string-2.cpp common.c $(BENCH_DEF) -o bench-string-2.exe 
+	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -DBENCH_CAN_USE_STL -DBENCH_CAN_USE_MSTARLIB bench-string.cpp common.c $(BENCH_DEF) -o bench-string.exe 
+	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -DBENCH_CAN_USE_STL -DBENCH_CAN_USE_MSTARLIB bench-string-2.cpp common.c $(BENCH_DEF) -o bench-string-2.exe 
 	@./bench-string.exe
 	@./bench-string-2.exe  2000000 0
 	@./bench-string-2.exe  2000000 1
@@ -483,7 +479,7 @@ bench-string-pgo:
 ############################################################################
 
 bench-find-sort:
-	g++ bench-find-sort.cpp -O2 -march=native -std=c++11 -I.. -g common.c -o bench-find-sort.exe
+	g++ bench-find-sort.cpp -O2 -march=native -std=c++11 -I $(MLIB) -g common.c -o bench-find-sort.exe
 	./bench-find-sort.exe 10000000
 
 ############################################################################

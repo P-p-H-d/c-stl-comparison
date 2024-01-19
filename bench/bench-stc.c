@@ -161,6 +161,7 @@ test_dict_big(size_t  n)
 
 #define i_val float
 #define i_tag float
+#define i_use_cmp
 #include <stc/cvec.h>
 
 static void test_sort(size_t n)
