@@ -32,7 +32,7 @@ ARFLAGS=cr
 
 .PHONY: all array
 
-all: array umap
+all: array umap glib
 
 clean:
 	$(RM) *~ *.exe **/*~
@@ -83,9 +83,9 @@ Collections-C/src/libCollections-C.a: Collections-C
 # 		Build example for array
 ###########################################################
 
-array: array-mpz-mlib.exe array-mpz-stc.exe array-mpz-ctl.exe array-mpz-cmc.exe array-mpz-stl.exe array-mpz-collectionsC.exe array-mpz-CC.exe array-mpz-glib.exe \
-       array-int-mlib.exe array-int-stc.exe array-int-ctl.exe array-int-cmc.exe array-int-stl.exe array-int-collectionsC.exe array-int-CC.exe array-int-glib.exe \
-       array-str-mlib.exe array-str-stc.exe array-str-ctl.exe array-str-cmc.exe array-str-stl.exe array-str-collectionsC.exe array-str-CC.exe array-str-glib.exe 
+array: array-mpz-mlib.exe array-mpz-stc.exe array-mpz-ctl.exe array-mpz-cmc.exe array-mpz-stl.exe array-mpz-collectionsC.exe array-mpz-CC.exe \
+       array-int-mlib.exe array-int-stc.exe array-int-ctl.exe array-int-cmc.exe array-int-stl.exe array-int-collectionsC.exe array-int-CC.exe \
+       array-str-mlib.exe array-str-stc.exe array-str-ctl.exe array-str-cmc.exe array-str-stl.exe array-str-collectionsC.exe array-str-CC.exe  
 
 array-mpz-stl.exe: array-mpz/array-stl.cc
 	$(CXX) $(CFLAGS) $< -o $@ -lgmpxx $(LDFLAGS)
@@ -150,24 +150,15 @@ array-int-CC.exe: array-int/array-CC.c CC
 array-str-CC.exe: array-str/array-CC.c CC 
 	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
 
-array-mpz-glib.exe: array-mpz/array-glib.c
-	$(CC) $(CFLAGS) $< -o $@ `pkg-config --cflags --libs glib-2.0` $(LDFLAGS)
-
-array-int-glib.exe: array-int/array-glib.c
-	$(CC) $(CFLAGS) $< -o $@ `pkg-config --cflags --libs glib-2.0` $(LDFLAGS)
-
-array-str-glib.exe: array-str/array-glib.c
-	$(CC) $(CFLAGS) $< -o $@ `pkg-config --cflags --libs glib-2.0` $(LDFLAGS)
-
 
 
 ###########################################################
 # 		Build example for Unordered map
 ###########################################################
 
-umap: umap-mpz-mlib.exe umap-mpz-stc.exe umap-mpz-ctl.exe umap-mpz-cmc.exe umap-mpz-stl.exe umap-mpz-collectionsC.exe umap-mpz-CC.exe umap-mpz-glib.exe \
-      umap-int-mlib.exe umap-int-stc.exe umap-int-ctl.exe umap-int-cmc.exe umap-int-stl.exe umap-int-collectionsC.exe umap-int-CC.exe umap-int-glib.exe \
-      umap-str-mlib.exe umap-str-stc.exe umap-str-ctl.exe umap-str-cmc.exe umap-str-stl.exe umap-str-collectionsC.exe umap-str-CC.exe umap-str-glib.exe 
+umap: umap-mpz-mlib.exe umap-mpz-stc.exe umap-mpz-ctl.exe umap-mpz-cmc.exe umap-mpz-stl.exe umap-mpz-collectionsC.exe umap-mpz-CC.exe \
+      umap-int-mlib.exe umap-int-stc.exe umap-int-ctl.exe umap-int-cmc.exe umap-int-stl.exe umap-int-collectionsC.exe umap-int-CC.exe \
+      umap-str-mlib.exe umap-str-stc.exe umap-str-ctl.exe umap-str-cmc.exe umap-str-stl.exe umap-str-collectionsC.exe umap-str-CC.exe  
 
 umap-mpz-stl.exe: umap-mpz/umap-stl.cc
 	$(CXX) $(CFLAGS) $< -o $@ -lgmpxx $(LDFLAGS)
@@ -231,6 +222,26 @@ umap-int-CC.exe: umap-int/umap-CC.c CC
 
 umap-str-CC.exe: umap-str/umap-CC.c CC 
 	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
+
+
+###########################################################
+# 		Build example for system GLIB
+###########################################################
+
+glib:
+	@(pkg-config glib-2.0 && $(MAKE) all-glib) || echo "GLIB not installed"
+
+all-glib: array-mpz-glib.exe array-int-glib.exe array-str-glib.exe \
+          umap-mpz-glib.exe  umap-int-glib.exe  umap-str-glib.exe
+
+array-mpz-glib.exe: array-mpz/array-glib.c
+	$(CC) $(CFLAGS) $< -o $@ `pkg-config --cflags --libs glib-2.0` $(LDFLAGS)
+
+array-int-glib.exe: array-int/array-glib.c
+	$(CC) $(CFLAGS) $< -o $@ `pkg-config --cflags --libs glib-2.0` $(LDFLAGS)
+
+array-str-glib.exe: array-str/array-glib.c
+	$(CC) $(CFLAGS) $< -o $@ `pkg-config --cflags --libs glib-2.0` $(LDFLAGS)
 
 umap-mpz-glib.exe: umap-mpz/umap-glib.c
 	$(CC) $(CFLAGS) $< -o $@ `pkg-config --cflags --libs glib-2.0` $(LDFLAGS)
