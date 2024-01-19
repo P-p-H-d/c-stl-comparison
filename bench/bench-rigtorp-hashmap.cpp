@@ -42,7 +42,7 @@ test_dict2(size_t  n)
   HashMap<unsigned long, unsigned long, UL_Hash, UL_Equal> dict(16, -1UL);
 
   for (size_t i = 0; i < n; i++) {
-    dict[rand_get()] = rand_get();
+    auto v = rand_get(); dict[rand_get()] = v;
   }
   rand_init();
   unsigned int s = 0;

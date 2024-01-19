@@ -32,7 +32,7 @@ test_dict2(size_t  n)
   dict.set_deleted_key(-2);
 
   for (size_t i = 0; i < n; i++) {
-    dict[rand_get()] = rand_get();
+    auto v = rand_get(); dict[rand_get()] = v;
   }
   rand_init();
   unsigned int s = 0;

@@ -96,7 +96,7 @@ test_dict1(size_t  n)
   map<unsigned long, unsigned long> dict;
 
   for (size_t i = 0; i < n; i++) {
-    dict[rand_get()] = rand_get();
+    auto v = rand_get(); dict[rand_get()] = v;
   }
   rand_init();
   unsigned int s = 0;
@@ -116,7 +116,7 @@ test_dict2(size_t  n)
   unordered_map<unsigned long, unsigned long> dict;
 
   for (size_t i = 0; i < n; i++) {
-    dict[rand_get()] = rand_get();
+    auto v = rand_get(); dict[rand_get()] = v;
   }
   rand_init();
   unsigned int s = 0;
