@@ -178,7 +178,7 @@ static void test_bptree(size_t n)
 
 /********************************************************************************************/
 
-#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 072
+#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 72
 DICT_DEF2(dict_ulong, unsigned long, M_OPEXTEND(M_DEFAULT_OPLIST, MEMPOOL(dict_mpool), MEMPOOL_LINKAGE(static)), unsigned long, M_DEFAULT_OPLIST)
 #else
 DICT_DEF2(dict_ulong, unsigned long, M_DEFAULT_OPLIST, unsigned long, M_DEFAULT_OPLIST)
@@ -187,7 +187,7 @@ DICT_DEF2(dict_ulong, unsigned long, M_DEFAULT_OPLIST, unsigned long, M_DEFAULT_
 static void
 test_dict(size_t  n)
 {
-#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 072
+#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 72
   dict_ulong_list_pair_mempool_init(dict_mpool);
 #endif
   M_LET(dict, DICT_OPLIST(dict_ulong)) {
@@ -205,7 +205,7 @@ test_dict(size_t  n)
     }
     g_result = s;
   }
-#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 072
+#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 72
   dict_ulong_list_pair_mempool_clear(dict_mpool);
 #endif
 }
@@ -275,7 +275,7 @@ static bool char_oor_equal_p(const char_array_t a, unsigned char n) { return a[0
 static void char_oor_set(char_array_t a, unsigned char n) { a[0] = 1+n; }
 #define M_OPL_char_array_t() (INIT(char_init), INIT_SET(char_set), SET(char_set), CLEAR(char_init), HASH(char_hash), EQUAL(char_equal_p), OOR_EQUAL(char_oor_equal_p), OOR_SET(char_oor_set))
 
-#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 072
+#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 72
 DICT_STOREHASH_DEF2(dict_char, char_array_t, M_OPEXTEND(M_OPL_char_array_t(),MEMPOOL(dict_mpool2), MEMPOOL_LINKAGE(static)), char_array_t, M_OPL_char_array_t())
 #else
 DICT_STOREHASH_DEF2(dict_char, char_array_t, M_OPL_char_array_t(), char_array_t, M_OPL_char_array_t())
@@ -285,7 +285,7 @@ DICT_STOREHASH_DEF2(dict_char, char_array_t, M_OPL_char_array_t(), char_array_t,
 static void
 test_dict_big(size_t  n)
 {
-#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 072
+#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 72
   dict_char_list_pair_mempool_init(dict_mpool2);
 #endif
   M_LET(dict, DICT_OPLIST(dict_char)) {
@@ -306,7 +306,7 @@ test_dict_big(size_t  n)
     }
     g_result = s;
   }
-#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 072
+#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 72
   dict_char_list_pair_mempool_clear(dict_mpool2);
 #endif
 }
@@ -338,7 +338,7 @@ test_dict_oa_big(size_t  n)
 
 /********************************************************************************************/
 
-#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 072
+#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 72
 DICT_DEF2(dict_str, string_t, M_OPEXTEND(STRING_OPLIST, MEMPOOL(dict_mpool3), MEMPOOL_LINKAGE(static)), string_t, STRING_OPLIST)
 #else
 DICT_DEF2(dict_str, string_t, STRING_OPLIST, string_t, STRING_OPLIST)
@@ -347,7 +347,7 @@ DICT_DEF2(dict_str, string_t, STRING_OPLIST, string_t, STRING_OPLIST)
 static void
 test_dict_str(size_t  n)
 {
-#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 072
+#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 72
   dict_str_list_pair_mempool_init(dict_mpool3);
 #endif
   M_LET(s1, s2, STRING_OPLIST)
@@ -367,7 +367,7 @@ test_dict_str(size_t  n)
     }
     g_result = s;
   }
-#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 072
+#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 72
   dict_str_list_pair_mempool_clear(dict_mpool3);
 #endif
 }
