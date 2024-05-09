@@ -262,6 +262,41 @@ test_dict_oa_linear(size_t  n)
   }
 }
 
+#ifdef M_USE_MAX_PREFETCH
+
+#define NUM 1024
+
+static void
+test_dict_oa_bulk(size_t  n)
+{
+  M_LET(dict, DICT_OPLIST(dict_oa_ulong)) {
+    unsigned long key[NUM], value[NUM];
+    for (size_t i = 0; i < n; i+=NUM) {
+      unsigned num = M_MIN(NUM, n-i);
+      for(unsigned j = 0; j < num; j++) {
+        key[j] = rand_get();
+        value[j] = rand_get();
+      }
+      dict_oa_ulong_bulk_set(dict, num, key, value);
+    }
+    rand_init();
+    unsigned int s = 0;
+    for (size_t i = 0; i < n; i+=NUM) {
+      unsigned num = M_MIN(NUM, n-i);
+      for(unsigned j = 0; j < num; j++) {
+        key[j] = rand_get();
+      }
+      dict_oa_ulong_bulk_get(num, value, dict, key, 0);
+      for(unsigned j = 0; j < num; j++) {
+        s += value[j];
+      }
+    }
+    g_result = s;
+  }
+}
+
+#endif
+
 /********************************************************************************************/
 #ifndef CHAR_ARRAY_SIZE
 #define CHAR_ARRAY_SIZE 256
@@ -1058,6 +1093,9 @@ const config_func_t table[] = {
   { 41, "dictBig", 1000000, 0, test_dict_big, 0},
   { 42,"dict(OA)", 1000000, 0, test_dict_oa, 0},
   { 43,"DictStr", 1000000, 0, test_dict_str, 0},
+#ifdef M_USE_MAX_PREFETCH
+  { 44,"dict(OA/BULK)", 1000000, 0, test_dict_oa_bulk, 0},
+#endif
   { 46, "dictLinear(OA)", 1000000, 0, test_dict_oa_linear, 0},
   { 47,    "dictBig(OA)", 1000000, 0, test_dict_oa_big, 0},
   { 50,           "Sort",10000000, 0, test_sort, 0},

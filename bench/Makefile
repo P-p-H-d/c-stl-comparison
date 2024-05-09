@@ -80,6 +80,7 @@ bench-mlib: pre-bench
 	@./bench-mlib.exe 40
 	@./bench-mlib.exe 41
 	@./bench-mlib.exe 42
+	@./bench-mlib.exe 44 2> /dev/null
 	@./bench-mlib.exe 46
 	@./bench-mlib.exe 47
 	@./bench-mlib.exe 43
