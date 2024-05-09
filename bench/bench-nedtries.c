@@ -88,8 +88,8 @@ test_dict_noalloc(size_t  n)
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  { 40,    "dict", 1000000, 0, test_dict, 0},
-  { 45, "dict(noalloc)", 1000000, 0, test_dict_noalloc, 0}
+  { 40,    "dict",       10000000, 0, test_dict, 0},
+  { 45, "dict(noalloc)", 10000000, 0, test_dict_noalloc, 0}
 };
 
 int main(int argc, const char *argv[])

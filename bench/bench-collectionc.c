@@ -254,7 +254,7 @@ const config_func_t table[] = {
   { 10,    "List", 10000000, 0, test_list, 0},
   { 20,   "Array", 100000000, 0, test_array, 0},
   { 30,  "Rbtree", 1000000, 0, test_rbtree, 0},
-  { 40,    "dict", 1000000, 0, test_dict, 0},
+  { 40,    "dict", 10000000, 0, test_dict, 0},
   { 41, "dictBig", 1000000, 0, test_dict_big, 0},
   { 50,           "Sort",10000000, 0, test_sort, 0},
 };
