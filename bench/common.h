@@ -115,7 +115,11 @@ test_function(const char *str, size_t n, void (*func)(size_t))
   double result;
   unsigned long long start, end;
   rand_init();
-  start = cputime();
+  end = cputime();
+  // Ensure that the start corresponds to a time period
+  do {
+    start = cputime();
+  } while (start == end);
   (*func)(n);
   end = cputime();
   result = (double)(end-start) / 1000.0;

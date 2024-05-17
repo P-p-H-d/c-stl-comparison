@@ -51,7 +51,7 @@ struct parse_opt_s {
   double from, to, step, grow;
   double within;
   unsigned repeat;
-  bool graph, best, best_within, average, quiet;
+  bool graph, best, best_within, average, quiet, clear_cache;
 };
 
 static void
@@ -69,6 +69,7 @@ parse_config(struct parse_opt_s *opt, int argc, const char *argv[])
   opt->best_within = false;
   opt->average = false;
   opt->quiet = false;
+  opt->clear_cache = false;
   opt->repeat = 1;
   opt->within = .05;
   
@@ -76,23 +77,23 @@ parse_config(struct parse_opt_s *opt, int argc, const char *argv[])
     {
       if (argv[i][0] == '-') {
 	if (strcmp(argv[i], "--from") == 0){
-	  i++;
+          if (++i == argc) { fprintf(stderr, "ERROR: Missing argument for --from\n"); exit(-2); }
 	  opt->from = strtod(argv[i], &end);
 	  opt->to   = opt->from;
 	} else if (strcmp(argv[i], "--to") == 0) {
-	  i++;
+          if (++i == argc) { fprintf(stderr, "ERROR: Missing argument for --to\n"); exit(-2); }
 	  opt->to = strtod(argv[i], &end);
 	  opt->grow = 1.1;
 	} else if (strcmp(argv[i], "--step") == 0) {
-	  i++;
+          if (++i == argc) { fprintf(stderr, "ERROR: Missing argument for --step\n"); exit(-2); }
 	  opt->step = strtod(argv[i], &end);
 	  opt->grow = 0;
 	} else if (strcmp(argv[i], "--grow") == 0) {
-	  i++;
+          if (++i == argc) { fprintf(stderr, "ERROR: Missing argument for --grow\n"); exit(-2); }
 	  opt->grow = strtod(argv[i], &end);
 	  opt->step = 0;
 	} else if (strcmp(argv[i], "--repeat") == 0) {
-	  i++;
+          if (++i == argc) { fprintf(stderr, "ERROR: Missing argument for --repeat\n"); exit(-2); }
 	  opt->repeat = strtol(argv[i], &end, 10);
 	  opt->repeat = (opt->repeat > MAX_REPEAT) ? MAX_REPEAT : opt->repeat;
 	} else if (strcmp(argv[i], "--graph") == 0) {
@@ -105,7 +106,7 @@ parse_config(struct parse_opt_s *opt, int argc, const char *argv[])
 	  opt->best_within = true;
 	  opt->best = false;
 	  opt->average = false;
-	  i++;
+          if (++i == argc) { fprintf(stderr, "ERROR: Missing argument for --best-within\n"); exit(-2); }
 	  opt->within = strtod(argv[i], &end) / 100.0;
 	} else if (strcmp(argv[i], "--average") == 0) {
 	  opt->average = true;
@@ -113,6 +114,8 @@ parse_config(struct parse_opt_s *opt, int argc, const char *argv[])
 	  opt->best_within = false;
 	} else if (strcmp(argv[i], "--quiet") == 0) {
 	  opt->quiet = true;
+	} else if (strcmp(argv[i], "--clear-cache") == 0) {
+	  opt->clear_cache = true;
 	} else {
 	  fprintf(stderr, "ERROR: Option unkown: %s.\n",
 		  argv[i]);
@@ -214,6 +217,16 @@ static unsigned integer_sqrt(unsigned n)
   return result;
 }
 
+static void
+clear_cache(unsigned long n)
+{
+  volatile char *p = malloc(n);
+  if (!p) abort();
+  for(unsigned long i = 0; i < n ; i++)
+    p[i] = rand_get();
+  free((void*)p);
+}
+
 void
 test(const char library[], size_t n, const config_func_t functions[], int argc, const char *argv[])
 {
@@ -255,6 +268,7 @@ test(const char library[], size_t n, const config_func_t functions[], int argc, 
 
       // Measure the time of the test_function
       for(unsigned r = 0; r < arg.repeat; r++) {
+        if (arg.clear_cache) clear_cache(100*1024*1024);          
 	double t0 = test_function( (arg.graph|arg.best|arg.average|arg.quiet) ? NULL : functions[i].funcname, (size_t) n, functions[i].func);
 	best = (t0 < best) ? t0 : best;
 	avg += t0;
@@ -281,7 +295,12 @@ test(const char library[], size_t n, const config_func_t functions[], int argc, 
       
       // Print the result
       if (arg.graph) {
-	fprintf(graph_file, "%f %f\n", n, arg.average ? avg : arg.best ? best : ba);
+        if (arg.from == arg.to) {
+          for(unsigned r = 0; r < arg.repeat; r++)
+            fprintf(graph_file, "%f %f\n", (double) r, measure[r]);
+        } else {
+          fprintf(graph_file, "%f %f\n", n, arg.average ? avg : arg.best ? best : ba);
+        }
       } else if (arg.quiet) {
 	printf("%ld\n", (long)(arg.average ? avg : arg.best ? best : reliable ? ba : -1));
       } else if (arg.repeat > 1) {
