@@ -220,7 +220,7 @@ static unsigned integer_sqrt(unsigned n)
 static void
 clear_cache(unsigned long n)
 {
-  volatile char *p = malloc(n);
+  volatile char *p = (volatile char *) malloc(n);
   if (!p) abort();
   for(unsigned long i = 0; i < n ; i++)
     p[i] = rand_get();
