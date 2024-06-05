@@ -49,6 +49,7 @@ distclean: clean
 	$(RM) C-Macro-Collections
 	$(RM) Collections-C
 	$(RM) CC
+	($RM) klib
 
 mlib:
 	git clone https://github.com/P-p-H-d/mlib.git
@@ -68,6 +69,9 @@ Collections-C:
 CC:
 	git clone https://github.com/JacksonAllan/CC.git
 
+klib:
+	git clone https://github.com/attractivechaos/klib.git
+
 ###########################################################
 # 		Build external Libraries
 ###########################################################
@@ -85,7 +89,8 @@ Collections-C/src/libCollections-C.a: Collections-C
 
 array: array-mpz-mlib.exe array-mpz-stc.exe array-mpz-ctl.exe array-mpz-cmc.exe array-mpz-stl.exe array-mpz-collectionsC.exe array-mpz-CC.exe \
        array-int-mlib.exe array-int-stc.exe array-int-ctl.exe array-int-cmc.exe array-int-stl.exe array-int-collectionsC.exe array-int-CC.exe \
-       array-str-mlib.exe array-str-stc.exe array-str-ctl.exe array-str-cmc.exe array-str-stl.exe array-str-collectionsC.exe array-str-CC.exe  
+       array-str-mlib.exe array-str-stc.exe array-str-ctl.exe array-str-cmc.exe array-str-stl.exe array-str-collectionsC.exe array-str-CC.exe  \
+	array-mpz-klib.exe array-int-klib.exe array-str-klib.exe
 
 array-mpz-stl.exe: array-mpz/array-stl.cc
 	$(CXX) $(CFLAGS) $< -o $@ -lgmpxx $(LDFLAGS)
@@ -149,6 +154,15 @@ array-int-CC.exe: array-int/array-CC.c CC
 
 array-str-CC.exe: array-str/array-CC.c CC 
 	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
+
+array-mpz-klib.exe: array-mpz/array-klib.c klib
+	$(CC) $(CFLAGS) -Iklib $< -o $@ $(LDFLAGS)
+
+array-int-klib.exe: array-int/array-klib.c klib
+	$(CC) $(CFLAGS) -Iklib $< -o $@ $(LDFLAGS)
+
+array-str-klib.exe: array-str/array-klib.c klib
+	$(CC) $(CFLAGS) -Iklib $< -o $@ $(LDFLAGS)
 
 
 

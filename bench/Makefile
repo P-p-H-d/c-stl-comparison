@@ -67,6 +67,7 @@ STC=../STC/
 CTL=../ctl
 CCLIB=../CC
 COLLECTIONC=../Collections-C
+KLIB=../klib
 
 #########################################################################
 
@@ -153,10 +154,10 @@ bench-glib0:
 
 # KLIB shall point to the directory where the headers are
 bench-klib:
-	@if test -n "$${KLIB}" ; then $(MAKE) bench-klib0 ; else echo "Nothing to be done for KLIB." ; fi
+	@if test -n "$(KLIB)" ; then $(MAKE) bench-klib0 ; else echo "Nothing to be done for KLIB." ; fi
 
 bench-klib0:
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $${KLIB} bench-klib.c common.c -o bench-klib.exe
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(KLIB) bench-klib.c common.c -o bench-klib.exe
 	@./bench-klib.exe 10
 	@./bench-klib.exe 20
 	@./bench-klib.exe 30
