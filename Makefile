@@ -49,7 +49,7 @@ distclean: clean
 	$(RM) C-Macro-Collections
 	$(RM) Collections-C
 	$(RM) CC
-	($RM) klib
+	$(RM) klib
 
 mlib:
 	git clone https://github.com/P-p-H-d/mlib.git
