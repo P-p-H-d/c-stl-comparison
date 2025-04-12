@@ -3,16 +3,16 @@
 
 static int str_cmp(const void *a, const void *b)
 {
-  const char *const *ap = a;
-  const char *const *bp = b;
-  return strcmp(*ap, *bp);
+  str(char) const *ap = a;
+  str(char) const *bp = b;
+  return strcmp(first(ap), first(bp));
 }
 
 int main( void )
 {
-  vec( const char * ) our_vec;
+  vec( str( char ) ) our_vec;
   init( &our_vec );
-  const char **p = push( &our_vec, "World" );
+  void *p = push( &our_vec, "World" );
   if (!p) {
     abort();
   }
@@ -26,7 +26,7 @@ int main( void )
   }
   qsort( get(&our_vec, 0), size(&our_vec), sizeof (const char *), str_cmp);   // LIMITATION: No Sort function
   for_each(&our_vec, ptr) {
-    printf("%s\n", *ptr);
+    printf("%s\n", first(ptr));
   }
   cleanup( &our_vec );
   return 0;
