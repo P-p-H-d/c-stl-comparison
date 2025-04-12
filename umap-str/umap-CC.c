@@ -3,7 +3,7 @@
 
 int main( void )
 {
-  map(char *, char *) map;
+  map(str(char), str(char)) map;
   init( &map );
   if (!insert(&map, "Hello", "LIB")) {
     abort();
@@ -14,12 +14,12 @@ int main( void )
   if (!insert(&map, "Sincerely", "Your map")) {
     abort();
   }
-  char* *it = get(&map, "Welcome");
+  str(char) *it = get(&map, "Welcome");
   if (it != NULL) {
-    printf("Value of Welcome is %s\n", *it);
+    printf("Value of Welcome is %s\n", first(it));
   }
   for_each(&map, key, value) {
-    printf("%s -> %s\n", *key, *value);
+    printf("%s -> %s\n", first(key), first(value));
   }
   cleanup( &map );
   return 0;
