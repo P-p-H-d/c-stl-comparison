@@ -13,30 +13,32 @@ typedef struct {
 #define i_keyclone(z)  __extension__ ({ mpz_z Z; mpz_init_set(Z.Z, (z).Z); Z; })  // WORKAROUND: needs to use GNU C extension or static inline functions to match GMP prototype.
 #define i_keyraw       unsigned long int
 #define i_keyfrom(ui)  __extension__ ({ mpz_z Z; mpz_init_set_ui(Z.Z, (ui)); Z; })
-#define i_keyto(z)     mpz_get_ui((z)->Z)
-#include <stc/cvec.h>
+#define i_keytoraw(z)  mpz_get_ui((z)->Z)
+#include <stc/vec.h>
 
 #include <stc/algorithm.h>
 
 int main(void)
 {
-  c_auto(array_mpz, vec) {
-    mpz_z *p = array_mpz_emplace(&vec, 17);
-    if (!p) {
-      abort();
-    }
-    p = array_mpz_emplace(&vec, 42);
-    if (!p) {
-      abort();
-    }
-    p = array_mpz_emplace(&vec, 9);
-    if (!p) {
-      abort();
-    }
-    array_mpz_sort(&vec);
-    c_foreach (item, array_mpz, vec) {
-      gmp_printf("%Zd\n", item.ref->Z);
-    }
+  array_mpz vec = { 0};
+  
+  mpz_z *p = array_mpz_emplace(&vec, 17);
+  if (!p) {
+    abort();
   }
+  p = array_mpz_emplace(&vec, 42);
+  if (!p) {
+    abort();
+  }
+  p = array_mpz_emplace(&vec, 9);
+  if (!p) {
+    abort();
+  }
+  array_mpz_sort(&vec);
+  for (c_each (item, array_mpz, vec)) {
+    gmp_printf("%Zd\n", item.ref->Z);
+  }
+  array_mpz_drop(&vec);
+  
   return 0;
 }
