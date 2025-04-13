@@ -3,7 +3,7 @@
 The goal of this project is to compare several C libraries
 that provide some STL like capabilities of the C++ (container template) but are targeting classic C language.
 A STL like library for C is a C library providing several classic generic containers for the C language,
-like vector, list, map, unordered_map, and so on.
+like vector, list, sorted set, unordered_map, and so on.
 
 A small benchmark to compare their performance is includes in the bench directory.
 
@@ -161,12 +161,12 @@ The following characteristics are used to compare the different C libraries. The
 
 | Comparison programs               | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     |  GLIB  |
 |-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|--------|
-| int:number of characters          | 236       | 370    | 480     | 1011    | 593   | 874          | 604    | 696    |
-| int:number of line of codes       | 12        | 16     | 26      | 36      | 22    | 35           | 30     | 38     |
+| int:number of characters          | 236       | 370    | 558     | 1011    | 593   | 885          | 611    | 696    |
+| int:number of line of codes       | 12        | 16     | 28      | 36      | 22    | 35           | 31     | 36     |
 | int:number of workarounds         | 0         | 0      | 0       | 2       | 2     | 1            | 1      | 0      |
-| mpz:number of characters          | 261       | 500    | 1152    | 1859    | 1456  | 1288         | 1108   | 840    |
-| mpz:number of line of codes       | 13        | 18     | 36      | 52      | 37    | 58           | 39     | 47     |
-| mpz:number of workarounds         | 0         | 0      | 3       | 8       | 6     | 1            | 2      | 0      |
+| mpz:number of characters          | 261       | 500    | 1222    | 1740    | 1407  | 1337         | 1120   | 840    |
+| mpz:number of line of codes       | 13        | 18     | 37      | 52      | 37    | 58           | 40     | 45     |
+| mpz:number of workarounds         | 0         | 0      | 3       | 7       | 5     | 1            | 2      | 0      |
 
 | Containers                        | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     | GLIB |
 |-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|------|
