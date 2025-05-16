@@ -10,12 +10,6 @@
 #include <sys/time.h>
 
 #include "m-array.h"
-#include "m-list.h"
-#include "m-rbtree.h"
-#include "m-dict.h"
-#include "m-algo.h"
-#include "m-mempool.h"
-#include "m-string.h"
 
 unsigned long g_result;
 
