@@ -11,12 +11,11 @@
 #include "m-deque.h"
 #include "m-dict.h"
 #include "m-algo.h"
-#include "m-mempool.h"
 #include "m-string.h"
 #include "m-buffer.h"
 #include "m-thread.h"
 #include "m-deque.h"
-#include "m-concurrent.h"
+#include "m-shared-ptr.h"
 #include "m-tuple.h"
 #include "m-serial-bin.h"
 #include "m-serial-json.h"
@@ -64,18 +63,10 @@ static void test_deque(size_t n)
 
 /********************************************************************************************/
 
-// Two benched mode: with or without mempool
-#ifdef USE_MEMPOOL
-LIST_DEF(list_uint, unsigned int, (MEMPOOL( list_mpool), MEMPOOL_LINKAGE(static)))
-#else
 LIST_DEF(list_uint, unsigned int)
-#endif
 
 static void test_list (size_t n)
 {
-#ifdef USE_MEMPOOL
-  list_uint_mempool_init(list_mpool);
-#endif
   M_LET(a1, a2, LIST_OPLIST(list_uint)) {
     for(size_t i = 0; i < n; i++) {
       list_uint_push_back(a1, rand_get() );
@@ -88,25 +79,14 @@ static void test_list (size_t n)
     }
     g_result = s;
   }
-#ifdef USE_MEMPOOL
-  list_uint_mempool_clear(list_mpool);
-#endif
 }
 
 /********************************************************************************************/
 
-// Two benched mode: with or without mempool
-#ifdef USE_MEMPOOL
-LIST_DUAL_PUSH_DEF(dlist_uint, unsigned int, (MEMPOOL( dlist_mpool), MEMPOOL_LINKAGE(static)))
-#else
 LIST_DUAL_PUSH_DEF(dlist_uint, unsigned int)
-#endif
 
 static void test_dlist (size_t n)
 {
-#ifdef USE_MEMPOOL
-  dlist_uint_mempool_init(dlist_mpool);
-#endif
   M_LET(a1, a2, LIST_OPLIST(dlist_uint)) {
     for(size_t i = 0; i < n; i++) {
       dlist_uint_push_back(a1, rand_get() );
@@ -119,24 +99,14 @@ static void test_dlist (size_t n)
     }
     g_result = s;
   }
-#ifdef USE_MEMPOOL
-  dlist_uint_mempool_clear(dlist_mpool);
-#endif
 }
 
 /********************************************************************************************/
 
-#ifdef USE_MEMPOOL
-RBTREE_DEF(rbtree_ulong, unsigned long, (MEMPOOL( rbtree_mpool), MEMPOOL_LINKAGE(static)))
-#else
 RBTREE_DEF(rbtree_ulong, unsigned long)
-#endif
 
 static void test_rbtree(size_t n)
 {
-#ifdef USE_MEMPOOL
-  rbtree_ulong_mempool_init(rbtree_mpool);
-#endif
   M_LET(tree, RBTREE_OPLIST(rbtree_ulong)) {
     for (size_t i = 0; i < n; i++) {
       rbtree_ulong_push(tree, rand_get());
@@ -150,9 +120,6 @@ static void test_rbtree(size_t n)
     }
     g_result = s;
   }
-#ifdef USE_MEMPOOL
-  rbtree_ulong_mempool_clear(rbtree_mpool);
-#endif
 }
 
 /********************************************************************************************/
@@ -178,18 +145,11 @@ static void test_bptree(size_t n)
 
 /********************************************************************************************/
 
-#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 72
-DICT_DEF2(dict_ulong, unsigned long, M_OPEXTEND(M_DEFAULT_OPLIST, MEMPOOL(dict_mpool), MEMPOOL_LINKAGE(static)), unsigned long, M_DEFAULT_OPLIST)
-#else
 DICT_DEF2(dict_ulong, unsigned long, M_DEFAULT_OPLIST, unsigned long, M_DEFAULT_OPLIST)
-#endif
 
 static void
 test_dict(size_t  n)
 {
-#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 72
-  dict_ulong_list_pair_mempool_init(dict_mpool);
-#endif
   M_LET(dict, DICT_OPLIST(dict_ulong)) {
     for (size_t i = 0; i < n; i++) {
       unsigned long value = rand_get();
@@ -205,9 +165,6 @@ test_dict(size_t  n)
     }
     g_result = s;
   }
-#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 72
-  dict_ulong_list_pair_mempool_clear(dict_mpool);
-#endif
 }
 
 /********************************************************************************************/
@@ -308,21 +265,14 @@ static bool char_equal_p (const char_array_t a, const char_array_t b) { return s
 static size_t char_hash(const char_array_t a) { return m_core_hash (a, strlen(a)); }
 static bool char_oor_equal_p(const char_array_t a, unsigned char n) { return a[0] == 1+n; }
 static void char_oor_set(char_array_t a, unsigned char n) { a[0] = 1+n; }
-#define M_OPL_char_array_t() (INIT(char_init), INIT_SET(char_set), SET(char_set), CLEAR(char_init), HASH(char_hash), EQUAL(char_equal_p), OOR_EQUAL(char_oor_equal_p), OOR_SET(char_oor_set))
+#define M_OPL_char_array_t() (INIT(char_init), INIT_SET(char_set), SET(char_set), CLEAR(char_init), HASH(char_hash), EQUAL(char_equal_p), OOR_EQUAL(char_oor_equal_p), OOR_SET(char_oor_set), INIT_MOVE(char_set) )
 
-#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 72
-DICT_STOREHASH_DEF2(dict_char, char_array_t, M_OPEXTEND(M_OPL_char_array_t(),MEMPOOL(dict_mpool2), MEMPOOL_LINKAGE(static)), char_array_t, M_OPL_char_array_t())
-#else
-DICT_STOREHASH_DEF2(dict_char, char_array_t, M_OPL_char_array_t(), char_array_t, M_OPL_char_array_t())
-#endif
+DICT_DEF2(dict_char, char_array_t, M_OPL_char_array_t(), char_array_t, M_OPL_char_array_t())
 
 
 static void
 test_dict_big(size_t  n)
 {
-#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 72
-  dict_char_list_pair_mempool_init(dict_mpool2);
-#endif
   M_LET(dict, DICT_OPLIST(dict_char)) {
     for (size_t i = 0; i < n; i++) {
       char_array_t s1, s2;
@@ -341,9 +291,6 @@ test_dict_big(size_t  n)
     }
     g_result = s;
   }
-#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 72
-  dict_char_list_pair_mempool_clear(dict_mpool2);
-#endif
 }
 
 DICT_OA_DEF2(dict_oa_char, char_array_t, char_array_t)
@@ -373,18 +320,11 @@ test_dict_oa_big(size_t  n)
 
 /********************************************************************************************/
 
-#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 72
-DICT_DEF2(dict_str, string_t, M_OPEXTEND(STRING_OPLIST, MEMPOOL(dict_mpool3), MEMPOOL_LINKAGE(static)), string_t, STRING_OPLIST)
-#else
 DICT_DEF2(dict_str, string_t, STRING_OPLIST, string_t, STRING_OPLIST)
-#endif
 
 static void
 test_dict_str(size_t  n)
 {
-#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 72
-  dict_str_list_pair_mempool_init(dict_mpool3);
-#endif
   M_LET(s1, s2, STRING_OPLIST)
   M_LET(dict, DICT_OPLIST(dict_str)) {
     for (size_t i = 0; i < n; i++) {
@@ -402,9 +342,6 @@ test_dict_str(size_t  n)
     }
     g_result = s;
   }
-#if defined(USE_MEMPOOL) && (M_CORE_VERSION_MAJOR *100+ M_CORE_VERSION_MINOR *10+ M_CORE_VERSION_PATCHLEVEL) <= 72
-  dict_str_list_pair_mempool_clear(dict_mpool3);
-#endif
 }
 
 /********************************************************************************************/
@@ -438,10 +375,10 @@ static void test_stable_sort(size_t n)
 
 #define SIZE_LIMIT (UINT_MAX/2)
 
-BUFFER_DEF(buffer_uint, unsigned int, 0, BUFFER_QUEUE|BUFFER_BLOCKING)
+BUFFER_DEF(buffer_uint, unsigned int, 0, BUFFER_QUEUE)
 buffer_uint_t g_buff_lock;
 
-BUFFER_DEF(buffer_ull, unsigned long long, 0, BUFFER_QUEUE|BUFFER_BLOCKING)
+BUFFER_DEF(buffer_ull, unsigned long long, 0, BUFFER_QUEUE)
 buffer_ull_t g_final_lock;
 
 static void final_lock(void *arg)
@@ -778,13 +715,13 @@ static void test_queue_single_bulk(size_t n)
 
 /********************************************************************************************/
 
-CONCURRENT_DEF(cdeque_uint, deque_uint_t, M_OPEXTEND(DEQUE_OPLIST(deque_uint, M_DEFAULT_OPLIST), PUSH(deque_uint_push_front)))
+SHARED_PTR_DEF(cdeque_uint, deque_uint_t, DEQUE_OPLIST(deque_uint, M_DEFAULT_OPLIST) )
 
 DEQUE_DEF(deque_ull, unsigned long long)
-CONCURRENT_DEF(cdeque_ull, deque_ull_t, M_OPEXTEND(DEQUE_OPLIST(deque_ull, M_DEFAULT_OPLIST), PUSH(deque_ull_push_front)))
+SHARED_PTR_DEF(cdeque_ull, deque_ull_t, DEQUE_OPLIST(deque_ull, M_DEFAULT_OPLIST) )
 
-cdeque_uint_t g_buff_conc;
-cdeque_ull_t g_final_conc;
+cdeque_uint_t *g_buff_conc;
+cdeque_ull_t *g_final_conc;
 
 static void final_conc(void *arg)
 {
@@ -792,7 +729,7 @@ static void final_conc(void *arg)
   size_t    n = *p_n;
   unsigned long long j, s = 0;
   for(int i = 0; i < n;i++) {
-    cdeque_ull_pop_blocking(&j, g_final_conc, true);
+    cdeque_ull_pop(&j, g_final_conc);
     s += j;
   }
   g_result = s;
@@ -805,7 +742,7 @@ static void conso_conc(void *arg)
   size_t n = *p_n;
   unsigned long long s = 0;
   for(int i = 0; i < n;i++) {
-    cdeque_uint_pop_blocking(&j, g_buff_conc, true);
+    cdeque_uint_pop(&j, g_buff_conc);
     s += j;
   }
   cdeque_ull_push(g_final_conc, s);
@@ -833,8 +770,8 @@ static void test_queue_concurrent(size_t n)
   }
   n = n > SIZE_LIMIT ? n - SIZE_LIMIT : n;
   // Init
-  cdeque_uint_init(g_buff_conc);
-  cdeque_ull_init (g_final_conc);
+  g_buff_conc = cdeque_uint_new();
+  g_final_conc = cdeque_ull_new();
 
   // Create thread
   m_thread_t idx_p[prod_count];

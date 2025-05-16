@@ -39,7 +39,7 @@ pgo:
 
 #########################################################################
 
-container: bench-mlib bench-mlib-mempool bench-stl bench-qt bench-glib bench-klib bench-libdynamic bench-cmc bench-sparsepp bench-densehashmap bench-collectionc bench-tommyds bench-flathashmap bench-emilib bench-emhash bench-hopscotchmap bench-uthash bench-qlibc bench-libsrt bench-nedtries bench-rigtorp-hashmap bench-ctl bench-stc bench-pottery bench-CC
+container: bench-mlib bench-stl bench-qt bench-glib bench-klib bench-libdynamic bench-cmc bench-sparsepp bench-densehashmap bench-collectionc bench-tommyds bench-flathashmap bench-emilib bench-emhash bench-hopscotchmap bench-uthash bench-qlibc bench-libsrt bench-nedtries bench-rigtorp-hashmap bench-ctl bench-stc bench-pottery bench-CC
 	@echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
 queue: bench-mlib-thread bench-liblfds bench-concurrentqueue bench-boost bench-rigtorp-mpmc-queue
@@ -87,22 +87,6 @@ bench-mlib: pre-bench
 	@./bench-mlib.exe 43
 	@./bench-mlib.exe 50
 	@./bench-mlib.exe 51
-
-bench-mlib-mempool:
-	$(CC) $(CFLAGS) $(CPPFLAGS) -I $(MLIB) bench-mlib.c common.c -DUSE_MEMPOOL -pthread -o bench-mlib-mempool.exe
-	@./bench-mlib-mempool.exe 10
-	@./bench-mlib-mempool.exe 11
-	@./bench-mlib-mempool.exe 20
-	@./bench-mlib-mempool.exe 30
-	@./bench-mlib-mempool.exe 31
-	@./bench-mlib-mempool.exe 40
-	@./bench-mlib-mempool.exe 41
-	@./bench-mlib-mempool.exe 42
-	@./bench-mlib-mempool.exe 46
-	@./bench-mlib-mempool.exe 47
-	@./bench-mlib-mempool.exe 43
-	@./bench-mlib-mempool.exe 50
-	@./bench-mlib-mempool.exe 51
 
 bench-mlib-thread:
 	$(CC) $(CFLAGS) $(CPPFLAGS) -I $(MLIB) bench-mlib.c common.c -DMULTI_THREAD_MEASURE -pthread -o bench-mlib-thread.exe
