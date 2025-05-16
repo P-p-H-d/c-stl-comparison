@@ -29,9 +29,9 @@ N=4
 BENCH_DEF=
 RM=rm -rf
 
-.PHONY: all pgo container queue mempool string plain bench-mlib bench-mlib-mempool bench-stl bench-qt bench-glib bench-klib bench-libdynamic bench-sparsepp bench-collectionc bench-tommyds bench-flathashmap bench-emilib bench-emhash bench-hopscotchmap bench-mlib-thread bench-liblfds bench-concurrentqueue bench-boost bench-mempool bench-string bench-plain bench-rigtorp-mpmc-queue bench-cmc
+.PHONY: all pgo container queue string plain bench-mlib bench-stl bench-qt bench-glib bench-klib bench-libdynamic bench-sparsepp bench-collectionc bench-tommyds bench-flathashmap bench-emilib bench-emhash bench-hopscotchmap bench-mlib-thread bench-liblfds bench-concurrentqueue bench-boost bench-string bench-plain bench-rigtorp-mpmc-queue bench-cmc
 
-all: container queue mempool string plain
+all: container queue string plain
 
 pgo:
 	$(MAKE) all XCFLAGS="-fprofile-generate=pgo"
@@ -43,9 +43,6 @@ container: bench-mlib bench-stl bench-qt bench-glib bench-klib bench-libdynamic 
 	@echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
 queue: bench-mlib-thread bench-liblfds bench-concurrentqueue bench-boost bench-rigtorp-mpmc-queue
-	@echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-
-mempool: bench-mempool
 	@echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
 string: bench-string
@@ -417,14 +414,6 @@ bench-plain:
 
 ############################################################################
 
-bench-mempool:
-	@if test -n "$${BOOST}" ; then if test -n "$${GLIB}" ; then make bench-mempool0 BENCH_DEF="-DUSE_BOOST -DUSE_GLIB `pkg-config --libs --cflags glib-2.0` -lboost_system"  ; else make bench-mempool0 BENCH_DEF="-DUSE_BOOST -lboost_system" ; fi ; else if test -n "$${GLIB}" ; then make bench-mempool0 BENCH_DEF="-DUSE_GLIB `pkg-config --libs --cflags glib-2.0`"  ; else make bench-mempool0 ; fi ; fi
-bench-mempool0:
-	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) pool.cc  $(BENCH_DEF) -o bench-mempool.exe
-	@./bench-mempool.exe
-
-############################################################################
-
 bench-maxdict:
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) max-dict.c -o bench-max-dict.exe
 	@./bench-max-dict.exe
@@ -487,7 +476,6 @@ clean:
 
 massif-do: all
 	@valgrind --tool=massif ./bench-mlib.exe $(N)
-	@valgrind --tool=massif ./bench-mlib-mempool.exe $(N)
 	@valgrind --tool=massif ./bench-stl.exe $(N)
 	@valgrind --tool=massif ./bench-qt.exe $(N)
 	@valgrind --tool=massif ./bench-glib.exe $(N)
