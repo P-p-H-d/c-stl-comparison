@@ -89,13 +89,13 @@ The following characteristics are used to compare the different C libraries. The
 * Is-it type safe (aka. using an incompatible type produces at least a compilation warning)?
 * support of integer/floats as basic type,
 * support of struct POD data as basic type,
-* containers don't steal ownership of object given as parameter by default (passing an object data to a container will create a proper copy of the object data as per the object semantic),
-* support of optional move semantics, 
 * support of array as basic type,
 * support of object like data (needing custom constructor, destructor...) as basic type,
 * support of C++ class as basic type,
+* support of copy semantics: containers don't steal the ownership of the object given as parameter (passing an object data to a container will create a proper copy of the object data as per the object semantic),
+* support of move semantics: containers steal the ownership of the object given as parameter,
 * container / basic type spatial separation: the association of the methods of the basic type to the needed operators of the container library can be defined when the basic type is defined (ensuring spatial coherency of the basic type) and not only when the container is defined,
-* support of API Interface Adapter to transform the interface of the provided method to the expected interface of the operator, 
+* support of an adaptation layer to transform the interface of the provided method to the expected interface of the operator, 
 * support of basic 'emplace'
 * support of multiple, enhanced 'emplace' based on the initialized arguments,
 * support of iterator abstraction
@@ -108,14 +108,12 @@ The following characteristics are used to compare the different C libraries. The
 * basic type is stored in the array, not a pointer to it.
 * don't need explicit instanciation of the array with the basic type,
 * functions are properly prefixed,
-* memory error handling (return code, exception, abort, none)
+* error handling (return code, exception, abort, none)
 * On exception, destructors of objects on stack are properly called.
 * custom memory functions
 * optional per-container context for custom memory functions
 * support of forward declaration of container
-* support of serialization
-* support of JSON serialization
-* support of XML serialization
+* support of serialization (JSON, XML)
 
 
 # Synthesis
@@ -129,13 +127,13 @@ The following characteristics are used to compare the different C libraries. The
 | type safe                         | Y         | Y      | Y       | Y       | Y     | N            | Y*     | N      |
 | integer/float support             | Y         | Y      | Y       | Y       | Y     | Y            | Y      | Y*     |
 | struct POD support                | Y         | Y      | Y       | Y       | Y     | N            | Y      | Y*     |
-| No default steal of ownership     | Y         | Y      | Y       | N       | N     | Y            | N      | Y      |
-| Optional move semantics           | Y         | Y      | N       | N       | N     | N            | N      | N      |
 | C++ class support                 | Y         | Y      | N       | N       | N     | N            | N      | N      |
 | C object support                  | Y         | Y      | Y       | Y       | Y     | N            | Y      | Y*     |
+| Copy semantics                    | Y         | Y      | N       | N       | N     | Y            | N      | Y      |
+| Move semantics                    | Y         | Y      | Y       | Y       | Y     | N            | Y      | N      |
 | container/basic spatial separation | Y        | Y      | N       | N       | N     | NA           | Y      | NA     |
-| API Interface Adaptator           | N         | Y      | N       | N       | N     | N            | N      | N      |
-| basic emplace support             | Y         | Y      | Y       | N       | N     | N            | N      | N      |
+| Adaptator Layer                   | N         | Y      | N       | N       | N     | N            | N      | N      |
+| Basic emplace support             | Y         | Y      | Y       | N       | N     | N            | N      | N      |
 | Enhance emplace support           | Y         | Y      | N       | N       | N     | N            | N      | N      |
 | Iterator support                  | Y         | Y      | Y       | N       | Y     | Y            | Y      | N      |
 | Sort algorithm                    | Y         | Y      | Y       | N       | Y     | Y            | N      | Y      |
@@ -150,11 +148,9 @@ The following characteristics are used to compare the different C libraries. The
 | memory handling                   | exception | abort, exception | retcode | retcode | none|retcode |retcode|retcode|
 | destructors on exception          | Y         | Y*     | NA      | NA      | NA    | NA           | NA     | N      |
 | custom memory support             | Y         | Y      | Y       | Y       | N     | Y            | Y      | N      |
-| context for custom memory support | N         | N      | Y       | N       | N     | N            | N      | N      |
+| context for custom memory support | N         | Y      | Y       | N       | N     | N            | N      | N      |
 | Forward declaration support       | N         | N      | Y       | N       | N     | N            | N      | N      |
-| Serialization                     | N         | Y      | N       | N       | N     | N            | N      | N      |
-| JSON Serialization                | N         | Y      | N       | N       | N     | N            | N      | N      |
-| XML Serialization                 | N         | N      | N       | N       | N     | N            | N      | N      |
+| Serialization                     | N         | JSON   | N       | N       | N     | N            | N      | N      |
 
 * C11*: means C11 + extension
 * Y*: Yes with some limitations.
@@ -203,6 +199,7 @@ The following characteristics are used to compare the different C libraries. The
 | flat_multimap                     | Y         | N      | N       | Y       | N     | N            | N      | N    |
 | unique_ptr                        | Y         | N      | Y       | N       | N     | N            | N      | N    |
 | shared_ptr                        | Y         | Y      | Y       | N       | N     | N            | N      | N    |
+| advanced shared_ptr               | N         | Y      | N       | N       | N     | N            | N      | N    |
 | weak_ptr                          | Y         | N      | N       | N       | N     | N            | N      | N    |
 | Function Object                   | Y         | Y      | N       | N       | N     | N            | N      | N    |
 | Span                              | Y         | N      | Y       | N       | N     | N            | N      | N    |
@@ -212,7 +209,6 @@ The following characteristics are used to compare the different C libraries. The
 | Atomic Shared Register MPSC       | N         | Y      | N       | N       | N     | N            | N      | N    |
 | Atomic Shared Register SPMC       | N         | Y      | N       | N       | N     | N            | N      | N    |
 | Atomic Shared Register MPMC       | N         | Y      | N       | N       | N     | N            | N      | N    |
-| concurrent<>                      | N         | Y      | N       | N       | N     | N            | N      | N    |
 | Skip List                         | N         | N      | N       | Y       | N     | N            | N      | N    |
 | Sorted Bidirectional Map          | N         | N      | N       | Y       | N     | N            | N      | N    |
 | Tree                              | N         | Y      | N       | N       | N     | N            | N      | N    |
