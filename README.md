@@ -251,6 +251,6 @@ do not hesitate to open a pull request.
 The [bench](https://github.com/P-p-H-d/c-stl-comparison/tree/master/bench)
 directory contains a small benchmark comparing
 the performance of different libraries.
-Results are available [here](https://github.com/P-p-H-d/mlib/wiki/performance)
+Results are available [here](https://github.com/P-p-H-d/c-stl-comparison/wiki/Benchmark-result)
 
 
