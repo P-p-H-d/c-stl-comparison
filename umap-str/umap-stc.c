@@ -4,10 +4,8 @@
 #include <stc/cstr.h>
 #include <stc/algorithm.h>
 
-#define i_type         umap_str
-#define i_key_str
-#define i_val_str
-#include <stc/hmap.h>
+#define T umap_str, cstr, cstr, (c_keypro | c_valpro)
+#include <stc/hashmap.h>
 
 int main(void)
 {
