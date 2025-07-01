@@ -50,6 +50,7 @@ distclean: clean
 	$(RM) Collections-C
 	$(RM) CC
 	$(RM) klib
+	$(RM) sc
 
 mlib:
 	git clone https://github.com/P-p-H-d/mlib.git
@@ -71,6 +72,9 @@ CC:
 
 klib:
 	git clone https://github.com/attractivechaos/klib.git
+
+sc:
+	git clone https://github.com/tezc/sc.git
 
 ###########################################################
 # 		Build external Libraries
