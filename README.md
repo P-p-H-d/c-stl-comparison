@@ -245,3 +245,12 @@ If you see any mistakes in this report,
 or want to include another C library,
 or want to include another point of comparison,
 do not hesitate to open a pull request.
+
+# Benchmark
+
+The [bench](https://github.com/P-p-H-d/c-stl-comparison/tree/master/bench)
+directory contains a small benchmark comparing
+the performance of different libraries.
+Results are available [here](https://github.com/P-p-H-d/mlib/wiki/performance)
+
+
