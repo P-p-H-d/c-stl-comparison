@@ -60,7 +60,7 @@ The program shall perform the following operations:
 
 The program shall perform the following operations:
 
-* declare a non-ordered associative array from int (resp. mpz_t, a string) to (resp. mpz_t, a string),
+* declare a non-ordered associative array from int (resp. mpz_t, a string) to int (resp. mpz_t, a string),
 * initialize this array with the association of signed integers values 17 to 4585, 42 to 4856 and -9 to 1452 (performing a conversion from signed integer to mpz_t for GMP) or the strings "Hello" to "LIB", "Welcome" to "Program" and "Sincerely" to "Your map" for strings,
 * search for the key "Hello" and display it if successful,
 * iterate the associative array to print the values.
