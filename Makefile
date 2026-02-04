@@ -43,49 +43,42 @@ clean:
 ###########################################################
 
 distclean: clean
-	$(RM) mlib
-	$(RM) STC
-	$(RM) ctl
-	$(RM) C-Macro-Collections
-	$(RM) Collections-C
-	$(RM) CC
-	$(RM) klib
-	$(RM) sc
+	$(RM) external
 
-mlib:
-	git clone https://github.com/P-p-H-d/mlib.git
+external/mlib:
+	mkdir -p external && cd external && git clone https://github.com/P-p-H-d/mlib.git
 
-STC:
-	git clone https://github.com/tylov/STC.git
+external/STC:
+	mkdir -p external && cd external && git clone https://github.com/tylov/STC.git
 
-ctl:
-	git clone https://github.com/rurban/ctl.git
+external/ctl:
+	mkdir -p external && cd external && git clone https://github.com/rurban/ctl.git
 
-C-Macro-Collections:
-	git clone https://github.com/LeoVen/C-Macro-Collections.git -b v0.25.0
+external/C-Macro-Collections:
+	mkdir -p external && cd external && git clone https://github.com/LeoVen/C-Macro-Collections.git -b v0.25.0
 
-Collections-C:
-	git clone https://github.com/srdja/Collections-C.git
+external/Collections-C:
+	mkdir -p external && cd external && git clone https://github.com/srdja/Collections-C.git
 
-CC:
-	git clone https://github.com/JacksonAllan/CC.git
+external/CC:
+	mkdir -p external && cd external && git clone https://github.com/JacksonAllan/CC.git
 
-klib:
-	git clone https://github.com/attractivechaos/klib.git
+external/klib:
+	mkdir -p external && cd external && git clone https://github.com/attractivechaos/klib.git
 
-sc:
-	git clone https://github.com/tezc/sc.git
+external/sc:
+	mkdir -p external && cd external && git clone https://github.com/tezc/sc.git
 
 ###########################################################
 # 		Build external Libraries
 ###########################################################
 
-Collections-C/src/libCollections-C.a: Collections-C
-	cd Collections-C/src && $(CC) $(CFLAGS) -Iinclude -c *.c
-	cd Collections-C/src && $(AR) $(ARFLAGS) libCollections-C.a *.o
+external/Collections-C/src/libCollections-C.a: external/Collections-C
+	cd external/Collections-C/src && $(CC) $(CFLAGS) -Iinclude -c *.c
+	cd external/Collections-C/src && $(AR) $(ARFLAGS) libCollections-C.a *.o
 	# Build optimized version
-	cd Collections-C/src && $(CC) -O2 -Wall -march=native -DNDEBUG -Iinclude -c *.c
-	cd Collections-C/src && $(AR) $(ARFLAGS) libCollections-C-fast.a *.o
+	cd external/Collections-C/src && $(CC) -O2 -Wall -march=native -DNDEBUG -Iinclude -c *.c
+	cd external/Collections-C/src && $(AR) $(ARFLAGS) libCollections-C-fast.a *.o
 
 ###########################################################
 # 		Build example for array
@@ -105,68 +98,68 @@ array-int-stl.exe: array-int/array-stl.cc
 array-str-stl.exe: array-str/array-stl.cc
 	$(CXX) $(CFLAGS) $< -o $@ -lgmpxx $(LDFLAGS)
 
-array-mpz-mlib.exe: array-mpz/array-mlib.c mlib 
-	$(CC) $(CFLAGS) -Imlib $< -o $@ $(LDFLAGS)
+array-mpz-mlib.exe: array-mpz/array-mlib.c external/mlib 
+	$(CC) $(CFLAGS) -Iexternal/mlib $< -o $@ $(LDFLAGS)
 
-array-int-mlib.exe: array-int/array-mlib.c mlib 
-	$(CC) $(CFLAGS) -Imlib $< -o $@ $(LDFLAGS)
+array-int-mlib.exe: array-int/array-mlib.c external/mlib 
+	$(CC) $(CFLAGS) -Iexternal/mlib $< -o $@ $(LDFLAGS)
 
-array-str-mlib.exe: array-str/array-mlib.c mlib 
-	$(CC) $(CFLAGS) -Imlib $< -o $@ $(LDFLAGS)
+array-str-mlib.exe: array-str/array-mlib.c external/mlib 
+	$(CC) $(CFLAGS) -Iexternal/mlib $< -o $@ $(LDFLAGS)
 
-array-mpz-stc.exe: array-mpz/array-stc.c STC 
-	$(CC) $(CFLAGS) -ISTC/include $< -o $@ $(LDFLAGS)
+array-mpz-stc.exe: array-mpz/array-stc.c external/STC 
+	$(CC) $(CFLAGS) -Iexternal/STC/include $< -o $@ $(LDFLAGS)
 
-array-int-stc.exe: array-int/array-stc.c STC 
-	$(CC) $(CFLAGS) -ISTC/include $< -o $@ $(LDFLAGS)
+array-int-stc.exe: array-int/array-stc.c external/STC 
+	$(CC) $(CFLAGS) -Iexternal/STC/include $< -o $@ $(LDFLAGS)
 
-array-str-stc.exe: array-str/array-stc.c STC 
-	$(CC) $(CFLAGS) -ISTC/include $< -o $@ $(LDFLAGS)
+array-str-stc.exe: array-str/array-stc.c external/STC 
+	$(CC) $(CFLAGS) -Iexternal/STC/include $< -o $@ $(LDFLAGS)
 
-array-mpz-ctl.exe: array-mpz/array-ctl.c ctl 
-	$(CC) $(CFLAGS) -Ictl/ $< -o $@ $(LDFLAGS)
+array-mpz-ctl.exe: array-mpz/array-ctl.c external/ctl 
+	$(CC) $(CFLAGS) -Iexternal/ctl/ $< -o $@ $(LDFLAGS)
 
-array-int-ctl.exe: array-int/array-ctl.c ctl 
-	$(CC) $(CFLAGS) -Ictl/ $< -o $@ $(LDFLAGS)
+array-int-ctl.exe: array-int/array-ctl.c external/ctl 
+	$(CC) $(CFLAGS) -Iexternal/ctl/ $< -o $@ $(LDFLAGS)
 
-array-str-ctl.exe: array-str/array-ctl.c ctl 
-	$(CC) $(CFLAGS) -Ictl/ $< -o $@ $(LDFLAGS)
+array-str-ctl.exe: array-str/array-ctl.c external/ctl 
+	$(CC) $(CFLAGS) -Iexternal/ctl/ $< -o $@ $(LDFLAGS)
 
-array-mpz-cmc.exe: array-mpz/array-cmc.c C-Macro-Collections 
-	$(CC) $(CFLAGS) -IC-Macro-Collections/src $< -o $@ $(LDFLAGS)
+array-mpz-cmc.exe: array-mpz/array-cmc.c external/C-Macro-Collections 
+	$(CC) $(CFLAGS) -Iexternal/C-Macro-Collections/src $< -o $@ $(LDFLAGS)
 
-array-int-cmc.exe: array-int/array-cmc.c C-Macro-Collections 
-	$(CC) $(CFLAGS) -IC-Macro-Collections/src $< -o $@ $(LDFLAGS)
+array-int-cmc.exe: array-int/array-cmc.c external/C-Macro-Collections 
+	$(CC) $(CFLAGS) -Iexternal/C-Macro-Collections/src $< -o $@ $(LDFLAGS)
 
-array-str-cmc.exe: array-str/array-cmc.c C-Macro-Collections 
-	$(CC) $(CFLAGS) -IC-Macro-Collections/src $< -o $@ $(LDFLAGS)
+array-str-cmc.exe: array-str/array-cmc.c external/C-Macro-Collections 
+	$(CC) $(CFLAGS) -Iexternal/C-Macro-Collections/src $< -o $@ $(LDFLAGS)
 
-array-mpz-collectionsC.exe: array-mpz/array-collectionsC.c Collections-C Collections-C/src/libCollections-C.a 
-	$(CC) $(CFLAGS) -ICollections-C/src/include $< -o $@ $(LDFLAGS) Collections-C/src/libCollections-C.a
+array-mpz-collectionsC.exe: array-mpz/array-collectionsC.c external/Collections-C/src/libCollections-C.a 
+	$(CC) $(CFLAGS) -Iexternal/Collections-C/src/include $< -o $@ $(LDFLAGS) external/Collections-C/src/libCollections-C.a
 
-array-int-collectionsC.exe: array-int/array-collectionsC.c Collections-C Collections-C/src/libCollections-C.a 
-	$(CC) $(CFLAGS) -ICollections-C/src/include $< -o $@ $(LDFLAGS) Collections-C/src/libCollections-C.a
+array-int-collectionsC.exe: array-int/array-collectionsC.c external/Collections-C/src/libCollections-C.a 
+	$(CC) $(CFLAGS) -Iexternal/Collections-C/src/include $< -o $@ $(LDFLAGS) external/Collections-C/src/libCollections-C.a
 
-array-str-collectionsC.exe: array-str/array-collectionsC.c Collections-C Collections-C/src/libCollections-C.a 
-	$(CC) $(CFLAGS) -ICollections-C/src/include $< -o $@ $(LDFLAGS) Collections-C/src/libCollections-C.a
+array-str-collectionsC.exe: array-str/array-collectionsC.c external/Collections-C/src/libCollections-C.a 
+	$(CC) $(CFLAGS) -Iexternal/Collections-C/src/include $< -o $@ $(LDFLAGS) external/Collections-C/src/libCollections-C.a
 
-array-mpz-CC.exe: array-mpz/array-CC.c CC 
-	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
+array-mpz-CC.exe: array-mpz/array-CC.c external/CC 
+	$(C11) $(CFLAGS) -Iexternal/CC $< -o $@ $(LDFLAGS)
 
-array-int-CC.exe: array-int/array-CC.c CC 
-	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
+array-int-CC.exe: array-int/array-CC.c external/CC 
+	$(C11) $(CFLAGS) -Iexternal/CC $< -o $@ $(LDFLAGS)
 
-array-str-CC.exe: array-str/array-CC.c CC 
-	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
+array-str-CC.exe: array-str/array-CC.c external/CC 
+	$(C11) $(CFLAGS) -Iexternal/CC $< -o $@ $(LDFLAGS)
 
-array-mpz-klib.exe: array-mpz/array-klib.c klib
-	$(CC) $(CFLAGS) -Iklib $< -o $@ $(LDFLAGS)
+array-mpz-klib.exe: array-mpz/array-klib.c external/klib
+	$(CC) $(CFLAGS) -Iexternal/klib $< -o $@ $(LDFLAGS)
 
-array-int-klib.exe: array-int/array-klib.c klib
-	$(CC) $(CFLAGS) -Iklib $< -o $@ $(LDFLAGS)
+array-int-klib.exe: array-int/array-klib.c external/klib
+	$(CC) $(CFLAGS) -Iexternal/klib $< -o $@ $(LDFLAGS)
 
-array-str-klib.exe: array-str/array-klib.c klib
-	$(CC) $(CFLAGS) -Iklib $< -o $@ $(LDFLAGS)
+array-str-klib.exe: array-str/array-klib.c external/klib
+	$(CC) $(CFLAGS) -Iexternal/klib $< -o $@ $(LDFLAGS)
 
 
 
@@ -187,59 +180,59 @@ umap-int-stl.exe: umap-int/umap-stl.cc
 umap-str-stl.exe: umap-str/umap-stl.cc
 	$(CXX) $(CFLAGS) $< -o $@ -lgmpxx $(LDFLAGS)
 
-umap-mpz-mlib.exe: umap-mpz/umap-mlib.c mlib 
-	$(CC) $(CFLAGS) -Imlib $< -o $@ $(LDFLAGS)
+umap-mpz-mlib.exe: umap-mpz/umap-mlib.c external/mlib 
+	$(CC) $(CFLAGS) -Iexternal/mlib $< -o $@ $(LDFLAGS)
 
-umap-int-mlib.exe: umap-int/umap-mlib.c mlib 
-	$(CC) $(CFLAGS) -Imlib $< -o $@ $(LDFLAGS)
+umap-int-mlib.exe: umap-int/umap-mlib.c external/mlib 
+	$(CC) $(CFLAGS) -Iexternal/mlib $< -o $@ $(LDFLAGS)
 
-umap-str-mlib.exe: umap-str/umap-mlib.c mlib 
-	$(CC) $(CFLAGS) -Imlib $< -o $@ $(LDFLAGS)
+umap-str-mlib.exe: umap-str/umap-mlib.c external/mlib 
+	$(CC) $(CFLAGS) -Iexternal/mlib $< -o $@ $(LDFLAGS)
 
-umap-mpz-stc.exe: umap-mpz/umap-stc.c STC 
-	$(CC) $(CFLAGS) -ISTC/include $< -o $@ $(LDFLAGS)
+umap-mpz-stc.exe: umap-mpz/umap-stc.c external/STC 
+	$(CC) $(CFLAGS) -Iexternal/STC/include $< -o $@ $(LDFLAGS)
 
-umap-int-stc.exe: umap-int/umap-stc.c STC 
-	$(CC) $(CFLAGS) -ISTC/include $< -o $@ $(LDFLAGS)
+umap-int-stc.exe: umap-int/umap-stc.c external/STC 
+	$(CC) $(CFLAGS) -Iexternal/STC/include $< -o $@ $(LDFLAGS)
 
-umap-str-stc.exe: umap-str/umap-stc.c STC 
-	$(CC) $(CFLAGS) -ISTC/include $< -o $@ $(LDFLAGS)
+umap-str-stc.exe: umap-str/umap-stc.c external/STC 
+	$(CC) $(CFLAGS) -Iexternal/STC/include $< -o $@ $(LDFLAGS)
 
-umap-mpz-ctl.exe: umap-mpz/umap-ctl.c ctl 
-	$(CC) $(CFLAGS) -Ictl/ $< -o $@ $(LDFLAGS)
+umap-mpz-ctl.exe: umap-mpz/umap-ctl.c external/ctl 
+	$(CC) $(CFLAGS) -Iexternal/ctl/ $< -o $@ $(LDFLAGS)
 
-umap-int-ctl.exe: umap-int/umap-ctl.c ctl 
-	$(CC) $(CFLAGS) -Ictl/ $< -o $@ $(LDFLAGS)
+umap-int-ctl.exe: umap-int/umap-ctl.c external/ctl 
+	$(CC) $(CFLAGS) -Iexternal/ctl/ $< -o $@ $(LDFLAGS)
 
-umap-str-ctl.exe: umap-str/umap-ctl.c ctl 
-	$(CC) $(CFLAGS) -Ictl/ $< -o $@ $(LDFLAGS)
+umap-str-ctl.exe: umap-str/umap-ctl.c external/ctl 
+	$(CC) $(CFLAGS) -Iexternal/ctl/ $< -o $@ $(LDFLAGS)
 
-umap-mpz-cmc.exe: umap-mpz/umap-cmc.c C-Macro-Collections 
-	$(CC) $(CFLAGS) -IC-Macro-Collections/src $< -o $@ $(LDFLAGS)
+umap-mpz-cmc.exe: umap-mpz/umap-cmc.c external/C-Macro-Collections 
+	$(CC) $(CFLAGS) -Iexternal/C-Macro-Collections/src $< -o $@ $(LDFLAGS)
 
-umap-int-cmc.exe: umap-int/umap-cmc.c C-Macro-Collections 
-	$(CC) $(CFLAGS) -IC-Macro-Collections/src $< -o $@ $(LDFLAGS)
+umap-int-cmc.exe: umap-int/umap-cmc.c external/C-Macro-Collections 
+	$(CC) $(CFLAGS) -Iexternal/C-Macro-Collections/src $< -o $@ $(LDFLAGS)
 
-umap-str-cmc.exe: umap-str/umap-cmc.c C-Macro-Collections 
-	$(CC) $(CFLAGS) -IC-Macro-Collections/src $< -o $@ $(LDFLAGS)
+umap-str-cmc.exe: umap-str/umap-cmc.c external/C-Macro-Collections 
+	$(CC) $(CFLAGS) -Iexternal/C-Macro-Collections/src $< -o $@ $(LDFLAGS)
 
-umap-mpz-collectionsC.exe: umap-mpz/umap-collectionsC.c Collections-C Collections-C/src/libCollections-C.a 
-	$(CC) $(CFLAGS) -ICollections-C/src/include $< -o $@ $(LDFLAGS) Collections-C/src/libCollections-C.a
+umap-mpz-collectionsC.exe: umap-mpz/umap-collectionsC.c external/Collections-C/src/libCollections-C.a 
+	$(CC) $(CFLAGS) -Iexternal/Collections-C/src/include $< -o $@ $(LDFLAGS) external/Collections-C/src/libCollections-C.a
 
-umap-int-collectionsC.exe: umap-int/umap-collectionsC.c Collections-C Collections-C/src/libCollections-C.a 
-	$(CC) $(CFLAGS) -ICollections-C/src/include $< -o $@ $(LDFLAGS) Collections-C/src/libCollections-C.a
+umap-int-collectionsC.exe: umap-int/umap-collectionsC.c external/Collections-C/src/libCollections-C.a 
+	$(CC) $(CFLAGS) -Iexternal/Collections-C/src/include $< -o $@ $(LDFLAGS) external/Collections-C/src/libCollections-C.a
 
-umap-str-collectionsC.exe: umap-str/umap-collectionsC.c Collections-C Collections-C/src/libCollections-C.a 
-	$(CC) $(CFLAGS) -ICollections-C/src/include $< -o $@ $(LDFLAGS) Collections-C/src/libCollections-C.a
+umap-str-collectionsC.exe: umap-str/umap-collectionsC.c external/Collections-C/src/libCollections-C.a 
+	$(CC) $(CFLAGS) -Iexternal/Collections-C/src/include $< -o $@ $(LDFLAGS) external/Collections-C/src/libCollections-C.a
 
-umap-mpz-CC.exe: umap-mpz/umap-CC.c CC 
-	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
+umap-mpz-CC.exe: umap-mpz/umap-CC.c external/CC 
+	$(C11) $(CFLAGS) -Iexternal/CC $< -o $@ $(LDFLAGS)
 
-umap-int-CC.exe: umap-int/umap-CC.c CC 
-	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
+umap-int-CC.exe: umap-int/umap-CC.c external/CC 
+	$(C11) $(CFLAGS) -Iexternal/CC $< -o $@ $(LDFLAGS)
 
-umap-str-CC.exe: umap-str/umap-CC.c CC 
-	$(C11) $(CFLAGS) -ICC $< -o $@ $(LDFLAGS)
+umap-str-CC.exe: umap-str/umap-CC.c external/CC 
+	$(C11) $(CFLAGS) -Iexternal/CC $< -o $@ $(LDFLAGS)
 
 
 ###########################################################
