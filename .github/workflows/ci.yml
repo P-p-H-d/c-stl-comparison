@@ -12,7 +12,7 @@ jobs:
     - name: Compiler Information
       run:  cc -v
     - name: Install dependencies
-      run:  sudo apt install libboost-dev
+      run:  sudo apt update && sudo apt install libboost-dev
     - name: make
       run: make
     - name: make bench
