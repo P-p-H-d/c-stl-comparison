@@ -77,6 +77,121 @@ to build then.
 Simply run "make" to perform a clone of the projects
 and generate the different executables.
 
+# Implementing generic code in C
+
+One of the main issue in the C language is how to write generic code, i.e. code that works the same for different kind of objects:
+you write once, and it works for several types.
+A kind of equivalent of the templates of the C++.
+
+There are several ways of doing so:
+
+## voidp: Everything is a pointer to void.
+
+Each object is handled through a pointer to void. The container store only pointers to theses objects.
+Potentially, it may also register some callback functions to handle the contained objects for the needed specialized methods (copy, drop, ...). 
+From a user point of view, this makes the code harder to use (as you don't have any help from the compiler) and type unsafe since a lot of cast is needed to handle it (so no formal proof of the code is possible). This also generally generate slower code (due to the multiple reduction, indirect callback, increase memory usage and cache miss) even if using link time optimization could reduce this a little. Properly used, it can yet be the most space efficient for the code, but can consume a lot more for the data due to the obligation of using pointers. This is however the easiest to design & code.
+
+Pros:
+
+* easy to develop,
+* reduced code.
+
+Cons:
+
+* slow code,
+* data memory usage,
+* hard to debug for user,
+* type unsafe.
+
+## macro: Everything is a macro
+
+Macros are used to access structures in a generic way (using known named fields of a structure — typically size, capacity, etc.). The macro is fully always expanded in the user code. From a user point of view, this can create subtle bugs in the use of the library (as everything is done through macro expansion in the user defined code) and hard to understand warnings. This can be mitigated using proper macros expansion and type checking, but it increases the complexity of the solution. This can generates fully efficient code. From a library developer point of view, this can be quite limiting in what you can offer.
+
+Pros:
+
+* easy to develop,
+* efficient code.
+
+Cons:
+
+* type unsafe,
+* error prone,
+* limited scope of what is possible
+
+## Generic objects
+
+The objects inherited from all the same base object. The base object has a virtual table that provides the callbacks to all the methods needed to handle such object.
+The generic code is a simple classic C code that handles only the base object: therefore it uses the provided callback in its vtable to handle the object for any operation.
+
+Another alternative of this is encapsulating the methods in macros that detect the type of the argument passed as parameter using _Generics, before calling the associated method according to the given type. The difficulty is how to add pure user types in this generic switch.
+
+Pros:
+
+* reduce code size
+* support different kind of objects in the same container
+
+Cons:
+
+* data memory usage
+* slow code
+* compiler usage
+* new operation requires rework of vtable
+
+## Intrusive container
+
+A known structure is put in an intrusive way in the type of all the objects you wan to handle. From a user point of view, he needs to modify its structure and has to perform all the allocation & deallocation code itself (which is good or bad depending on the context). This can generate efficient code (both in speed and size). From a library developer point of view, this is easy to design & code. You need internally a cast to go from a pointer to the known structure to the pointed object (a reverse of offsetof) that is generally type unsafe (except if mixed with the macro generating concept). This is quite limited in what you can do: you can't move your objects so any container that has to move some objects is out-of-question (which means that you cannot use the most efficient container).
+
+Pros:
+
+* reduce code size
+* efficient code
+
+Cons:
+
+* data memory usage
+* limited scope of what is possible
+
+## Template header
+
+Header files are included multiple times with different macro contexts (some different values given to defined macros) in order to generate different code for each type. From a user point of view, this creates a new step before using the container: an instantiating stage that has to be done once per type and per compilation unit (The user is responsible to create only one instance of the container, which can be troublesome if the library doesn't handle proper prefix for its naming convention) which generates functions with the correct type ensuring type safety and control by the compiler. The debug of the library is generally easy and can generate fully specialized & efficient code. Incorrectly used, this can generate a lot of code bloat. Properly used, this can even create smaller code than the void pointer variant. The interface used to configure the library can be quite tiresome in case of a lot of specialized methods to configure: it doesn't enable to chain the configuration from a container to another one easily. It also cannot have heavy customization of the code.
+
+Pros:
+
+* specialized & efficient code
+* type safe
+* easy to use for user
+* easy to develop and understand
+
+Cons:
+
+* Explicit instance needed
+* can generate code bloat if incorrectly used
+* more verbose
+
+## Template macros
+
+Macros are used to generate context-dependent C code enabling to generate code for different type. This is pretty much like the template headers solution but with added flexibility. From a user point of view, this creates a new step before using the container: an instantiating stage that has to be done once per type and per compilation unit (The user is responsible to create only one instance of the container, which can be troublesome if the library doesn't handle proper prefix for its naming convention). This can generate fully specialized & efficient code with the correct type ensuring type safety and control by the compiler. Incorrectly used, this can generate a lot of code bloat. Properly used, this can even create smaller code than the void pointer variant. From a library developer point of view, the library is harder to design and to debug: everything being expanded in one line, you can't step in the library (there is however a solution to overcome this limitation by adding another stage to the compilation process). This can also generates cryptic error messages at user level if incorrectly used. You can however see the generated code by looking at the preprocessed file. You can perform heavy context-dependent customization of the code (transforming the macro preprocessing step into its own language). Properly done, you can also chain the methods from a container to another one easily, enabling quick and easy expansion of the containers. Errors in code using containers are easy to read and natural.
+
+Pros:
+
+* specialized & efficient code
+* type safe
+* easy to use for user
+* maximum flexibility in code generation
+* maximum configuration possible
+
+Cons:
+
+* Explicit instance needed
+* can generate code bloat if incorrectly used
+* hard to debug for developer
+* can have cryptic error message if incorrectly used
+* more verbose
+
+## Mix
+
+Some mix of the previous solutions can also be chosen for a specific usage.
+For example, mixing the macro solution and the voidp solution can mitigates the Cons of both solution.
 
 # Analysis and synthesis
 
@@ -85,7 +200,7 @@ The following characteristics are used to compare the different C libraries. The
 * What is the supported C language (C89, C99, C11 or C23)?
 * Is it a pure C program (no need for external preprocessor)?
 * Is it a Header only library?
-* How is implemented the Generic mechanism? By using  A)void pointer, B)macro, C)_Generic and macro, D)intrusive field, E)code generation by include, F)code generation by macro
+* How is implemented the Generic mechanism? By using  A)void pointer, B)macro, C) Generic objects, D)intrusive field, E)template header, F)template macro
 * Is-it type safe (aka. using an incompatible type produces at least a compilation warning)?
 * support of integer/floats as basic type,
 * support of struct POD data as basic type,
