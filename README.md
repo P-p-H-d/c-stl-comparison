@@ -153,24 +153,27 @@ Cons:
 
 ## Template header
 
-Header files are included multiple times with different macro contexts (some different values given to defined macros) in order to generate different code for each type. From a user point of view, this creates a new step before using the container: an instantiating stage that has to be done once per type and per compilation unit (The user is responsible to create only one instance of the container, which can be troublesome if the library doesn't handle proper prefix for its naming convention) which generates functions with the correct type ensuring type safety and control by the compiler. The debug of the library is generally easy and can generate fully specialized & efficient code. Incorrectly used, this can generate a lot of code bloat. Properly used, this can even create smaller code than the void pointer variant. The interface used to configure the library can be quite tiresome in case of a lot of specialized methods to configure: it doesn't enable to chain the configuration from a container to another one easily. It also cannot have heavy customization of the code.
+Header files are included multiple times with different macro contexts (some different values given to defined macros) in order to generate different code for each type. From a user point of view, this creates a new step before using the container: an instantiating stage that has to be done once per type and per compilation unit (The user is responsible to create only one instance of the container, which can be troublesome if the library doesn't handle proper prefix for its naming convention) which generates functions with the correct type ensuring type safety and control by the compiler. The debug of the library is generally easy and can generate fully specialized & efficient code. Incorrectly used, this can generate a lot of code bloat. Properly used, this can even create smaller code than the void pointer variant. The interface used to configure the library can be quite tiresome in case of a lot of specialized methods to configure: it doesn't enable to chain the configuration from a container to another one easily. It also cannot have heavy customization of the code. Code usage is a little bit more verbose as it uses specialized function names, and not generic ones.
 
 Pros:
 
 * specialized & efficient code
 * type safe
 * easy to use for user
-* easy to develop and understand
+* quite easy to develop and understand
 
 Cons:
 
 * Explicit instance needed
 * can generate code bloat if incorrectly used
-* more verbose
+* can have cryptic error message if instantiation is incorrectly used
+* method names are more verbose
 
 ## Template macros
 
-Macros are used to generate context-dependent C code enabling to generate code for different type. This is pretty much like the template headers solution but with added flexibility. From a user point of view, this creates a new step before using the container: an instantiating stage that has to be done once per type and per compilation unit (The user is responsible to create only one instance of the container, which can be troublesome if the library doesn't handle proper prefix for its naming convention). This can generate fully specialized & efficient code with the correct type ensuring type safety and control by the compiler. Incorrectly used, this can generate a lot of code bloat. Properly used, this can even create smaller code than the void pointer variant. From a library developer point of view, the library is harder to design and to debug: everything being expanded in one line, you can't step in the library (there is however a solution to overcome this limitation by adding another stage to the compilation process). This can also generates cryptic error messages at user level if incorrectly used. You can however see the generated code by looking at the preprocessed file. You can perform heavy context-dependent customization of the code (transforming the macro preprocessing step into its own language). Properly done, you can also chain the methods from a container to another one easily, enabling quick and easy expansion of the containers. Errors in code using containers are easy to read and natural.
+Macros are used to generate context-dependent C code enabling to generate code for different type. This is pretty much like the template headers solution but with added flexibility. From a user point of view, this creates a new step before using the container: an instantiating stage that has to be done once per type and per compilation unit (The user is responsible to create only one instance of the container, which can be troublesome if the library doesn't handle proper prefix for its naming convention). This can generate fully specialized & efficient code with the correct type ensuring type safety and control by the compiler. Incorrectly used, this can generate a lot of code bloat. Properly used, this can even create smaller code than the void pointer variant. From a library developer point of view, the library is harder to design and to debug: everything being expanded in one line, you can't step in the library (there is however a solution to overcome this limitation by adding another stage to the compilation process). This can also generates cryptic error messages at user level if incorrectly used. You can however see the generated code by looking at the preprocessed file. You can perform heavy context-dependent customization of the code (transforming the macro preprocessing step into its own language). Properly done, you can also chain the methods from a container to another one easily, enabling quick and easy expansion of the containers. Errors in code using containers are easy to read and natural. Code usage is a little bit more verbose as it uses specialized function names, and not generic ones.
+
+I've read that one issue of the template macros is ugly to look at due to the use of backslash at the end of the lines, but honestly if you align properly the backslashes at the 80 column, it looks quite good. Another issue is the lack of support of syntax highlighting and autocomplete in macros but... I would say just update your textual editor!
 
 Pros:
 
@@ -184,9 +187,9 @@ Cons:
 
 * Explicit instance needed
 * can generate code bloat if incorrectly used
-* hard to debug for developer
-* can have cryptic error message if incorrectly used
-* more verbose
+* little harder to debug for library developer
+* can have cryptic error message if instantiation is incorrectly used
+* method names are verbose
 
 ## Mix
 
