@@ -80,7 +80,7 @@ static void test_rbtree(size_t n)
   tree->set_compare(tree, compare);
   for (size_t i = 0; i < n; i++) {
     unsigned long v = rand_get();
-    tree->put_by_obj(tree,
+    tree->putobj(tree,
 		     &v, sizeof(unsigned long), /* key */
 		     &v, sizeof(unsigned long) /* value */ );
   }
@@ -88,7 +88,7 @@ static void test_rbtree(size_t n)
   unsigned int s = 0;
   for (size_t i = 0; i < n; i++) {
     unsigned long v = rand_get();
-    void *obj = tree->get_by_obj(tree, (const char*)&v, sizeof(unsigned long), NULL, 0);
+    void *obj = tree->getobj(tree, (const char*)&v, sizeof(unsigned long), NULL, 0);
     if (obj)
       s += *(unsigned long*)obj;
   }
@@ -101,9 +101,9 @@ static void test_rbtree(size_t n)
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  { 10,    "List", 10000000, 0, test_list, 0},
-  { 20,   "Array", 100000000, 0, test_array, 0},
-  { 30,  "Rbtree", 1000000, 0, test_rbtree, 0}
+  { 100,    "Seq(List)", 10000000, 0, test_list, 0},
+  { 110,   "Seq(Array)", 100000000, 0, test_array, 0},
+  { 200,  "SSet(Rbtree)", 1000000, 0, test_rbtree, 0}
 };
 
 int main(int argc, const char *argv[])

@@ -72,9 +72,9 @@ static void test_list (size_t n)
   }
   g_result = s;
 
-  struct list_node_s *el;
-  LL_FOREACH(a1, el) free(el);
-  LL_FOREACH(a2, el) free(el);
+  struct list_node_s *el, *tmp;
+  LL_FOREACH_SAFE(a1, el, tmp) free(el);
+  LL_FOREACH_SAFE(a2, el, tmp) free(el);
 }
 
 /********************************************************************************************/
@@ -201,11 +201,11 @@ static void test_sort(size_t n)
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  { 10,    "List", 10000000, 0, test_list, 0},
-  { 20,   "Array", 100000000, 0, test_array, 0},
-  { 40,    "dict", 10000000, 0, test_dict, 0},
-  { 41, "dictBig", 1000000, 0, test_dict_big, 0},
-  { 50,    "sort", 10000000, 0, test_sort, 0}
+  { 100,    "Seq(List)",  10000000, 0, test_list, 0},
+  { 110,   "Seq(Array)", 100000000, 0, test_array, 0},
+  { 300, "UMap U64(dict)", 10000000, 0, test_dict, 0},
+  { 320, "UMap Big(dict)", 1000000, 0, test_dict_big, 0},
+  { 500,           "Sort", 10000000, 0, test_sort, 0}
 };
 
 int main(int argc, const char *argv[])

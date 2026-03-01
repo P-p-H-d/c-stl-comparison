@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#define XXH_STATIC_LINKING_ONLY /* access advanced declarations */
+#define XXH_IMPLEMENTATION      /* access definitions */
+
 #include "xxhash.h"
 
 #include "common.h"
@@ -32,7 +35,7 @@ static void test_hash(size_t n)
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  { 70,"XXHASH64", 100000000, test_hash_prepare, test_hash, test_hash_final}
+  { 700,         "Hash (xxhash64)", 1000000000,test_hash_prepare, test_hash, test_hash_final}
 };
 
 int main(int argc, const char *argv[])

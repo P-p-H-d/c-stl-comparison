@@ -168,11 +168,11 @@ static void test_sort(size_t n)
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  { 10,    "List",  10000000, 0, test_list, 0},
-  { 20,   "Array", 100000000, 0, test_array, 0},
-  { 30,  "Rbtree",   1000000, 0, test_rbtree, 0},
-  { 40,    "dict",  10000000, 0, test_dict, 0},
-  { 50,    "Sort",  10000000, 0, test_sort, 0},
+  { 100,    "Seq(List)",  10000000, 0, test_list, 0},
+  { 110,   "Seq(Array)", 100000000, 0, test_array, 0},
+  { 200,  "SSet(set)",   1000000, 0, test_rbtree, 0},
+  { 300,    "UMap(umap)",  10000000, 0, test_dict, 0},
+  { 500,    "Sort",  10000000, 0, test_sort, 0},
 };
 
 int main(int argc, const char *argv[])

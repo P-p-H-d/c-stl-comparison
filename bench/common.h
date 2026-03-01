@@ -110,7 +110,7 @@ static inline unsigned int rand_get(void)
 
 // The function that performs the bench
 static inline double
-test_function(const char *str, size_t n, void (*func)(size_t))
+test_function(const char *lib, const char *str, size_t n, void (*func)(size_t))
 {
   double result;
   unsigned long long start, end;
@@ -124,7 +124,7 @@ test_function(const char *str, size_t n, void (*func)(size_t))
   end = cputime();
   result = (double)(end-start) / 1000.0;
   if (str != NULL) {
-    printf ("%20.20s [n:%9lu r:%10lu] time = %.2f ms\n", str, (unsigned long) n, g_result, result);
+    printf ("%s:%20.20s [n:%9lu r:%10lu] time = %.2f ms\n", lib, str, (unsigned long) n, g_result, result);
   }
   return result;
 }

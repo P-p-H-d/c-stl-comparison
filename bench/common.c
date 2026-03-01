@@ -269,7 +269,7 @@ test(const char library[], size_t n, const config_func_t functions[], int argc, 
       // Measure the time of the test_function
       for(unsigned r = 0; r < arg.repeat; r++) {
         if (arg.clear_cache) clear_cache(100*1024*1024);
-          double t0 = test_function( (arg.graph|arg.best|arg.average|arg.quiet) ? NULL : functions[i].funcname, (size_t) n, functions[i].func);
+          double t0 = test_function( library, (arg.graph|arg.best|arg.average|arg.quiet) ? NULL : functions[i].funcname, (size_t) n, functions[i].func);
           best = (t0 < best) ? t0 : best;
           avg += t0;
           variance += t0 * t0;

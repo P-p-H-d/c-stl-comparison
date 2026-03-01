@@ -1,4 +1,4 @@
-# Copyright (c) 2017-2024, Patrick Pelissier
+# Copyright (c) 2017-2026, Patrick Pelissier
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -28,6 +28,7 @@ CPPFLAGS=
 N=4
 BENCH_DEF=
 RM=rm -rf
+LOG=| tee -a logs.txt
 
 .PHONY: all pgo container queue string plain bench-mlib bench-stl bench-qt bench-glib bench-klib bench-libdynamic bench-sparsepp bench-collectionc bench-tommyds bench-flathashmap bench-emilib bench-emhash bench-hopscotchmap bench-mlib-thread bench-liblfds bench-concurrentqueue bench-boost bench-string bench-plain bench-rigtorp-mpmc-queue bench-cmc
 
@@ -39,7 +40,7 @@ pgo:
 
 #########################################################################
 
-container-c: bench-mlib bench-glib bench-klib bench-ctl bench-stc bench-CC bench-cmc bench-collectionc bench-libdynamic bench-tommyds bench-uthash bench-qlibc bench-libsrt bench-nedtries bench-pottery 
+container-c: bench-mlib bench-glib bench-klib bench-ctl bench-stc bench-CC bench-cmc bench-collectionc bench-libdynamic bench-tommyds bench-uthash bench-qlibc bench-libsrt bench-pottery 
 	@echo
 	@echo
 
@@ -59,7 +60,7 @@ plain: bench-plain
 	@echo
 	@echo
 
-# Test if MLIB directory exists, otherwise bootstrap it
+# Test if MLIB directory exists, otherwise bootstrap it (and all other libraries too)
 pre-bench:
 	@test -d $(MLIB) || ( cd .. && make )
 
@@ -80,112 +81,113 @@ KLIB=../external/klib
 
 bench-mlib: pre-bench
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -pthread bench-mlib.c common.c -o bench-mlib.exe
-	@./bench-mlib.exe 10
-	@./bench-mlib.exe 11
-	@./bench-mlib.exe 20
-	@./bench-mlib.exe 30
-	@./bench-mlib.exe 31
-	@./bench-mlib.exe 40
-	@./bench-mlib.exe 41
-	@./bench-mlib.exe 42
-	@./bench-mlib.exe 44 2> /dev/null
-	@./bench-mlib.exe 46
-	@./bench-mlib.exe 47
-	@./bench-mlib.exe 43
-	@./bench-mlib.exe 50
-	@./bench-mlib.exe 51
+	@./bench-mlib.exe 100 $(LOG)
+	@./bench-mlib.exe 101 $(LOG)
+	@./bench-mlib.exe 110 $(LOG)
+	@./bench-mlib.exe 120 $(LOG)
+	@./bench-mlib.exe 200 $(LOG)
+	@./bench-mlib.exe 210 $(LOG)
+	@./bench-mlib.exe 300 $(LOG)
+	@./bench-mlib.exe 301 $(LOG)
+	@./bench-mlib.exe 310 $(LOG)
+	@./bench-mlib.exe 320 $(LOG)
+	@./bench-mlib.exe 321 $(LOG)
+	@./bench-mlib.exe 330 $(LOG)
+	@./bench-mlib.exe 340 2> /dev/null $(LOG)
+	@./bench-mlib.exe 500 $(LOG)
+	@./bench-mlib.exe 510 $(LOG)
+	@./bench-mlib.exe 700 $(LOG)
+	@./bench-mlib.exe 701 $(LOG)
 
 bench-mlib-thread:
 	$(CC) $(CFLAGS) $(CPPFLAGS) -I $(MLIB) bench-mlib.c common.c -DMULTI_THREAD_MEASURE -pthread -o bench-mlib-thread.exe
-	@./bench-mlib-thread.exe 60
-	@./bench-mlib-thread.exe 61
-	@./bench-mlib-thread.exe 62
-	@./bench-mlib-thread.exe 63
-	@./bench-mlib-thread.exe 64
-	@./bench-mlib-thread.exe 65
-	@./bench-mlib-thread.exe 66
+	@./bench-mlib-thread.exe 600 $(LOG)
+	@./bench-mlib-thread.exe 601 $(LOG)
+	@./bench-mlib-thread.exe 602 $(LOG)
+	@./bench-mlib-thread.exe 603 $(LOG)
+	@./bench-mlib-thread.exe 604 $(LOG)
+	@./bench-mlib-thread.exe 605 $(LOG)
+	@./bench-mlib-thread.exe 610 $(LOG)
 
 bench-CC:
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(CCLIB) bench-CC.c common.c -o bench-CC.exe
-	@./bench-CC.exe 10
-	@./bench-CC.exe 20
-	@./bench-CC.exe 40
-	@./bench-CC.exe 41
+	@./bench-CC.exe 100 $(LOG)
+	@./bench-CC.exe 110 $(LOG)
+	@./bench-CC.exe 300 $(LOG)
+	@./bench-CC.exe 320 $(LOG)
 
 bench-klib:
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -Wno-unused-function -I $(KLIB) bench-klib.c common.c -o bench-klib.exe
-	@./bench-klib.exe 10
-	@./bench-klib.exe 20
-	@./bench-klib.exe 30
-	@./bench-klib.exe 40
-	@./bench-klib.exe 41
-	@./bench-klib.exe 50
+	@./bench-klib.exe 100 $(LOG)
+	@./bench-klib.exe 110 $(LOG)
+	@./bench-klib.exe 200 $(LOG)
+	@./bench-klib.exe 300 $(LOG)
+	@./bench-klib.exe 320 $(LOG)
+	@./bench-klib.exe 500 $(LOG)
 
 bench-cmc:
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(CMC) bench-cmc.c common.c -o bench-cmc.exe
-	@./bench-cmc.exe 20
-	@./bench-cmc.exe 30
-	@./bench-cmc.exe 40
+	@./bench-cmc.exe 110 $(LOG)
+	@./bench-cmc.exe 200 $(LOG)
+	@./bench-cmc.exe 300 $(LOG)
 
 bench-collectionc:
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(COLLECTIONC)/src/include/  bench-collectionc.c common.c $(COLLECTIONC)/src/libCollections-C-fast.a -o bench-collectionc.exe
-	@./bench-collectionc.exe 10
-	@./bench-collectionc.exe 20
-	@./bench-collectionc.exe 30
-	@./bench-collectionc.exe 40
-	@./bench-collectionc.exe 41
-	@./bench-collectionc.exe 50
+	@./bench-collectionc.exe 100 $(LOG)
+	@./bench-collectionc.exe 110 $(LOG)
+	@./bench-collectionc.exe 200 $(LOG)
+	@./bench-collectionc.exe 300 $(LOG)
+	@./bench-collectionc.exe 320 $(LOG)
+	@./bench-collectionc.exe 500 $(LOG)
 
 bench-ctl:
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -I $(CTL) bench-ctl.c common.c -o bench-ctl.exe
-	@./bench-ctl.exe 10
-	@./bench-ctl.exe 20
-	@./bench-ctl.exe 30
-	@./bench-ctl.exe 40
-	@./bench-ctl.exe 50
+	@./bench-ctl.exe 100 $(LOG)
+	@./bench-ctl.exe 110 $(LOG)
+	@./bench-ctl.exe 200 $(LOG)
+	@./bench-ctl.exe 300 $(LOG)
+	@./bench-ctl.exe 500 $(LOG)
 
 bench-stc:
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(STC)/include bench-stc.c common.c -o bench-stc.exe
-	@./bench-stc.exe 10
-	@./bench-stc.exe 20
-	@./bench-stc.exe 30
-	@./bench-stc.exe 40
-	@./bench-stc.exe 41
-	@./bench-stc.exe 50
+	@./bench-stc.exe 100 $(LOG)
+	@./bench-stc.exe 110 $(LOG)
+	@./bench-stc.exe 200 $(LOG)
+	@./bench-stc.exe 300 $(LOG)
+	@./bench-stc.exe 320 $(LOG)
+	@./bench-stc.exe 500 $(LOG)
 
-# POTTERY shall point to the source directory (not where the headers are)
 bench-pottery:
-	@if test -n "$${POTTERY}" ; then $(MAKE) bench-pottery0 ; else echo "Nothing to be done for POTTERY." ; fi
-bench-pottery0:
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -DPOTTERY_AVAILABLE=1 -I $${POTTERY}/include bench-pottery.c common.c -o bench-pottery.exe
-	@./bench-pottery.exe 10
-	@./bench-pottery.exe 20
-	@./bench-pottery.exe 30
-	@./bench-pottery.exe 40
-	@./bench-pottery.exe 41
-	@./bench-pottery.exe 50
+	@cd .. && make external/pottery
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -DPOTTERY_AVAILABLE=1 -I ../external/pottery/include -I ../external/mlib bench-pottery.c common.c -o bench-pottery.exe
+	@./bench-pottery.exe 100 $(LOG)
+	@./bench-pottery.exe 110 $(LOG)
+	@./bench-pottery.exe 200 $(LOG)
+	@./bench-pottery.exe 300 $(LOG)
+	@./bench-pottery.exe 320 $(LOG)
+	@./bench-pottery.exe 500 $(LOG)
 
-# VERSTABLE shall point to the source directory of VERSTABLE (where the headers are)
 bench-verstable:
-	@if test -n "$${VERSTABLE}" ; then $(MAKE) bench-verstable0 ; else echo "Nothing to be done for VERSTABLE." ; fi
-bench-verstable0:
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $${VERSTABLE}/ bench-verstable.c common.c -o bench-verstable.exe
-	@./bench-verstable.exe 40
-	@./bench-verstable.exe 41
+	@cd .. && make external/Verstable
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I ../external/Verstable -I ../external/mlib bench-verstable.c common.c -o bench-verstable.exe
+	@./bench-verstable.exe 300 $(LOG)
+	@./bench-verstable.exe 320 $(LOG)
 
 # GLIB shall point to the the directory containing the file .pc are stored (can be let empty if system installed)
 bench-glib:
 	@(PKG_CONFIG_PATH="$${GLIB}" pkg-config glib-2.0 && $(MAKE) bench-glib0) || echo "GLIB not installed"
 bench-glib0:
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) bench-glib.c common.c -o bench-glib.exe `PKG_CONFIG_PATH="$${GLIB}" pkg-config --libs --cflags glib-2.0`
-	@./bench-glib.exe 10
-	@./bench-glib.exe 20
-	@./bench-glib.exe 30
-	@./bench-glib.exe 40
-	@./bench-glib.exe 41
-	@./bench-glib.exe 50
+	@./bench-glib.exe 100 $(LOG)
+	@./bench-glib.exe 110 $(LOG)
+	@./bench-glib.exe 200 $(LOG)
+	@./bench-glib.exe 300 $(LOG)
+	@./bench-glib.exe 320 $(LOG)
+	@./bench-glib.exe 500 $(LOG)
 
 # LIBDYNAMIC shall point to the the source directory where the source is built
+# Newer version of libdynamic requires C23 compliant C library (stdbit.h)
+# Needs to port the build infrastructure.
 bench-libdynamic:
 	@if test -n "$${LIBDYNAMIC}" ; then $(MAKE) bench-libdynamic0 ; else echo "Nothing to be done for LIBDYNAMIC." ; fi
 bench-libdynamic0:
@@ -194,69 +196,46 @@ bench-libdynamic0:
 	@./bench-libdynamic.exe 40
 	@./bench-libdynamic.exe 41
 
-# TOMMYDS shall point to the source directory.
 bench-tommyds:
-	@if test -n "$${TOMMYDS}" ; then $(MAKE) bench-tommyds0 ; else echo "Nothing to be done for TOMMYDS." ; fi
-bench-tommyds0:
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I "$${TOMMYDS}" bench-tommyds.c $${TOMMYDS}/tommyds/tommyarray.c $${TOMMYDS}/tommyds/tommylist.c $${TOMMYDS}/tommyds/tommytree.c $${TOMMYDS}/tommyds/tommyhashlin.c common.c -o bench-tommyds.exe
-	@./bench-tommyds.exe 10
-	@./bench-tommyds.exe 20
-	@./bench-tommyds.exe 30
-	@./bench-tommyds.exe 40
-	@./bench-tommyds.exe 41
+	@cd .. && make external/tommyds
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I "../external/tommyds" bench-tommyds.c ../external/tommyds/tommyds/tommyarray.c ../external/tommyds/tommyds/tommylist.c ../external/tommyds/tommyds/tommytree.c ../external/tommyds/tommyds/tommyhashlin.c common.c -o bench-tommyds.exe
+	@./bench-tommyds.exe 100 $(LOG)
+	@./bench-tommyds.exe 110 $(LOG)
+	@./bench-tommyds.exe 200 $(LOG)
+	@./bench-tommyds.exe 300 $(LOG)
+	@./bench-tommyds.exe 320 $(LOG)
 
-# UTHASH shall point to the directory where the source are
 bench-uthash:
-	@if test -n "$${UTHASH}" ; then $(MAKE) bench-uthash0 ; else echo "Nothing to be done for UTHASH." ; fi
-bench-uthash0:
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I "$${UTHASH}" bench-uthash.c common.c -o bench-uthash.exe
-	@./bench-uthash.exe 10
-	@./bench-uthash.exe 20
-	@./bench-uthash.exe 40
-	@./bench-uthash.exe 41
-	@./bench-uthash.exe 50
+	@cd .. && make external/uthash
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I ../external/uthash bench-uthash.c common.c -o bench-uthash.exe
+	@./bench-uthash.exe 100 $(LOG)
+	@./bench-uthash.exe 110 $(LOG)
+	@./bench-uthash.exe 300 $(LOG)
+	@./bench-uthash.exe 320 $(LOG)
+	@./bench-uthash.exe 500 $(LOG)
 
-# QLIBC shall point to the directory where the library is installed.
 bench-qlibc:
-	@if test -n "$${QLIBC}" ; then $(MAKE) bench-qlibc0 ; else echo "Nothing to be done for QLIBC." ; fi
-bench-qlibc0:
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I "$${QLIBC}/include" -L "$${QLIBC}/lib" -lqlibc -pthread bench-qlibc.c common.c -o bench-qlibc.exe
-	@LD_LIBRARY_PATH="$${QLIBC}/lib:$${LD_LIBRARY_PATH}" ./bench-qlibc.exe 10
-	@LD_LIBRARY_PATH="$${QLIBC}/lib:$${LD_LIBRARY_PATH}" ./bench-qlibc.exe 20
-	@LD_LIBRARY_PATH="$${QLIBC}/lib:$${LD_LIBRARY_PATH}" ./bench-qlibc.exe 30
+	@cd .. && make external/qlibc/lib/libqlibc.a
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I "../external/qlibc/include" -pthread bench-qlibc.c common.c ../external/qlibc/lib/libqlibc.a -o bench-qlibc.exe
+	@./bench-qlibc.exe 100 $(LOG)
+	@./bench-qlibc.exe 110 $(LOG)
+	@./bench-qlibc.exe 200 $(LOG)
 
-# LIBSRT shall point to the directory where it is installed
 bench-libsrt:
-	@if test -n "$${LIBSRT}" ; then $(MAKE) bench-libsrt0 ; else echo "Nothing to be done for LIBSRT." ; fi
-bench-libsrt0:
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I "$${LIBSRT}/src" bench-libsrt.c common.c -o bench-libsrt.exe $${LIBSRT}/src/.libs/libsrt.a 
-	@./bench-libsrt.exe 20
-	@./bench-libsrt.exe 50
+	@cd .. && make external/libsrt/src/.libs/libsrt.a
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I "../external/libsrt/src" bench-libsrt.c common.c -o bench-libsrt.exe ../external/libsrt/src/.libs/libsrt.a 
+	@./bench-libsrt.exe 110 $(LOG)
+	@./bench-libsrt.exe 500 $(LOG)
 
-
-# LIBLFDS shall point to the directory where the bin/build/inc/obj/src directories are
-# The library shall be built.
 bench-liblfds:
-	@if test -n "$${LIBLFDS}" ; then $(MAKE) bench-liblfds0 ; else echo "Nothing to be done for LIBLFDS." ; fi
-bench-liblfds0:
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I "$${LIBLFDS}/inc" -Wno-unknown-pragmas bench-liblfds.c common.c -DMULTI_THREAD_MEASURE -o bench-liblfds.exe $${LIBLFDS}/bin/liblfds711.a -lpthread
-	@LD_LIBRARY_PATH="$${LIBLFDS}/bin:$${LD_LIBRARY_PATH}" ./bench-liblfds.exe 60
+	@cd .. && make external/liblfds7.1.1/bin/liblfds711.a
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I ../external/mlib -I "../external/liblfds7.1.1/inc" -Wno-unknown-pragmas bench-liblfds.c common.c -DMULTI_THREAD_MEASURE -o bench-liblfds.exe ../external/liblfds7.1.1/bin/liblfds711.a -lpthread
+	@./bench-liblfds.exe 600 $(LOG)
 
-# XXHASH shall point to the source directory of xxhash
-# The library shall be built.
 bench-xxhash:
-	@if test -n "$${XXHASH}" ; then $(MAKE) bench-xxhash0 ; else echo "Nothing to be done for XXHASH." ; fi
-bench-xxhash0:
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I "$${XXHASH}/" bench-xxhash.c common.c "$${XXHASH}/libxxhash.a" -o bench-xxhash.exe
-	@./bench-xxhash.exe 70
-
-# NEDTRIES shall point to the header location.
-bench-nedtries:
-	@if test -n "$${NEDTRIES}" ; then $(MAKE) bench-nedtries0 ; else echo "Nothing to be done for NEDTRIES." ; fi
-bench-nedtries0:
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I "$${NEDTRIES}" bench-nedtries.c common.c -o bench-nedtries.exe
-	@./bench-nedtries.exe 40
-	@./bench-nedtries.exe 45
+	@cd .. && make external/xxHash
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I "../external/xxHash/" bench-xxhash.c common.c -o bench-xxhash.exe
+	@./bench-xxhash.exe 700 $(LOG)
 
 ############################################################################
 # C++ Libraries
@@ -264,16 +243,17 @@ bench-nedtries0:
 
 bench-stl:
 	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) bench-stl.cpp common.c -o bench-stl.exe
-	@./bench-stl.exe 10
-	@./bench-stl.exe 20
-	@./bench-stl.exe 30
-	@./bench-stl.exe 40
-	@./bench-stl.exe 41
-	@./bench-stl.exe 42
-	@./bench-stl.exe 46
-	@./bench-stl.exe 43
-	@./bench-stl.exe 50
-	@./bench-stl.exe 51
+	@./bench-stl.exe 100 $(LOG)
+	@./bench-stl.exe 110 $(LOG)
+	@./bench-stl.exe 120 $(LOG)
+	@./bench-stl.exe 200 $(LOG)
+	@./bench-stl.exe 300 $(LOG)
+	@./bench-stl.exe 301 $(LOG)
+	@./bench-stl.exe 320 $(LOG)
+	@./bench-stl.exe 330 $(LOG)
+	@./bench-stl.exe 331 $(LOG)
+	@./bench-stl.exe 500 $(LOG)
+	@./bench-stl.exe 510 $(LOG)
 
 # QT shall point to the the directory containing the file .pc are stored (can be let empty if system installed)
 bench-qt:
@@ -293,20 +273,20 @@ bench-boost:
 	@if test -n "$${BOOST}" ; then $(MAKE) bench-boost0 ; else echo "Nothing to be done for BOOST." ; fi
 bench-boost0:
 	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -I "$${BOOST}" bench-boost.cpp common.c -o bench-boost.exe -lpthread
-	@./bench-boost.exe 42
-	@./bench-boost.exe 41
-	@./bench-boost.exe 43
+	@./bench-boost.exe 300 $(LOG)
+	@./bench-boost.exe 310 $(LOG)
+	@./bench-boost.exe 320 $(LOG)
+	@./bench-boost.exe 330 $(LOG)
 
 bench-boost-queue:
 	@if test -n "$${BOOST}" ; then $(MAKE) bench-boost-queue0 ; else echo "Nothing to be done for BOOST." ; fi
 bench-boost-queue0:
 	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -I "$${BOOST}" bench-boost.cpp common.c -DMULTI_THREAD_MEASURE -o bench-boost-thread.exe -lpthread
-	@./bench-boost-thread.exe 60
+	@./bench-boost-thread.exe 600 $(LOG)
 
 # SPARSEPP shall point to the directory where the headers are
 bench-sparsepp:
 	@if test -n "$${SPARSEPP}" ; then $(MAKE) bench-sparsepp0 ; else echo "Nothing to be done for SPARSEPP." ; fi
-
 bench-sparsepp0:
 	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I "$${SPARSEPP}"  -I "$${SPARSEPP}/.." bench-sparsepp.cpp common.c -o bench-sparsepp.exe
 	@./bench-sparsepp.exe 41
@@ -390,17 +370,20 @@ bench-rigtorp-mpmc-queue0:
 ############################################################################
 
 bench-mlib-json: bench-mlib
-	@./bench-mlib.exe 110
-	@./bench-mlib.exe 111
-	@./bench-mlib.exe 112
+	@./bench-mlib.exe 850 $(LOG)
+	@./bench-mlib.exe 860 $(LOG)
+	@./bench-mlib.exe 870 $(LOG)
 
 bench-rapidjson:
 	@if test -n "$${RAPIDJSON}" ; then $(MAKE) bench-rapidjson0 ; else echo "Nothing to be done for RAPIDJSON." ; fi
 bench-rapidjson0:
 	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I "$${RAPIDJSON}/" bench-rapidjson.cpp common.c -o bench-rapidjson.exe
-	@./bench-rapidjson.exe 110
-	@./bench-rapidjson.exe 111
-	@./bench-rapidjson.exe 112
+	@./bench-rapidjson.exe 850 $(LOG)
+	@./bench-rapidjson.exe 860 $(LOG)
+	@./bench-rapidjson.exe 870 $(LOG)
+
+# Extract from logs the ranks:
+# grep Seq logs.txt |awk -F'=' '{print $2, "=", $1}'|sort -g|awk -F'=' '{print $2,"=",$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print $1,"|",$2,"|",$3}'
 
 ############################################################################
 
@@ -464,7 +447,7 @@ clean:
 	$(RM) *.o bench-*.exe
 	$(RM) bench-*.s *~ massif.out.*
 	$(RM) plot-*.dat
-	$(RM) pgo
+	$(RM) pgo logs.txt
 	$(RM) tmp-serial.*
 	cd nucleotide && $(MAKE) clean
 

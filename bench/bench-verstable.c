@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#include "m-core.h"
+#include "m-core.h" // For m_core_hash
 #include "common.h"
 
 #define NAME umap_ulong
@@ -82,13 +82,13 @@ test_dict_big(size_t  n)
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  { 40,    "dict",  10000000, 0, test_dict, 0},
-  { 41, "dictBig",   1000000, 0, test_dict_big, 0},
+  { 300, "UMap U64(dict)",  10000000, 0, test_dict, 0},
+  { 320, "UMap Big(dict)",  1000000, 0, test_dict_big, 0},
 };
 
 int main(int argc, const char *argv[])
 {
-  test("CTL", numberof(table), table, argc, argv);
+  test("VERSTABLE", numberof(table), table, argc, argv);
   exit(0);
 }
 

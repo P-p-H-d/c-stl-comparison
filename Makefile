@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2023, Patrick Pelissier
+# Copyright (c) 2022-2026, Patrick Pelissier
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -69,6 +69,33 @@ external/klib:
 external/sc:
 	mkdir -p external && cd external && git clone https://github.com/tezc/sc.git
 
+external/Verstable:
+	mkdir -p external && cd external && git clone https://github.com/JacksonAllan/Verstable.git
+
+external/pottery:
+	mkdir -p external && cd external && git clone https://github.com/ludocode/pottery.git
+
+external/libdynamic:
+	mkdir -p external && cd external && git clone https://github.com/fredrikwidlund/libdynamic.git
+
+external/uthash:
+	mkdir -p external && cd external && git clone https://github.com/troydhanson/uthash
+
+external/tommyds:
+	mkdir -p external && cd external && git clone https://github.com/amadvance/tommyds.git
+
+external/qlibc:
+	mkdir -p external && cd external && git clone https://github.com/wolkykim/qlibc.git
+
+external/libsrt:
+	mkdir -p external && cd external && git clone https://github.com/faragon/libsrt.git
+
+external/liblfds7.1.1:
+	mkdir -p external && cd external && git clone https://liblfds.org/git/liblfds7.1.1
+
+external/xxHash:
+	mkdir -p external && cd external && git clone https://github.com/Cyan4973/xxHash.git
+
 ###########################################################
 # 		Build external Libraries
 ###########################################################
@@ -79,6 +106,17 @@ external/Collections-C/src/libCollections-C.a: external/Collections-C
 	# Build optimized version
 	cd external/Collections-C/src && $(CC) -O2 -Wall -march=native -DNDEBUG -Iinclude -c *.c
 	cd external/Collections-C/src && $(AR) $(ARFLAGS) libCollections-C-fast.a *.o
+
+external/qlibc/lib/libqlibc.a: external/qlibc
+	cd external/qlibc && ./configure && make
+
+external/libsrt/src/.libs/libsrt.a: external/libsrt
+	cd external/libsrt && ./bootstrap.sh && ./configure && make -j2
+
+external/liblfds7.1.1/bin/liblfds711.a: external/liblfds7.1.1
+	cd external/liblfds7.1.1/liblfds7.1.1/liblfds711/build/gcc_gnumake && make
+	cd external/liblfds7.1.1/ && ln -s liblfds7.1.1/liblfds711/bin/ . || echo "Already done"
+	cd external/liblfds7.1.1/ && ln -s liblfds7.1.1/liblfds711/inc/ . || echo "Already done"
 
 ###########################################################
 # 		Build example for array

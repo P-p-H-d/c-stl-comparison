@@ -328,14 +328,14 @@ test_dict_str(size_t  n)
   M_LET(s1, s2, STRING_OPLIST)
   M_LET(dict, DICT_OPLIST(dict_str)) {
     for (size_t i = 0; i < n; i++) {
-      string_printf(s1, "%u", rand_get());
-      string_printf(s2, "%u", rand_get());
+      string_set_ui(s1, rand_get());
+      string_set_ui(s2, rand_get());
       dict_str_set_at(dict, s1, s2);
     }
     rand_init();
     unsigned int s = 0;
     for (size_t i = 0; i < n; i++) {
-      string_printf(s1, "%u", rand_get());
+      string_set_ui(s1, rand_get());
       string_t *p = dict_str_get(dict, s1);
       if (p)
         s ++;
@@ -1020,38 +1020,38 @@ bench_vector_ulong_clear(void)
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  { 10,    "List", 10000000, 0, test_list, 0},
-  { 11,  "DPList", 10000000, 0, test_dlist, 0},
-  { 20,   "Array", 100000000, 0, test_array, 0},
-  { 21,   "Deque", 100000000, 0, test_deque, 0},
-  { 30,  "Rbtree", 1000000, 0, test_rbtree, 0},
-  { 31,  "B+tree", 1000000, 0, test_bptree, 0},
-  { 40,    "dict", 10000000, 0, test_dict, 0},
-  { 41, "dictBig", 1000000, 0, test_dict_big, 0},
-  { 42,"dict(OA)", 10000000, 0, test_dict_oa, 0},
-  { 43,"DictStr", 1000000, 0, test_dict_str, 0},
+  { 100,    "Seq(List)", 10000000, 0, test_list, 0},
+  { 101,  "Seq(DPList)", 10000000, 0, test_dlist, 0},
+  { 110,   "Seq(Array)", 100000000, 0, test_array, 0},
+  { 120,   "Seq(Deque)", 100000000, 0, test_deque, 0},
+  { 200,  "SSet(Rbtree)", 1000000, 0, test_rbtree, 0},
+  { 210,  "SSet(B+tree)", 1000000, 0, test_bptree, 0},
+  { 300, "UMap U64(dict)", 10000000, 0, test_dict, 0},
+  { 301, "UMap U64(dict OA)", 10000000, 0, test_dict_oa, 0},
+  { 310, "UMAP U64 Linear(dict OA)", 10000000, 0, test_dict_oa_linear, 0},
+  { 320, "UMap Big(dict)", 1000000, 0, test_dict_big, 0},
+  { 321, "UMap Big(dict OA)", 1000000, 0, test_dict_oa_big, 0},
+  { 330, "UMap Str(dict)", 1000000, 0, test_dict_str, 0},
 #ifdef M_USE_MAX_PREFETCH
-  { 44,  "dict(OA/BULK)", 10000000, 0, test_dict_oa_bulk, 0},
+  { 340,  "UMap Bulk (dict oa)", 10000000, 0, test_dict_oa_bulk, 0},
 #endif
-  { 46, "dictLinear(OA)", 10000000, 0, test_dict_oa_linear, 0},
-  { 47,    "dictBig(OA)", 1000000, 0, test_dict_oa_big, 0},
-  { 50,           "Sort", 10000000, 0, test_sort, 0},
-  { 51,    "Stable Sort", 10000000, 0, test_stable_sort, 0},
-  { 60,         "Buffer", 1000000, 0, test_buffer, 0},
-  { 61,     "Queue MPMC", 1000000, 0, test_queue, 0},
-  { 62,    "Buffer(P=2)", SIZE_LIMIT+1000000, 0, test_buffer, 0},
-  { 63,"Queue MPMC(P=2)", SIZE_LIMIT+1000000, 0, test_queue, 0},
-  { 64,"Queue SPSC(P=2)", 1000000, 0, test_queue_single, 0},
-  { 65,"Queue Concurrent",1000000, 0, test_queue_concurrent, 0},
-  { 66,"Queue SPSC(Bulk)",1000000, 0, test_queue_single_bulk, 0},
-  { 70,         "M_HASH", 100000000, test_hash_prepare, test_hash, test_hash_final},
-  { 71,      "Core Hash", 100000000, test_hash_prepare, test_core_hash, test_hash_final},
-  {100, "serial-bin STR", 10000000, bench_vector_string_init, bench_vector_string_bin_run, bench_vector_string_clear},
-  {101, "serial-bin STR.big", 10000000, bench_vector_string_init_big, bench_vector_string_bin_run, bench_vector_string_clear},
-  {102, "serial-bin INT", 10000000, bench_vector_ulong_init, bench_vector_ulong_bin_run, bench_vector_ulong_clear},
-  {110, "serial-json STR", 10000000, bench_vector_string_init, bench_vector_string_json_run, bench_vector_string_clear},
-  {111, "serial-json STR.big", 10000000, bench_vector_string_init_big, bench_vector_string_json_run, bench_vector_string_clear},
-  {112, "serial-json INT", 10000000, bench_vector_ulong_init, bench_vector_ulong_json_run, bench_vector_ulong_clear}
+  { 500,           "Sort", 10000000, 0, test_sort, 0},
+  { 510,    "Stable Sort", 10000000, 0, test_stable_sort, 0},
+  { 600, "Queue(Buffer)", 1000000, 0, test_buffer, 0},
+  { 601,    "Queue(MPMC)", 1000000, 0, test_queue, 0},
+  { 602,    "Queue(Buffer P=2)", SIZE_LIMIT+1000000, 0, test_buffer, 0},
+  { 603,"Queue(MPMC P=2)", SIZE_LIMIT+1000000, 0, test_queue, 0},
+  { 604,"Queue(SPSC P=2)", 1000000, 0, test_queue_single, 0},
+  { 605,"Queue(Shared ptr)",1000000, 0, test_queue_concurrent, 0},
+  { 610,"Queue(SPSC Bulk)",1000000, 0, test_queue_single_bulk, 0},
+  { 700,         "Hash (M_HASH)", 1000000000, test_hash_prepare, test_hash, test_hash_final},
+  { 701,      "Hash (Core Hash)", 1000000000, test_hash_prepare, test_core_hash, test_hash_final},
+  { 800, "serial-bin STR", 10000000, bench_vector_string_init, bench_vector_string_bin_run, bench_vector_string_clear},
+  { 810, "serial-bin STR.big", 10000000, bench_vector_string_init_big, bench_vector_string_bin_run, bench_vector_string_clear},
+  { 820, "serial-bin INT", 10000000, bench_vector_ulong_init, bench_vector_ulong_bin_run, bench_vector_ulong_clear},
+  { 850, "serial-json STR", 10000000, bench_vector_string_init, bench_vector_string_json_run, bench_vector_string_clear},
+  { 860, "serial-json STR.big", 10000000, bench_vector_string_init_big, bench_vector_string_json_run, bench_vector_string_clear},
+  { 870, "serial-json INT", 10000000, bench_vector_ulong_init, bench_vector_ulong_json_run, bench_vector_ulong_clear}
 };
 
 int main(int argc, const char *argv[])
