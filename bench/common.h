@@ -124,7 +124,7 @@ test_function(const char *str, size_t n, void (*func)(size_t))
   end = cputime();
   result = (double)(end-start) / 1000.0;
   if (str != NULL) {
-    printf ("%20.20s time %.2f ms for n = %lu [r=%lu]\n", str, result, (unsigned long) n, g_result);
+    printf ("%20.20s [n:%9lu r:%10lu] time = %.2f ms\n", str, (unsigned long) n, g_result, result);
   }
   return result;
 }

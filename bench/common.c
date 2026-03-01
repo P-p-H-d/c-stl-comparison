@@ -76,64 +76,64 @@ parse_config(struct parse_opt_s *opt, int argc, const char *argv[])
   for(int i = 1; i < argc ; i++)
     {
       if (argv[i][0] == '-') {
-	if (strcmp(argv[i], "--from") == 0){
+        if (strcmp(argv[i], "--from") == 0){
           if (++i == argc) { fprintf(stderr, "ERROR: Missing argument for --from\n"); exit(-2); }
-	  opt->from = strtod(argv[i], &end);
-	  opt->to   = opt->from;
-	} else if (strcmp(argv[i], "--to") == 0) {
+          opt->from = strtod(argv[i], &end);
+          opt->to   = opt->from;
+        } else if (strcmp(argv[i], "--to") == 0) {
           if (++i == argc) { fprintf(stderr, "ERROR: Missing argument for --to\n"); exit(-2); }
-	  opt->to = strtod(argv[i], &end);
-	  opt->grow = 1.1;
-	} else if (strcmp(argv[i], "--step") == 0) {
+          opt->to = strtod(argv[i], &end);
+          opt->grow = 1.1;
+        } else if (strcmp(argv[i], "--step") == 0) {
           if (++i == argc) { fprintf(stderr, "ERROR: Missing argument for --step\n"); exit(-2); }
-	  opt->step = strtod(argv[i], &end);
-	  opt->grow = 0;
-	} else if (strcmp(argv[i], "--grow") == 0) {
+          opt->step = strtod(argv[i], &end);
+          opt->grow = 0;
+        } else if (strcmp(argv[i], "--grow") == 0) {
           if (++i == argc) { fprintf(stderr, "ERROR: Missing argument for --grow\n"); exit(-2); }
-	  opt->grow = strtod(argv[i], &end);
-	  opt->step = 0;
-	} else if (strcmp(argv[i], "--repeat") == 0) {
-          if (++i == argc) { fprintf(stderr, "ERROR: Missing argument for --repeat\n"); exit(-2); }
-	  opt->repeat = strtol(argv[i], &end, 10);
-	  opt->repeat = (opt->repeat > MAX_REPEAT) ? MAX_REPEAT : opt->repeat;
-	} else if (strcmp(argv[i], "--graph") == 0) {
-	  opt->graph = true;
-	} else if (strcmp(argv[i], "--best") == 0) {
-	  opt->best = true;
-	  opt->average = false;
-	  opt->best_within = false;
-	} else if (strcmp(argv[i], "--best-within") == 0) {
-	  opt->best_within = true;
-	  opt->best = false;
-	  opt->average = false;
+          opt->grow = strtod(argv[i], &end);
+          opt->step = 0;
+        } else if (strcmp(argv[i], "--repeat") == 0) {
+                if (++i == argc) { fprintf(stderr, "ERROR: Missing argument for --repeat\n"); exit(-2); }
+          opt->repeat = strtol(argv[i], &end, 10);
+          opt->repeat = (opt->repeat > MAX_REPEAT) ? MAX_REPEAT : opt->repeat;
+        } else if (strcmp(argv[i], "--graph") == 0) {
+          opt->graph = true;
+        } else if (strcmp(argv[i], "--best") == 0) {
+          opt->best = true;
+          opt->average = false;
+          opt->best_within = false;
+        } else if (strcmp(argv[i], "--best-within") == 0) {
+          opt->best_within = true;
+          opt->best = false;
+          opt->average = false;
           if (++i == argc) { fprintf(stderr, "ERROR: Missing argument for --best-within\n"); exit(-2); }
-	  opt->within = strtod(argv[i], &end) / 100.0;
-	} else if (strcmp(argv[i], "--average") == 0) {
-	  opt->average = true;
-	  opt->best = false;
-	  opt->best_within = false;
-	} else if (strcmp(argv[i], "--quiet") == 0) {
-	  opt->quiet = true;
-	} else if (strcmp(argv[i], "--clear-cache") == 0) {
-	  opt->clear_cache = true;
-	} else {
-	  fprintf(stderr, "ERROR: Option unkown: %s.\n",
-		  argv[i]);
-	  exit(-1);
-	}
-	if (*end != 0) {
-	  fprintf(stderr, "ERROR: Cannot parse %s. Expected float\n",
-		  argv[i]);
-	  exit(-1);
-	}
+          opt->within = strtod(argv[i], &end) / 100.0;
+        } else if (strcmp(argv[i], "--average") == 0) {
+          opt->average = true;
+          opt->best = false;
+          opt->best_within = false;
+        } else if (strcmp(argv[i], "--quiet") == 0) {
+          opt->quiet = true;
+        } else if (strcmp(argv[i], "--clear-cache") == 0) {
+          opt->clear_cache = true;
+        } else {
+          fprintf(stderr, "ERROR: Option unkown: %s.\n",
+            argv[i]);
+          exit(-1);
+        }
+        if (*end != 0) {
+          fprintf(stderr, "ERROR: Cannot parse %s. Expected float\n",
+            argv[i]);
+          exit(-1);
+        }
 
       } else {
-	opt->test_function = strtol (argv[i], &end, 10);
-	if (*end != 0) {
-	  fprintf(stderr, "ERROR: Cannot parse %s. Expected function number\n",
-		  argv[i]);
-	  exit(-1);
-	}
+        opt->test_function = strtol (argv[i], &end, 10);
+        if (*end != 0) {
+          fprintf(stderr, "ERROR: Cannot parse %s. Expected function number\n",
+            argv[i]);
+          exit(-1);
+        }
       }
     }
 }
@@ -151,7 +151,7 @@ select_config(int func, size_t n, const config_func_t functions[])
   }
   fprintf(stderr,
 	  "USAGE: FUNC_NUMBER [--from number --to number (--grow number | --step number)] [--graph]\n"
-	  "[--repeat number] [--best|--average|--best-within] [--quiet]\n");
+	  "[--repeat number] [--best|--average|--best-within] [--quiet] [--clear-cache]\n");
   exit(-1);
 }
 
@@ -264,27 +264,27 @@ test(const char library[], size_t n, const config_func_t functions[], int argc, 
       double ba = 0.0;
       
       if (functions[i].init != NULL)
-	functions[i].init(n);
+        functions[i].init(n);
 
       // Measure the time of the test_function
       for(unsigned r = 0; r < arg.repeat; r++) {
-        if (arg.clear_cache) clear_cache(100*1024*1024);          
-	double t0 = test_function( (arg.graph|arg.best|arg.average|arg.quiet) ? NULL : functions[i].funcname, (size_t) n, functions[i].func);
-	best = (t0 < best) ? t0 : best;
-	avg += t0;
-	variance += t0 * t0;
-	measure[r] = t0;
+        if (arg.clear_cache) clear_cache(100*1024*1024);
+          double t0 = test_function( (arg.graph|arg.best|arg.average|arg.quiet) ? NULL : functions[i].funcname, (size_t) n, functions[i].func);
+          best = (t0 < best) ? t0 : best;
+          avg += t0;
+          variance += t0 * t0;
+          measure[r] = t0;
       }
 
       // Closure of the tests
       if (functions[i].clear != NULL)
-	functions[i].clear();
+        functions[i].clear();
 
       // Finish computing the different times
       if (arg.repeat > 1) {
-	avg /= arg.repeat;
-	variance = (variance - arg.repeat * avg * avg) / (arg.repeat - 1);
-	ba = get_best_within(arg.repeat, measure, 1. + arg.within);
+        avg /= arg.repeat;
+        variance = (variance - arg.repeat * avg * avg) / (arg.repeat - 1);
+        ba = get_best_within(arg.repeat, measure, 1. + arg.within);
       } else {
         ba = avg;
       }
@@ -302,14 +302,14 @@ test(const char library[], size_t n, const config_func_t functions[], int argc, 
           fprintf(graph_file, "%f %f\n", n, arg.average ? avg : arg.best ? best : ba);
         }
       } else if (arg.quiet) {
-	printf("%ld\n", (long)(arg.average ? avg : arg.best ? best : reliable ? ba : -1));
+        printf("%ld\n", (long)(arg.average ? avg : arg.best ? best : reliable ? ba : -1));
       } else if (arg.repeat > 1) {
-	if (arg.average == false && arg.best_within == false)
-	  printf ("%20.20s time %lu ms for n = %lu ***   BEST  ***\n", functions[i].funcname, (unsigned long) best, (unsigned long) n);
-	if (arg.best == false  && arg.best_within == false)
-	  printf ("%20.20s time %lu ms +/- %u ms for n = %lu *** AVERAGE ***\n", functions[i].funcname, (unsigned long) avg, 2*integer_sqrt(variance), (unsigned long) n);
-	if (arg.best == false  && arg.average == false)
-	  printf ("%20.20s time %lu ms for n = %lu *** BEST within %d%% *** %s\n", functions[i].funcname, (unsigned long) ba, (unsigned long) n, (int)(100*arg.within), reliable ? "" : "(unreliable result)");
+        if (arg.average == false && arg.best_within == false)
+          printf ("%20.20s time %.2f ms for n = %lu ***   BEST  ***\n", functions[i].funcname, best, (unsigned long) n);
+        if (arg.best == false  && arg.best_within == false)
+          printf ("%20.20s time %.2f ms +/- %u ms for n = %lu *** AVERAGE ***\n", functions[i].funcname, avg, 2*integer_sqrt(variance), (unsigned long) n);
+        if (arg.best == false  && arg.average == false)
+          printf ("%20.20s time %.2f ms for n = %lu *** BEST within %d%% *** %s\n", functions[i].funcname, ba, (unsigned long) n, (int)(100*arg.within), reliable ? "" : "(unreliable result)");
       }
     }
   
