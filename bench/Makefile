@@ -30,7 +30,7 @@ BENCH_DEF=
 RM=rm -rf
 LOG=| tee -a logs.txt
 
-.PHONY: all pgo container queue string plain bench-mlib bench-stl bench-qt bench-glib bench-klib bench-libdynamic bench-sparsepp bench-collectionc bench-tommyds bench-flathashmap bench-emilib bench-emhash bench-hopscotchmap bench-mlib-thread bench-liblfds bench-concurrentqueue bench-boost bench-string bench-plain bench-rigtorp-mpmc-queue bench-cmc
+.PHONY: all pgo container queue string plain bench-mlib bench-stl bench-qt bench-glib bench-klib bench-sparsepp bench-collectionc bench-tommyds bench-flathashmap bench-emilib bench-emhash bench-hopscotchmap bench-mlib-thread bench-liblfds bench-concurrentqueue bench-boost bench-string bench-plain bench-rigtorp-mpmc-queue bench-cmc
 
 all: container-c container-cpp queue string plain bench-find-sort
 
@@ -40,7 +40,7 @@ pgo:
 
 #########################################################################
 
-container-c: bench-mlib bench-glib bench-klib bench-ctl bench-stc bench-CC bench-cmc bench-collectionc bench-libdynamic bench-tommyds bench-uthash bench-qlibc bench-libsrt bench-pottery 
+container-c: bench-mlib bench-glib bench-klib bench-ctl bench-stc bench-CC bench-cmc bench-collectionc bench-tommyds bench-uthash bench-qlibc bench-libsrt bench-pottery 
 	@echo
 	@echo
 
@@ -184,17 +184,6 @@ bench-glib0:
 	@./bench-glib.exe 300 $(LOG)
 	@./bench-glib.exe 320 $(LOG)
 	@./bench-glib.exe 500 $(LOG)
-
-# LIBDYNAMIC shall point to the the source directory where the source is built
-# Newer version of libdynamic requires C23 compliant C library (stdbit.h)
-# Needs to port the build infrastructure.
-bench-libdynamic:
-	@if test -n "$${LIBDYNAMIC}" ; then $(MAKE) bench-libdynamic0 ; else echo "Nothing to be done for LIBDYNAMIC." ; fi
-bench-libdynamic0:
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) bench-libdynamic.c common.c -o bench-libdynamic.exe -I$${LIBDYNAMIC}/src $${LIBDYNAMIC}/.libs/libdynamic.a
-	@./bench-libdynamic.exe 20
-	@./bench-libdynamic.exe 40
-	@./bench-libdynamic.exe 41
 
 bench-tommyds:
 	@cd .. && make external/tommyds
@@ -459,7 +448,6 @@ massif-do: all
 	@valgrind --tool=massif ./bench-qt.exe $(N)
 	@valgrind --tool=massif ./bench-glib.exe $(N)
 	@test -f ./bench-klib.exe && valgrind --tool=massif ./bench-klib.exe $(N)
-	@test -f ./bench-libdynamic.exe && valgrind --tool=massif ./bench-libdynamic.exe $(N)
 
 massif-visu:
 	test -f massif.out.* || $(MAKE) massif-do

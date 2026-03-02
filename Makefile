@@ -75,9 +75,6 @@ external/Verstable:
 external/pottery:
 	mkdir -p external && cd external && git clone https://github.com/ludocode/pottery.git
 
-external/libdynamic:
-	mkdir -p external && cd external && git clone https://github.com/fredrikwidlund/libdynamic.git
-
 external/uthash:
 	mkdir -p external && cd external && git clone https://github.com/troydhanson/uthash
 
