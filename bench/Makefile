@@ -28,7 +28,7 @@ CPPFLAGS=
 N=4
 BENCH_DEF=
 RM=rm -rf
-LOG=| tee -a logs.txt
+LOG=--quiet --best --repeat 3| tee -a logs.txt
 
 .PHONY: all pgo container queue string plain bench-mlib bench-stl bench-qt bench-glib bench-klib bench-sparsepp bench-collectionc bench-tommyds bench-flathashmap bench-emilib bench-emhash bench-hopscotchmap bench-mlib-thread bench-liblfds bench-concurrentqueue bench-boost bench-string bench-plain bench-rigtorp-mpmc-queue bench-cmc
 
@@ -162,7 +162,7 @@ bench-pottery:
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -DPOTTERY_AVAILABLE=1 -I ../external/pottery/include -I ../external/mlib bench-pottery.c common.c -o bench-pottery.exe
 	@./bench-pottery.exe 100 $(LOG)
 	@./bench-pottery.exe 110 $(LOG)
-	@./bench-pottery.exe 200 $(LOG)
+#	@./bench-pottery.exe 200 $(LOG)	# Result is incorrect, so it is not run
 	@./bench-pottery.exe 300 $(LOG)
 	@./bench-pottery.exe 320 $(LOG)
 	@./bench-pottery.exe 500 $(LOG)
@@ -452,3 +452,79 @@ massif-do: all
 massif-visu:
 	test -f massif.out.* || $(MAKE) massif-do
 	for i in massif.out.* ; do ms_print $$i|head -30 ; done
+
+############################################################################
+
+report: report-seq report-sset report-umap report-umap-big report-umap-str report-sort report-queue
+	mkdir -p doc
+	mv BENCH-*.md doc
+
+report-seq:
+	@echo "Bench for best sequence container" > BENCH-SEQ.md
+	@echo >> BENCH-SEQ.md
+	@echo "Rank|Library|Container|Time" >> BENCH-SEQ.md
+	@echo "----|-------|---------|----" >> BENCH-SEQ.md
+	@grep Seq logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-SEQ.md
+	@echo >> BENCH-SEQ.md
+	@LANG=C lscpu |grep "Model name" >> BENCH-SEQ.md
+	cat BENCH-SEQ.md
+
+report-sset:
+	@echo "Bench for best sorted set container" > BENCH-SSET.md
+	@echo >> BENCH-SSET.md
+	@echo "Rank|Library|Container|Time" >> BENCH-SSET.md
+	@echo "----|-------|---------|----" >> BENCH-SSET.md
+	@grep SSet logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-SSET.md
+	@echo >> BENCH-SSET.md
+	@LANG=C lscpu |grep "Model name" >> BENCH-SSET.md
+	cat BENCH-SSET.md
+
+report-umap:
+	@echo "Bench for best unordered map U64 container" > BENCH-UMAP.md
+	@echo >> BENCH-UMAP.md
+	@echo "Rank|Library|Container|Time" >> BENCH-UMAP.md
+	@echo "----|-------|---------|----" >> BENCH-UMAP.md
+	@grep "UMap U64" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-UMAP.md
+	@echo >> BENCH-UMAP.md
+	@LANG=C lscpu |grep "Model name" >> BENCH-UMAP.md
+	cat BENCH-UMAP.md
+
+report-umap-big:
+	@echo "Bench for best unordered map BIG container" > BENCH-UMAP2.md
+	@echo >> BENCH-UMAP2.md
+	@echo "Rank|Library|Container|Time" >> BENCH-UMAP2.md
+	@echo "----|-------|---------|----" >> BENCH-UMAP2.md
+	@grep "UMap Big" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-UMAP2.md
+	@echo >> BENCH-UMAP2.md
+	@LANG=C lscpu |grep "Model name" >> BENCH-UMAP2.md
+	cat BENCH-UMAP2.md
+
+report-umap-str:
+	@echo "Bench for best unordered map string container" > BENCH-UMAP-STR.md
+	@echo >> BENCH-UMAP-STR.md
+	@echo "Rank|Library|Container|Time" >> BENCH-UMAP-STR.md
+	@echo "----|-------|---------|----" >> BENCH-UMAP-STR.md
+	@grep "UMap Str" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-UMAP-STR.md
+	@echo >> BENCH-UMAP-STR.md
+	@LANG=C lscpu |grep "Model name" >> BENCH-UMAP-STR.md
+	cat BENCH-UMAP-STR.md
+
+report-sort:
+	@echo "Bench for best sort container" > BENCH-SORT.md
+	@echo >> BENCH-SORT.md
+	@echo "Rank|Library|Container|Time" >> BENCH-SORT.md
+	@echo "----|-------|---------|----" >> BENCH-SORT.md
+	@grep "Sort" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-SORT.md
+	@echo >> BENCH-SORT.md
+	@LANG=C lscpu |grep "Model name" >> BENCH-SORT.md
+	cat BENCH-SORT.md
+
+report-queue:
+	@echo "Bench for best thread queue container" > BENCH-QUEUE.md
+	@echo >> BENCH-QUEUE.md
+	@echo "Rank|Library|Container|Time" >> BENCH-QUEUE.md
+	@echo "----|-------|---------|----" >> BENCH-QUEUE.md
+	@grep "Queue" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-QUEUE.md
+	@echo >> BENCH-QUEUE.md
+	@LANG=C lscpu |grep "Model name" >> BENCH-QUEUE.md
+	cat BENCH-QUEUE.md
