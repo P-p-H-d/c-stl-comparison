@@ -10,6 +10,21 @@ Just run `make` to run the benchmark after having running the toplevel Make to g
 * `DENSEHASHMAP`: Path to the google dense hashmap headers
 *
 
-# Result
+# Results
 
-Results are available [here](https://github.com/P-p-H-d/mlib/wiki/performance)
+[Sequence bench](./doc/BENCH-SEQ.md)
+
+[Sorted Set bench](./doc/BENCH-SSET.md)
+
+[Unordered Map U64 bench](./doc/BENCH-UMAP.md)
+
+[Unordered Map Big structure bench](./doc/BENCH-UMAP2.md)
+
+[Unordered Map String bench](./doc/BENCH-STR.md)
+
+[Sort bench](./doc/BENCH-SORT.md)
+
+[Thread Queue bench](./doc/BENCH-QUEUE.md)
+
+Older results are available [here](https://github.com/P-p-H-d/mlib/wiki/performance)
+
