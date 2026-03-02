@@ -302,7 +302,8 @@ test(const char library[], size_t n, const config_func_t functions[], int argc, 
           fprintf(graph_file, "%f %f\n", n, arg.average ? avg : arg.best ? best : ba);
         }
       } else if (arg.quiet) {
-        printf("%ld\n", (long)(arg.average ? avg : arg.best ? best : reliable ? ba : -1));
+        double result = arg.average ? avg : arg.best ? best : ba;
+        printf ("%s:%20.20s [n:%9lu r:%10lu] time = %.2f ms\n", library, functions[i].funcname, (unsigned long) n, 0UL, result);
       } else if (arg.repeat > 1) {
         if (arg.average == false && arg.best_within == false)
           printf ("%20.20s time %.2f ms for n = %lu ***   BEST  ***\n", functions[i].funcname, best, (unsigned long) n);
