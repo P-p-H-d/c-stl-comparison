@@ -173,13 +173,13 @@ extern "C"
 void compiler_barrier(void *p);
 
 #define C_N_SEQ_BYTES 1000000000
-#define C_N_SEQ_ARRAY  100000000
-#define C_N_SEQ_LIST    10000000
-#define C_N_UMAP_U64    10000000
+#define C_N_SEQ_ARRAY  200000000
+#define C_N_SEQ_LIST    20000000
+#define C_N_UMAP_U64    20000000
 #define C_N_SORT        10000000
 #define C_N_SERIAL_JSON 10000000
-#define C_N_SSET         1000000
-#define C_N_UMAP_BIG     1000000
-#define C_N_THR_QUEUE    1000000
+#define C_N_SSET         2000000
+#define C_N_UMAP_BIG     3000000
+#define C_N_THR_QUEUE    5000000
 
 #endif
