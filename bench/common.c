@@ -51,7 +51,7 @@ struct parse_opt_s {
   double from, to, step, grow;
   double within;
   unsigned repeat;
-  bool graph, best, best_within, average, quiet, clear_cache;
+  bool graph, best, best_within, average, quiet, clear_cache, sleep;
 };
 
 static void
@@ -69,6 +69,7 @@ parse_config(struct parse_opt_s *opt, int argc, const char *argv[])
   opt->best_within = false;
   opt->average = false;
   opt->quiet = false;
+  opt->sleep = false;
   opt->clear_cache = false;
   opt->repeat = 1;
   opt->within = .05;
@@ -114,6 +115,8 @@ parse_config(struct parse_opt_s *opt, int argc, const char *argv[])
           opt->best_within = false;
         } else if (strcmp(argv[i], "--quiet") == 0) {
           opt->quiet = true;
+        } else if (strcmp(argv[i], "--sleep") == 0) {
+          opt->sleep = true;
         } else if (strcmp(argv[i], "--clear-cache") == 0) {
           opt->clear_cache = true;
         } else {
@@ -220,9 +223,9 @@ static unsigned integer_sqrt(unsigned n)
 static void
 clear_cache(unsigned long n)
 {
-  volatile char *p = (volatile char *) malloc(n);
+  volatile unsigned long *p = (volatile unsigned long *) malloc(n);
   if (!p) abort();
-  for(unsigned long i = 0; i < n ; i++)
+  for(unsigned long i = 0; i < n / sizeof(unsigned long); i++)
     p[i] = rand_get();
   free((void*)p);
 }
@@ -269,11 +272,12 @@ test(const char library[], size_t n, const config_func_t functions[], int argc, 
       // Measure the time of the test_function
       for(unsigned r = 0; r < arg.repeat; r++) {
         if (arg.clear_cache) clear_cache(100*1024*1024);
-          double t0 = test_function( library, (arg.graph|arg.best|arg.average|arg.quiet) ? NULL : functions[i].funcname, (size_t) n, functions[i].func);
-          best = (t0 < best) ? t0 : best;
-          avg += t0;
-          variance += t0 * t0;
-          measure[r] = t0;
+        if (arg.sleep) sleep(1);
+        double t0 = test_function( library, (arg.graph|arg.best|arg.average|arg.quiet) ? NULL : functions[i].funcname, (size_t) n, functions[i].func);
+        best = (t0 < best) ? t0 : best;
+        avg += t0;
+        variance += t0 * t0;
+        measure[r] = t0;
       }
 
       // Closure of the tests
