@@ -35,7 +35,7 @@ static void test_hash(size_t n)
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  { 700,         "Hash (xxhash64)", 1000000000,test_hash_prepare, test_hash, test_hash_final}
+  { 700,         "Hash (xxhash64)", C_N_SEQ_BYTES,test_hash_prepare, test_hash, test_hash_final}
 };
 
 int main(int argc, const char *argv[])

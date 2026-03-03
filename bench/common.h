@@ -1,7 +1,7 @@
 /*
  * M*LIB - common functions for bench module
  *
- * Copyright (c) 2017-2024, Patrick Pelissier
+ * Copyright (c) 2017-2026, Patrick Pelissier
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -171,5 +171,15 @@ static inline int get_cpu_count(void)
 extern "C"
 #endif
 void compiler_barrier(void *p);
+
+#define C_N_SEQ_BYTES 1000000000
+#define C_N_SEQ_ARRAY  100000000
+#define C_N_SEQ_LIST    10000000
+#define C_N_UMAP_U64    10000000
+#define C_N_SORT        10000000
+#define C_N_SERIAL_JSON 10000000
+#define C_N_SSET         1000000
+#define C_N_UMAP_BIG     1000000
+#define C_N_THR_QUEUE    1000000
 
 #endif

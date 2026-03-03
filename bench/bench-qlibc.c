@@ -101,9 +101,9 @@ static void test_rbtree(size_t n)
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  { 100,    "Seq(List)", 10000000, 0, test_list, 0},
-  { 110,   "Seq(Array)", 100000000, 0, test_array, 0},
-  { 200,  "SSet(Rbtree)", 1000000, 0, test_rbtree, 0}
+  { 100,    "Seq(List)", C_N_SEQ_LIST, 0, test_list, 0},
+  { 110,   "Seq(Array)", C_N_SEQ_ARRAY, 0, test_array, 0},
+  { 200,  "SSet(Rbtree)", C_N_SSET, 0, test_rbtree, 0}
 };
 
 int main(int argc, const char *argv[])

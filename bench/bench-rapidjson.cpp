@@ -173,9 +173,9 @@ bench_vector_ulong_clear(void)
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  {850,    "serial-json STR", 10000000, bench_vector_string_init, bench_vector_string_json_run, bench_vector_string_clear},
-  {860,    "serial-json STR.big", 10000000, bench_vector_string_init_big, bench_vector_string_json_run, bench_vector_string_clear},
-  {870,    "serial-json INT", 10000000, bench_vector_ulong_init, bench_vector_ulong_json_run, bench_vector_ulong_clear}
+  {850,    "serial-json STR", C_N_SERIAL_JSON, bench_vector_string_init, bench_vector_string_json_run, bench_vector_string_clear},
+  {860,    "serial-json STR.big", C_N_SERIAL_JSON, bench_vector_string_init_big, bench_vector_string_json_run, bench_vector_string_clear},
+  {870,    "serial-json INT", C_N_SERIAL_JSON, bench_vector_ulong_init, bench_vector_ulong_json_run, bench_vector_ulong_clear}
 };
 
 int main(int argc, const char *argv[])

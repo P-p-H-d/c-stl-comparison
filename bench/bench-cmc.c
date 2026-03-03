@@ -190,10 +190,10 @@ test_dict_big(size_t  n)
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  { 110,   "Seq(Array)", 100000000, 0, test_array, 0},
-  { 200,  "SSet(tree)", 1000000, 0, test_rbtree, 0},
-  { 300,    "UMap U64(hmap)", 10000000, 0, test_dict, 0},
-  //{ 41, "dictBig", 1000000, 0, test_dict_big, 0},
+  { 110,   "Seq(Array)", C_N_SEQ_ARRAY, 0, test_array, 0},
+  { 200,  "SSet(tree)", C_N_SSET, 0, test_rbtree, 0},
+  { 300,    "UMap U64(hmap)", C_N_UMAP_U64, 0, test_dict, 0},
+  //{ 41, "dictBig", C_N_UMAP_BIG, 0, test_dict_big, 0},
 };
 
 int main(int argc, const char *argv[])

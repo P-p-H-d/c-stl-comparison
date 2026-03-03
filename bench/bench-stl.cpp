@@ -257,18 +257,18 @@ static void test_stable_sort(size_t n)
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  { 100,    "Seq(List)", 10000000, 0, test_list, 0},
-  { 110,   "Seq(Array)", 100000000, 0, test_array, 0},
-  { 120,   "Seq(Deque)", 100000000, 0, test_deque, 0},
-  { 200,  "SSet(Rbtree)", 1000000, 0, test_rbtree, 0},
-  { 300, "UMap U64(map)", 10000000, 0, test_dict1, 0},
-  { 301, "UMap U64(umap)", 10000000, 0, test_dict2, 0},
-  { 320, "UMap Big(umap)", 1000000, 0, test_dict_big, 0},
-  { 330, "UMap Str(umap)", 1000000, 0, test_dict_str, 0},
-  { 331,  "UMap Str(map)", 1000000, 0, test_dict_str2, 0},
-  { 310, "UMAP U64 Linear(umap)", 1000000, 0, test_dict2_linear, 0},
-  { 500,          "Sort", 10000000, 0, test_sort, 0},
-  { 510,   "Stable Sort", 10000000, 0, test_stable_sort, 0}
+  { 100,    "Seq(List)", C_N_SEQ_LIST, 0, test_list, 0},
+  { 110,   "Seq(Array)", C_N_SEQ_ARRAY, 0, test_array, 0},
+  { 120,   "Seq(Deque)", C_N_SEQ_ARRAY, 0, test_deque, 0},
+  { 200,  "SSet(Rbtree)", C_N_SSET, 0, test_rbtree, 0},
+  { 300, "UMap U64(map)", C_N_UMAP_U64, 0, test_dict1, 0},
+  { 301, "UMap U64(umap)", C_N_UMAP_U64, 0, test_dict2, 0},
+  { 320, "UMap Big(umap)", C_N_UMAP_BIG, 0, test_dict_big, 0},
+  { 330, "UMap Str(umap)", C_N_UMAP_BIG, 0, test_dict_str, 0},
+  { 331,  "UMap Str(map)", C_N_UMAP_BIG, 0, test_dict_str2, 0},
+  { 310, "UMAP U64 Linear(umap)", C_N_UMAP_U64, 0, test_dict2_linear, 0},
+  { 500,          "Sort", C_N_SORT, 0, test_sort, 0},
+  { 510,   "Stable Sort", C_N_SORT, 0, test_stable_sort, 0}
 };
 
 int main(int argc, const char *argv[])

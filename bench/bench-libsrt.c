@@ -62,8 +62,8 @@ static void test_sort(size_t n)
 
 
 const config_func_t table[] = {
-  { 110,   "Seq(Array)", 100000000, 0, test_array, 0},
-  { 500,           "Sort", 10000000, 0, test_sort, 0}
+  { 110,   "Seq(Array)", C_N_SEQ_ARRAY, 0, test_array, 0},
+  { 500,           "Sort", C_N_SORT, 0, test_sort, 0}
 };
 
 int main(int argc, const char *argv[])

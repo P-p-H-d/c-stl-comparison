@@ -163,13 +163,13 @@ static void test_sort(size_t n)
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  { 10,    "List", 10000000, 0, test_list, 0},
-  { 20,   "Array", 100000000, 0, test_array, 0},
-  { 30,  "Rbtree", 1000000, 0, test_rbtree, 0},
-  { 40, "dict(m)",   10000000, 0, test_dict1, 0},
-  { 41, "dictBig",    1000000, 0, test_dict_big, 0},
-  { 42, "dict(u)",   10000000, 0, test_dict2, 0},
-  { 50, "Sort",      10000000, 0, test_sort, 0}
+  { 10,    "List", C_N_SEQ_LIST, 0, test_list, 0},
+  { 20,   "Array", C_N_SEQ_ARRAY, 0, test_array, 0},
+  { 30,  "Rbtree", C_N_SSET, 0, test_rbtree, 0},
+  { 40, "dict(m)",   C_N_UMAP_U64, 0, test_dict1, 0},
+  { 41, "dictBig",    C_N_UMAP_BIG, 0, test_dict_big, 0},
+  { 42, "dict(u)",   C_N_UMAP_U64, 0, test_dict2, 0},
+  { 50, "Sort",      C_N_SORT, 0, test_sort, 0}
 };
 
 int main(int argc, const char *argv[])

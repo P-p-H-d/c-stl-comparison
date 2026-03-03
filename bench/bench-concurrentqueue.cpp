@@ -86,7 +86,7 @@ static void test_queue(size_t n)
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  { 60,    "Queue MPMC", 1000000, 0, test_queue, 0}
+  { 60,    "Queue MPMC", C_N_THR_QUEUE, 0, test_queue, 0}
 };
 
 int main(int argc, const char *argv[])

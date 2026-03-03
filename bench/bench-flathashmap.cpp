@@ -126,10 +126,10 @@ test_dict_str(size_t  n)
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  { 41,    "dictBig", 1000000, 0, test_dict_big, 0},
-  { 42,       "dict", 10000000, 0, test_dict2, 0},
-  { 43,    "DictStr", 1000000, 0, test_dict_str, 0},
-  { 46, "DictLinear", 10000000, 0, test_dict2_linear, 0}
+  { 41,    "dictBig", C_N_UMAP_BIG, 0, test_dict_big, 0},
+  { 42,       "dict", C_N_UMAP_U64, 0, test_dict2, 0},
+  { 43,    "DictStr", C_N_UMAP_BIG, 0, test_dict_str, 0},
+  { 46, "DictLinear", C_N_UMAP_U64, 0, test_dict2_linear, 0}
 };
 
 int main(int argc, const char *argv[])

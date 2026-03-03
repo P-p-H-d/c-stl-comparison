@@ -179,12 +179,12 @@ static void test_sort(size_t n)
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  { 100,    "Seq(List)", 10000000, 0, test_list, 0},
-  { 110,   "Seq(Array)", 100000000, 0, test_array, 0},
-  { 200,  "SSet(sset)", 1000000, 0, test_rbtree, 0},
-  { 300,    "UMap U64(hmap)", 10000000, 0, test_dict, 0},
-  { 320, "UMap Big(hmap)", 1000000, 0, test_dict_big, 0},
-  { 500,    "Sort", 10000000, 0, test_sort, 0},
+  { 100,    "Seq(List)", C_N_SEQ_LIST, 0, test_list, 0},
+  { 110,   "Seq(Array)", C_N_SEQ_ARRAY, 0, test_array, 0},
+  { 200,  "SSet(sset)", C_N_SSET, 0, test_rbtree, 0},
+  { 300,    "UMap U64(hmap)", C_N_UMAP_U64, 0, test_dict, 0},
+  { 320, "UMap Big(hmap)", C_N_UMAP_BIG, 0, test_dict_big, 0},
+  { 500,    "Sort", C_N_SORT, 0, test_sort, 0},
 };
 
 int main(int argc, const char *argv[])

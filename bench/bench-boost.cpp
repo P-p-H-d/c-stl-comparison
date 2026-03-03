@@ -186,11 +186,11 @@ static void test_queue(size_t n)
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  { 300, "UMap U64(uflat_map)", 10000000, 0, test_dict2, 0},
-  { 310, "UMAP U64 Linear(uflat_map)", 10000000, 0, test_dict2_linear, 0},
-  { 320, "UMap Big(uflat_map)",  1000000, 0, test_dict_big, 0},
-  { 330, "UMap Str(uflat_map)",  1000000, 0, test_dict_str, 0},
-  { 600, "Queue MPMC (lockfree)", 1000000, 0, test_queue, 0}
+  { 300, "UMap U64(uflat_map)", C_N_UMAP_U64, 0, test_dict2, 0},
+  { 310, "UMAP U64 Linear(uflat_map)", C_N_UMAP_U64, 0, test_dict2_linear, 0},
+  { 320, "UMap Big(uflat_map)",  C_N_UMAP_BIG, 0, test_dict_big, 0},
+  { 330, "UMap Str(uflat_map)",  C_N_UMAP_BIG, 0, test_dict_str, 0},
+  { 600, "Queue MPMC (lockfree)", C_N_THR_QUEUE, 0, test_queue, 0}
 };
 
 int main(int argc, const char *argv[])

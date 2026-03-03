@@ -82,8 +82,8 @@ test_dict_big(size_t  n)
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  { 300, "UMap U64(dict)",  10000000, 0, test_dict, 0},
-  { 320, "UMap Big(dict)",  1000000, 0, test_dict_big, 0},
+  { 300, "UMap U64(dict)",  C_N_UMAP_U64, 0, test_dict, 0},
+  { 320, "UMap Big(dict)",  C_N_UMAP_BIG, 0, test_dict_big, 0},
 };
 
 int main(int argc, const char *argv[])
