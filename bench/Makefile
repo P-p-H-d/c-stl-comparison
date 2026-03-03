@@ -236,7 +236,7 @@ bench-stl:
 	@./bench-stl.exe 110 $(LOG)
 	@./bench-stl.exe 120 $(LOG)
 	@./bench-stl.exe 200 $(LOG)
-	@./bench-stl.exe 300 $(LOG)
+#	@./bench-stl.exe 300 $(LOG)	# Too slow
 	@./bench-stl.exe 301 $(LOG)
 	@./bench-stl.exe 320 $(LOG)
 	@./bench-stl.exe 330 $(LOG)
