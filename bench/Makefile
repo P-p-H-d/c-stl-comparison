@@ -40,7 +40,7 @@ pgo:
 
 #########################################################################
 
-container-c: bench-mlib bench-glib bench-klib bench-ctl bench-stc bench-CC bench-cmc bench-collectionc bench-tommyds bench-uthash bench-qlibc bench-libsrt bench-pottery 
+container-c: bench-mlib bench-glib bench-klib bench-ctl bench-stc bench-CC bench-cmc bench-collectionc bench-tommyds bench-uthash bench-qlibc bench-libsrt bench-pottery bench-verstable bench-xxhash
 	@echo
 	@echo
 
