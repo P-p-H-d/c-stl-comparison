@@ -23,6 +23,9 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #define NDEBUG
+#define BENCH_CAN_USE_STL      1
+#define BENCH_CAN_USE_MSTARLIB 1
+#define BENCH_CAN_USE_POTTERY  1
 
 #include <string>
 #include <sstream>
@@ -54,7 +57,7 @@ extern "C" {
  * BENCH
  * 2000000
  * 1. Generate N strings of random numbers 32 bits.
- * 2. Concat all strings in a string usigned a random permutation of N.
+ * 2. Concat all strings in a string unsigned a random permutation of N.
  * 3. Replace "1234" in the string into "WELL" until nothing remains.
  * 4. Replace "56789" in the string into "DONE" until nothing remains.
  * Return the final string length.

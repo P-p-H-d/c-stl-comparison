@@ -98,6 +98,7 @@ bench-mlib: pre-bench
 	@./bench-mlib.exe 510 $(LOG)
 	@./bench-mlib.exe 700 $(LOG)
 	@./bench-mlib.exe 701 $(LOG)
+	@./bench-mlib.exe 900 $(LOG)
 
 bench-mlib-thread:
 	$(CC) $(CFLAGS) $(CPPFLAGS) -I $(MLIB) bench-mlib.c common.c -DMULTI_THREAD_MEASURE -pthread -o bench-mlib-thread.exe
@@ -147,6 +148,7 @@ bench-ctl:
 	@./bench-ctl.exe 200 $(LOG)
 	@./bench-ctl.exe 300 $(LOG)
 	@./bench-ctl.exe 500 $(LOG)
+#	@./bench-ctl.exe 900 $(LOG)	# Result is too slow, so it is not run
 
 bench-stc:
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(STC)/include bench-stc.c common.c -o bench-stc.exe
@@ -156,16 +158,18 @@ bench-stc:
 	@./bench-stc.exe 300 $(LOG)
 	@./bench-stc.exe 320 $(LOG)
 	@./bench-stc.exe 500 $(LOG)
+	@./bench-stc.exe 900 $(LOG)
 
 bench-pottery:
 	@cd .. && make external/pottery
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -DPOTTERY_AVAILABLE=1 -I ../external/pottery/include -I ../external/mlib bench-pottery.c common.c -o bench-pottery.exe
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I ../external/pottery/util -I ../external/pottery/include -I ../external/mlib bench-pottery.c common.c ../external/pottery/util/pottery/string/string.c -o bench-pottery.exe
 	@./bench-pottery.exe 100 $(LOG)
 	@./bench-pottery.exe 110 $(LOG)
 #	@./bench-pottery.exe 200 $(LOG)	# Result is incorrect, so it is not run
 	@./bench-pottery.exe 300 $(LOG)
 	@./bench-pottery.exe 320 $(LOG)
 	@./bench-pottery.exe 500 $(LOG)
+#	@./bench-pottery.exe 900 $(LOG)	# Result is too slow, so it is not run
 
 bench-verstable:
 	@cd .. && make external/Verstable
@@ -181,9 +185,10 @@ bench-glib0:
 	@./bench-glib.exe 100 $(LOG)
 	@./bench-glib.exe 110 $(LOG)
 	@./bench-glib.exe 200 $(LOG)
-	@./bench-glib.exe 300 $(LOG)
+	@./bench-glib.exe 300 $(LOG)	# Quite slow. To disable?
 	@./bench-glib.exe 320 $(LOG)
 	@./bench-glib.exe 500 $(LOG)
+#	@./bench-glib.exe 900 $(LOG)	# Result is too slow, so it is not run
 
 bench-tommyds:
 	@cd .. && make external/tommyds
@@ -243,6 +248,7 @@ bench-stl:
 	@./bench-stl.exe 331 $(LOG)
 	@./bench-stl.exe 500 $(LOG)
 	@./bench-stl.exe 510 $(LOG)
+	@./bench-stl.exe 900 $(LOG)
 
 # QT shall point to the the directory containing the file .pc are stored (can be let empty if system installed)
 bench-qt:
@@ -391,24 +397,18 @@ bench-maxdict:
 # BSTRLIB shall point to the BSTRLIB sources
 # LIBSRT shall point to the LIBSRT sources
 bench-string:
-	@if test -n "$${BSTRLIB}" ; then $(MAKE) bench-string-step1 BENCH_DEF="-DBENCH_CAN_USE_BSTRLIB -I ${BSTRLIB} $${BSTRLIB}/obj/bstrlib.o $${BSTRLIB}/obj/bstraux.o $${BSTRLIB}/obj/bstrwrap.o" ; else $(MAKE) bench-string-step1 ; fi
-
-bench-string-step1:
-	@if test -n "$${LIBSRT}" ; then $(MAKE) bench-string-step2 BENCH_DEF="$(BENCH_DEF) -DBENCH_CAN_USE_LIBSRT -I$${LIBSRT}/src $${LIBSRT}/src/.libs/libsrt.a" ; else $(MAKE) bench-string-step2 BENCH_DEF="$(BENCH_DEF)"; fi
+	@if test -n "$${BSTRLIB}" ; then $(MAKE) bench-string-step2 BENCH_DEF="-DBENCH_CAN_USE_BSTRLIB -I ${BSTRLIB} $${BSTRLIB}/obj/bstrlib.o $${BSTRLIB}/obj/bstraux.o $${BSTRLIB}/obj/bstrwrap.o" ; else $(MAKE) bench-string-step2 ; fi
 
 #NOTE: Need to build by hand sds.o since it is not build by default and sds.c is not compatible with C++
 bench-string-step2:
 	@if test -n "$${SDS}" ; then $(MAKE) bench-string-step4 BENCH_DEF="$(BENCH_DEF) -fpermissive -DBENCH_CAN_USE_SDS -I$${SDS}/ $${SDS}/sds.o" ; else $(MAKE) bench-string-step4 BENCH_DEF="$(BENCH_DEF)"; fi
 
 bench-string-step4:
-	@if test -n "$${GLIB}" ; then $(MAKE) bench-string-step5 BENCH_DEF="$(BENCH_DEF) -DBENCH_CAN_USE_GLIB $$(pkg-config --cflags --libs glib-2.0)" ; else $(MAKE) bench-string-step5 BENCH_DEF="$(BENCH_DEF)"; fi
-
-bench-string-step5:
-	@if test -n "$${POTTERY}" ; then $(MAKE) bench-string-step6 BENCH_DEF="$(BENCH_DEF) -DBENCH_CAN_USE_POTTERY -I$${POTTERY}/include -I$${POTTERY}/util/ $${POTTERY}/util/pottery/string/string.c" ; else $(MAKE) bench-string-step6 BENCH_DEF="$(BENCH_DEF)"; fi
+	@PKG_CONFIG_PATH=$${GLIB} pkg-config glib-2.0 && $(MAKE) bench-string-step6 BENCH_DEF="$(BENCH_DEF) -DBENCH_CAN_USE_GLIB $$(PKG_CONFIG_PATH=$${GLIB} pkg-config --cflags --libs glib-2.0)" || $(MAKE) bench-string-step6 BENCH_DEF="$(BENCH_DEF)"
 
 bench-string-step6:
-	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -DBENCH_CAN_USE_STL -DBENCH_CAN_USE_MSTARLIB bench-string.cpp common.c $(BENCH_DEF) -o bench-string.exe 
-	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -DBENCH_CAN_USE_STL -DBENCH_CAN_USE_MSTARLIB bench-string-2.cpp common.c $(BENCH_DEF) -o bench-string-2.exe
+	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -I ../external/pottery/util -I ../external/pottery/include -I ../external/libsrt/src bench-string.cpp common.c ../external/pottery/util/pottery/string/string.c ../external/libsrt/src/.libs/libsrt.a $(BENCH_DEF) -o bench-string.exe 
+	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -I ../external/pottery/util -I ../external/pottery/include bench-string-2.cpp common.c ../external/pottery/util/pottery/string/string.c $(BENCH_DEF) -o bench-string-2.exe
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -DBENCH_CAN_USE_MSTARLIB bench-string-3-mlib.c -o bench-string-3-mlib.exe
 	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -DBENCH_CAN_USE_STL bench-string-3-stl.cpp -o bench-string-3-stl.exe
 	@./bench-string.exe

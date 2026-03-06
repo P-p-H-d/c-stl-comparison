@@ -50,6 +50,11 @@
 
 #define NDEBUG
 
+#define BENCH_CAN_USE_STL     1
+#define BENCH_CAN_USE_LIBSRT  1
+#define BENCH_CAN_USE_MSTARLIB 1
+#define BENCH_CAN_USE_POTTERY  1
+
 #include <stdio.h>
 #include <time.h>
 #include <limits.h>
