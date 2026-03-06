@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <assert.h>
 
 #include <glib.h>
 
@@ -186,6 +187,59 @@ static void test_sort(size_t n)
 
 /********************************************************************************************/
 
+unsigned *permutation_tab = NULL;
+
+static void bench_string_replace_init(size_t n)
+{
+  if (permutation_tab) free(permutation_tab);
+  permutation_tab = (unsigned *) malloc(n * sizeof(unsigned));
+  if (permutation_tab == NULL) abort();
+  for(unsigned i = 0; i < n; i++)
+    permutation_tab[i] = i;
+  for(unsigned i = 0; i < n; i++) {
+    unsigned j = rand_get() % n;
+    unsigned k = rand_get() % n;
+    unsigned l = permutation_tab[j];
+    permutation_tab[j] = permutation_tab[k];
+    permutation_tab[k] = l;
+  }
+}
+
+static void bench_string_replace_clear(void)
+{
+  free(permutation_tab);
+}
+
+static void bench_string_replace(size_t n)
+{
+  GString **tab = (GString**) malloc (n * sizeof (GString*));
+  assert (tab != 0);
+  // P1
+  for(unsigned i = 0; i < n; i++) {
+    tab[i] = g_string_new(NULL);
+    g_string_printf(tab[i], "%u", rand_get());
+  }
+  // P2
+  GString *str = g_string_new(NULL);
+  for(unsigned i = 0; i < n; i++) {
+    str = g_string_append(str, tab[permutation_tab[i]]->str);
+  }
+  // P3
+  g_string_replace(str, "1234", "WELL", 0);
+  g_string_replace(str, "56789", "DONE", 0);
+  size_t length = str->len;
+
+  // Clean
+  g_string_free(str, TRUE);
+  for(unsigned i = 0; i < n; i++) {
+    g_string_free(tab[i], TRUE);
+  }
+  free(tab);
+  g_result = length;
+}
+
+/********************************************************************************************/
+
 const config_func_t table[] = {
   { 100,    "Seq(List)", C_N_SEQ_LIST, 0, test_list, 0},
   { 110,   "Seq(Array)", C_N_SEQ_ARRAY, 0, test_array, 0},
@@ -193,6 +247,7 @@ const config_func_t table[] = {
   { 300,    "UMap U64(GHashTable)", C_N_UMAP_U64, 0, test_dict, 0},
   { 320, "UMap Big(GHashTable)", C_N_UMAP_BIG, 0, test_dict_big, 0},
   { 500,           "Sort",C_N_SORT, 0, test_sort, 0},
+  { 900, "String Replace", C_N_STR_REPLACE, bench_string_replace_init, bench_string_replace, bench_string_replace_clear}
 };
 
 int main(int argc, const char *argv[])

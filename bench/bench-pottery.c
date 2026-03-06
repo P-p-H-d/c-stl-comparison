@@ -252,6 +252,79 @@ static void test_sort(size_t n)
 }
 
 /********************************************************************************************/
+#include "pottery/string/string.h"
+
+unsigned *permutation_tab = NULL;
+
+static void bench_string_replace_init(size_t n)
+{
+  if (permutation_tab) free(permutation_tab);
+  permutation_tab = (unsigned *) malloc(n * sizeof(unsigned));
+  if (permutation_tab == NULL) abort();
+  for(unsigned i = 0; i < n; i++)
+    permutation_tab[i] = i;
+  for(unsigned i = 0; i < n; i++) {
+    unsigned j = rand_get() % n;
+    unsigned k = rand_get() % n;
+    unsigned l = permutation_tab[j];
+    permutation_tab[j] = permutation_tab[k];
+    permutation_tab[k] = l;
+  }
+}
+
+static void bench_string_replace_clear(void)
+{
+  free(permutation_tab);
+}
+
+size_t pottery_find_cstr(string_t *b, size_t index, const char *pattern)
+{
+  // I cannot find such function in the API
+  const char *s = string_cstr(b);
+  const char *r = strstr(&s[index], pattern);
+  return r == NULL ? SIZE_MAX : r - s;
+}
+
+void pottery_replace_all_str(string_t *str, const char *s, const char *d)
+{
+  size_t i = 0;
+  while (true) {
+    i = pottery_find_cstr(str, i, s);
+    if (i==SIZE_MAX) return;
+    string_remove(str, i, strlen(s));
+    string_insert_cstr(str, i, d);
+  }
+}
+
+static void bench_string_replace(size_t n)
+{
+  string_t *tab = (string_t*) malloc (n * sizeof (string_t));
+  assert (tab != 0);
+  // P1
+  for(unsigned i = 0; i < n; i++) {
+    string_init(&tab[i]);
+    string_append_format(&tab[i], "%u", rand_get());
+  }
+  // P2
+  string_t str;
+  string_init(&str);
+  for(unsigned i = 0; i < n; i++) {
+    string_append_string(&str, &tab[permutation_tab[i]]);
+  }
+  // P3
+  pottery_replace_all_str(&str, "1234", "WELL");
+  pottery_replace_all_str(&str, "56789", "DONE");
+  size_t length = string_length(&str);
+  // Clean
+  string_clear(&str);
+  for(unsigned i = 0; i < n; i++) {
+    string_clear(&tab[i]);
+  }
+  free(tab);
+  g_result = length;
+}
+
+/********************************************************************************************/
 
 const config_func_t table[] = {
   { 100,    "Seq(List)",   C_N_SEQ_LIST, 0, test_list, 0},
@@ -260,6 +333,7 @@ const config_func_t table[] = {
   { 300, "UMap U64(open hash)", C_N_UMAP_U64, 0, test_dict, 0},
   { 320, "UMap Big(open hash)",  C_N_UMAP_BIG, 0, test_dict_big, 0},
   { 500,           "Sort",  C_N_SORT, 0, test_sort, 0},
+  { 900, "String Replace", C_N_STR_REPLACE, bench_string_replace_init, bench_string_replace, bench_string_replace_clear}
 };
 
 int main(int argc, const char *argv[])

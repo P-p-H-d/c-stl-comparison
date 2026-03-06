@@ -1019,6 +1019,60 @@ bench_vector_ulong_clear(void)
 
 /********************************************************************************************/
 
+unsigned *permutation_tab = NULL;
+
+static void bench_string_replace_init(size_t n)
+{
+  if (permutation_tab) free(permutation_tab);
+  permutation_tab = (unsigned *) malloc(n * sizeof(unsigned));
+  if (permutation_tab == NULL) abort();
+  for(unsigned i = 0; i < n; i++)
+    permutation_tab[i] = i;
+  for(unsigned i = 0; i < n; i++) {
+    unsigned j = rand_get() % n;
+    unsigned k = rand_get() % n;
+    unsigned l = permutation_tab[j];
+    permutation_tab[j] = permutation_tab[k];
+    permutation_tab[k] = l;
+  }
+}
+
+static void bench_string_replace_clear(void)
+{
+  free(permutation_tab);
+}
+
+static void bench_string_replace(size_t n)
+{
+  m_string_t *tab = (m_string_t*) malloc (n * sizeof (m_string_t));
+  assert (tab != 0);
+  // P1
+  for(unsigned i = 0; i < n; i++) {
+    m_string_init(tab[i]);
+    m_string_set_ui(tab[i], rand_get());
+  }
+  // P2
+  m_string_t str;
+  m_string_init(str);
+  for(unsigned i = 0; i < n; i++) {
+    m_string_cat(str, tab[permutation_tab[i]]);
+  }
+  // P3
+  m_string_replace_all_cstr(str, "1234", "WELL");
+  m_string_replace_all_cstr(str, "56789", "DONE");
+  size_t length = m_string_size(str);
+
+  // Clean
+  m_string_clear(str);
+  for(unsigned i = 0; i < n; i++) {
+    m_string_clear(tab[i]);
+  }
+  free(tab);
+  g_result = length;
+}
+
+/********************************************************************************************/
+
 const config_func_t table[] = {
   { 100,    "Seq(List)", C_N_SEQ_LIST, 0, test_list, 0},
   { 101,  "Seq(DPList)", C_N_SEQ_LIST, 0, test_dlist, 0},
@@ -1051,7 +1105,8 @@ const config_func_t table[] = {
   { 820, "serial-bin INT", C_N_SERIAL_JSON, bench_vector_ulong_init, bench_vector_ulong_bin_run, bench_vector_ulong_clear},
   { 850, "serial-json STR", C_N_SERIAL_JSON, bench_vector_string_init, bench_vector_string_json_run, bench_vector_string_clear},
   { 860, "serial-json STR.big", C_N_SERIAL_JSON, bench_vector_string_init_big, bench_vector_string_json_run, bench_vector_string_clear},
-  { 870, "serial-json INT", C_N_SERIAL_JSON, bench_vector_ulong_init, bench_vector_ulong_json_run, bench_vector_ulong_clear}
+  { 870, "serial-json INT", C_N_SERIAL_JSON, bench_vector_ulong_init, bench_vector_ulong_json_run, bench_vector_ulong_clear},
+  { 900, "String Replace", C_N_STR_REPLACE, bench_string_replace_init, bench_string_replace, bench_string_replace_clear}
 };
 
 int main(int argc, const char *argv[])

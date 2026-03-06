@@ -256,6 +256,60 @@ static void test_stable_sort(size_t n)
 
 /********************************************************************************************/
 
+unsigned *permutation_tab = NULL;
+
+static void bench_string_replace_init(size_t n)
+{
+  if (permutation_tab) free(permutation_tab);
+  permutation_tab = (unsigned *) malloc(n * sizeof(unsigned));
+  if (permutation_tab == NULL) abort();
+  for(unsigned i = 0; i < n; i++)
+    permutation_tab[i] = i;
+  for(unsigned i = 0; i < n; i++) {
+    unsigned j = rand_get() % n;
+    unsigned k = rand_get() % n;
+    unsigned l = permutation_tab[j];
+    permutation_tab[j] = permutation_tab[k];
+    permutation_tab[k] = l;
+  }
+}
+
+static void bench_string_replace_clear(void)
+{
+  free(permutation_tab);
+}
+
+static void replace_all_stl(string &str, const char pattern[], const char replace[])
+{
+  size_t pos = 0;
+  do {
+    pos = str.find(pattern, pos);
+    if (pos != string::npos) {
+      str.replace (pos, strlen(pattern), replace);
+    }
+  } while (pos != string::npos);
+}
+
+static void bench_string_replace(size_t n)
+{
+  vector<string> tab;
+  tab.resize(n);
+  for(unsigned i = 0; i < n; i++)
+    tab[i] = to_string(rand_get());
+
+  string str;
+  for(unsigned i = 0; i < n; i++) {
+    str += tab[permutation_tab[i]];
+  }
+
+  replace_all_stl(str, "1234", "WELL");
+  replace_all_stl(str, "56789", "DONE");
+
+  g_result = str.length();
+}
+
+/********************************************************************************************/
+
 const config_func_t table[] = {
   { 100,    "Seq(List)", C_N_SEQ_LIST, 0, test_list, 0},
   { 110,   "Seq(Array)", C_N_SEQ_ARRAY, 0, test_array, 0},
@@ -268,7 +322,8 @@ const config_func_t table[] = {
   { 331,  "UMap Str(map)", C_N_UMAP_BIG, 0, test_dict_str2, 0},
   { 310, "UMAP U64 Linear(umap)", C_N_UMAP_U64, 0, test_dict2_linear, 0},
   { 500,          "Sort", C_N_SORT, 0, test_sort, 0},
-  { 510,   "Stable Sort", C_N_SORT, 0, test_stable_sort, 0}
+  { 510,   "Stable Sort", C_N_SORT, 0, test_stable_sort, 0},
+  { 900, "String Replace", C_N_STR_REPLACE, bench_string_replace_init, bench_string_replace, bench_string_replace_clear}
 };
 
 int main(int argc, const char *argv[])
