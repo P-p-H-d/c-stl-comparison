@@ -182,5 +182,6 @@ void compiler_barrier(void *p);
 #define C_N_UMAP_BIG     3000000
 #define C_N_THR_QUEUE    5000000
 #define C_N_STR_REPLACE  8000000
+#define C_N_STR_CONCAT  40000000
 
 #endif

@@ -99,6 +99,7 @@ bench-mlib: pre-bench
 	@./bench-mlib.exe 700 $(LOG)
 	@./bench-mlib.exe 701 $(LOG)
 	@./bench-mlib.exe 900 $(LOG)
+	@./bench-mlib.exe 910 $(LOG)
 
 bench-mlib-thread:
 	$(CC) $(CFLAGS) $(CPPFLAGS) -I $(MLIB) bench-mlib.c common.c -DMULTI_THREAD_MEASURE -pthread -o bench-mlib-thread.exe
@@ -259,6 +260,7 @@ bench-stl:
 	@./bench-stl.exe 500 $(LOG)
 	@./bench-stl.exe 510 $(LOG)
 	@./bench-stl.exe 900 $(LOG)
+	@./bench-stl.exe 910 $(LOG)
 
 # QT shall point to the the directory containing the file .pc are stored (can be let empty if system installed)
 bench-qt:
@@ -418,15 +420,7 @@ bench-string-step4:
 
 bench-string-step6:
 	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -I ../external/pottery/util -I ../external/pottery/include -I ../external/libsrt/src bench-string.cpp common.c ../external/pottery/util/pottery/string/string.c ../external/libsrt/src/.libs/libsrt.a $(BENCH_DEF) -o bench-string.exe 
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -DBENCH_CAN_USE_MSTARLIB bench-string-3-mlib.c -o bench-string-3-mlib.exe
-	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -DBENCH_CAN_USE_STL bench-string-3-stl.cpp -o bench-string-3-stl.exe
 	@./bench-string.exe
-	@./bench-string-3-mlib.exe
-	@./bench-string-3-stl.exe
-
-bench-string-pgo:
-	$(MAKE) bench-string XCFLAGS="-fprofile-generate=pgo"
-	$(MAKE) bench-string XCFLAGS="-fprofile-use=pgo"
 
 ############################################################################
 
