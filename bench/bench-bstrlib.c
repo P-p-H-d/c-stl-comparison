@@ -70,15 +70,34 @@ static void bench_string_replace(size_t n)
   g_result = length;
 }
 
+static void bench_string_concat(size_t n)
+{
+  bstring *tab = (bstring *) malloc (n * sizeof(bstring)), dst;
+  if (!tab) abort();
+  dst = bfromcstr("");
+  for(size_t i = 0; i < n; i++)
+    tab[i] = bfromcstr("");
+  for(size_t i = 0; i < n; i++)
+    bassigncstr(tab[i], "THIS IS IT");
+  for(size_t i = 0; i < n; i++)
+    bconcat(dst, tab[i]);
+  for(size_t i = 0; i < n; i++)
+    bdestroy(tab[i]);
+  g_result = blength(dst);
+  bdestroy(dst);
+  free(tab);
+}
+
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  { 900, "String Replace", C_N_STR_REPLACE, bench_string_replace_init, bench_string_replace, bench_string_replace_clear}
+  { 900, "String Replace", C_N_STR_REPLACE, bench_string_replace_init, bench_string_replace, bench_string_replace_clear},
+  { 910, "String Concat", C_N_STR_CONCAT, 0, bench_string_concat, 0},
 };
 
 int main(int argc, const char *argv[])
 {
-  test("SDS", numberof(table), table, argc, argv);
+  test("BSTRLIB", numberof(table), table, argc, argv);
   exit(0);
 }
 

@@ -160,6 +160,7 @@ bench-stc:
 	@./bench-stc.exe 320 $(LOG)
 	@./bench-stc.exe 500 $(LOG)
 	@./bench-stc.exe 900 $(LOG)
+	@./bench-stc.exe 910 $(LOG)
 
 bench-pottery:
 	@cd .. && make external/pottery
@@ -236,11 +237,13 @@ bench-sds:
 	@cd .. && make external/sds
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I ../external/sds bench-sds.c common.c ../external/sds/sds.c -o bench-sds.exe
 #	@./bench-sds.exe 900 $(LOG)	# Result is too slow, so it is not run
+	@./bench-sds.exe 910 $(LOG)
 
 bench-bstrlib:
 	@cd .. && make external/bstrlib/libbstrlib.a
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I ../external/bstrlib bench-bstrlib.c common.c ../external/bstrlib/libbstrlib.a -o bench-bstrlib.exe
 	@./bench-bstrlib.exe 900 $(LOG)
+	@./bench-bstrlib.exe 910 $(LOG)
 
 ############################################################################
 # C++ Libraries
