@@ -528,7 +528,7 @@ report-hash:
 	@echo >> BENCH-HASH.md
 	@echo "Rank|Library|Container|Time" >> BENCH-HASH.md
 	@echo "----|-------|---------|----" >> BENCH-HASH.md
-	@grep "Hash" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-HASH.md
+	@grep "Hash " logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-HASH.md
 	@echo >> BENCH-HASH.md
 	@LANG=C lscpu |grep "Model name" >> BENCH-HASH.md
 	cat BENCH-HASH.md
