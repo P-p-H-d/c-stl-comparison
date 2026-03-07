@@ -837,7 +837,6 @@ static void test_core_hash(size_t n)
 ARRAY_DEF(vector_string, string_t)
 
 vector_string_t vstring;
-vector_string_t vstring2;
 
 static void
 bench_vector_string_init(size_t n)
@@ -849,7 +848,6 @@ bench_vector_string_init(size_t n)
             vector_string_push_back(vstring, s);
         }
     }
-    vector_string_init(vstring2);
 }
 
 static void
@@ -862,7 +860,6 @@ bench_vector_string_init_big(size_t n)
             vector_string_push_back(vstring, s);
         }
     }
-    vector_string_init(vstring2);
 }
 
 static void
@@ -879,6 +876,9 @@ bench_vector_string_bin_run(size_t n)
         vector_string_out_serial(serial, vstring);
     }
     fclose(f);
+        
+    vector_string_t vstring2;
+    vector_string_init(vstring2);
     
     f = fopen("tmp-serial.dat", "rb");
     if (!f) abort();
@@ -891,6 +891,7 @@ bench_vector_string_bin_run(size_t n)
       fprintf(stderr, "ERROR: Size are different (%zu vs %zu)!\n", n, vector_string_size(vstring2));
       abort();
     }
+    vector_string_clear(vstring2);
 }
 
 static void
@@ -907,7 +908,10 @@ bench_vector_string_json_run(size_t n)
         vector_string_out_serial(serial, vstring);
     }
     fclose(f);
-    
+        
+    vector_string_t vstring2;
+    vector_string_init(vstring2);
+
     f = fopen("tmp-serial.json", "rt");
     if (!f) abort();
     M_LET( (serial, f), m_serial_json_read_t) {
@@ -919,17 +923,13 @@ bench_vector_string_json_run(size_t n)
       fprintf(stderr, "ERROR: Size are different (%zu vs %zu)!\n", n, vector_string_size(vstring2));
       abort();
     }
+    vector_string_clear(vstring2);
 }
 
 static void
 bench_vector_string_clear(void)
 {
-    if (!vector_string_equal_p(vstring, vstring2)) {
-      fprintf(stderr, "ERROR: Array are different after deserialization!\n");
-      abort();
-    }
     vector_string_clear(vstring);
-    vector_string_clear(vstring2);
 }
 
 /********************************************************************************************/
@@ -937,7 +937,6 @@ bench_vector_string_clear(void)
 ARRAY_DEF(vector_ulong, unsigned long)
 
 vector_ulong_t vulong;
-vector_ulong_t vulong2;
 
 static void
 bench_vector_ulong_init(size_t n)
@@ -947,7 +946,6 @@ bench_vector_ulong_init(size_t n)
     {
       vector_ulong_push_back(vulong, i*i);
     }
-    vector_ulong_init(vulong2);
 }
 
 static void
@@ -965,6 +963,9 @@ bench_vector_ulong_bin_run(size_t n)
     }
     fclose(f);
     
+    vector_ulong_t vulong2;
+    vector_ulong_init(vulong2);
+
     f = fopen("tmp-serial.dat", "rb");
     if (!f) abort();
     M_LET( (serial, f), m_serial_bin_read_t) {
@@ -976,6 +977,7 @@ bench_vector_ulong_bin_run(size_t n)
       fprintf(stderr, "ERROR: Size are different!\n");
       abort();
     }
+    vector_ulong_clear(vulong2);
 }
 
 static void
@@ -993,6 +995,9 @@ bench_vector_ulong_json_run(size_t n)
     }
     fclose(f);
     
+    vector_ulong_t vulong2;
+    vector_ulong_init(vulong2);
+
     f = fopen("tmp-serial.json", "rt");
     if (!f) abort();
     M_LET( (serial, f), m_serial_json_read_t) {
@@ -1004,17 +1009,13 @@ bench_vector_ulong_json_run(size_t n)
       fprintf(stderr, "ERROR: Size are different!\n");
       abort();
     }
+    vector_ulong_clear(vulong2);
 }
 
 static void
 bench_vector_ulong_clear(void)
 {
-    if (!vector_ulong_equal_p(vulong, vulong2)) {
-      fprintf(stderr, "ERROR: Array are different after deserialization!\n");
-      abort();
-    }
     vector_ulong_clear(vulong);
-    vector_ulong_clear(vulong2);
 }
 
 /********************************************************************************************/

@@ -99,6 +99,9 @@ external/sds:
 external/bstrlib:
 	mkdir -p external && cd external && git clone https://github.com/websnarf/bstrlib
 
+external/rapidjson:
+	mkdir -p external && cd external && git clone https://github.com/Tencent/rapidjson.git
+
 ###########################################################
 # 		Build external Libraries
 ###########################################################

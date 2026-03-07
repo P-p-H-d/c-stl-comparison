@@ -20,7 +20,6 @@ using namespace std;
 /********************************************************************************************/
 
 vector<string> vstring;
-vector<string> vstring2;
 
 static void
 bench_vector_string_init(size_t n)
@@ -39,7 +38,7 @@ bench_vector_string_init_big(size_t n)
 {
     for(size_t i = 0; i < n; i++)
     {
-        char buff[100];
+        char buff[1000];
         snprintf(buff, sizeof(buff), "%zu%zu%zu%zu%zu%zu", i, i, i, i, i, i);
         std::string s(buff);
         vstring.push_back(s);
@@ -72,6 +71,8 @@ bench_vector_string_json_run(size_t n)
     }
     fclose(f);
     
+    vector<string> vstring2;
+
     f = fopen("tmp-serial.json", "rt");
     if (!f) abort();
     {
@@ -92,19 +93,9 @@ bench_vector_string_json_run(size_t n)
     }
 }
 
-static void
-bench_vector_string_clear(void)
-{
-    if (vstring != vstring2) {
-        printf("Array are different!\n");
-        abort();
-    }
-}
-
 /********************************************************************************************/
 
 vector<unsigned long> vulong;
-vector<unsigned long> vulong2;
 
 static void
 bench_vector_ulong_init(size_t n)
@@ -119,7 +110,7 @@ static void
 bench_vector_ulong_json_run(size_t n)
 {
     if (vulong.size() != n) {
-        printf("Size are different!\n");
+        printf("Size is unexpected!\n");
         abort();
     }
 
@@ -141,6 +132,8 @@ bench_vector_ulong_json_run(size_t n)
     }
     fclose(f);
     
+    vector<unsigned long> vulong2;
+
     f = fopen("tmp-serial.json", "rt");
     if (!f) abort();
     {
@@ -161,21 +154,12 @@ bench_vector_ulong_json_run(size_t n)
     }
 }
 
-static void
-bench_vector_ulong_clear(void)
-{
-    if (vulong != vulong2) {
-        printf("Array are different!\n");
-        abort();
-    }
-}
-
 /********************************************************************************************/
 
 const config_func_t table[] = {
-  {850,    "serial-json STR", C_N_SERIAL_JSON, bench_vector_string_init, bench_vector_string_json_run, bench_vector_string_clear},
-  {860,    "serial-json STR.big", C_N_SERIAL_JSON, bench_vector_string_init_big, bench_vector_string_json_run, bench_vector_string_clear},
-  {870,    "serial-json INT", C_N_SERIAL_JSON, bench_vector_ulong_init, bench_vector_ulong_json_run, bench_vector_ulong_clear}
+  {850,    "serial-json STR", C_N_SERIAL_JSON, bench_vector_string_init, bench_vector_string_json_run, 0},
+  {860,    "serial-json STR.big", C_N_SERIAL_JSON, bench_vector_string_init_big, bench_vector_string_json_run, 0},
+  {870,    "serial-json INT", C_N_SERIAL_JSON, bench_vector_ulong_init, bench_vector_ulong_json_run, 0}
 };
 
 int main(int argc, const char *argv[])

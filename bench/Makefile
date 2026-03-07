@@ -44,7 +44,7 @@ container-c: bench-mlib bench-glib bench-klib bench-ctl bench-stc bench-CC bench
 	@echo
 	@echo
 
-container-cpp: bench-stl bench-qt bench-sparsepp bench-densehashmap bench-flathashmap bench-emilib bench-emhash bench-hopscotchmap bench-rigtorp-hashmap bench-boost
+container-cpp: bench-stl bench-qt bench-sparsepp bench-densehashmap bench-flathashmap bench-emilib bench-emhash bench-hopscotchmap bench-rigtorp-hashmap bench-boost bench-rapidjson
 	@echo
 	@echo
 
@@ -98,6 +98,9 @@ bench-mlib: pre-bench
 	@./bench-mlib.exe 510 $(LOG)
 	@./bench-mlib.exe 700 $(LOG)
 	@./bench-mlib.exe 701 $(LOG)
+	@./bench-mlib.exe 850 $(LOG)
+	@./bench-mlib.exe 860 $(LOG)
+	@./bench-mlib.exe 870 $(LOG)
 	@./bench-mlib.exe 900 $(LOG)
 	@./bench-mlib.exe 910 $(LOG)
 
@@ -378,19 +381,9 @@ bench-rigtorp-mpmc-queue0:
 	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I "$${RIGTORP_MPMC_QUEUE}" bench-rigtorp-mpmcqueue.cpp common.c -DMULTI_THREAD_MEASURE -o bench-mpmcqueue.exe -lpthread
 	@./bench-mpmcqueue.exe 60
 
-
-
-############################################################################
-
-bench-mlib-json: bench-mlib
-	@./bench-mlib.exe 850 $(LOG)
-	@./bench-mlib.exe 860 $(LOG)
-	@./bench-mlib.exe 870 $(LOG)
-
 bench-rapidjson:
-	@if test -n "$${RAPIDJSON}" ; then $(MAKE) bench-rapidjson0 ; else echo "Nothing to be done for RAPIDJSON." ; fi
-bench-rapidjson0:
-	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I "$${RAPIDJSON}/" bench-rapidjson.cpp common.c -o bench-rapidjson.exe
+	@cd .. && make external/rapidjson
+	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I ../external/rapidjson/include bench-rapidjson.cpp common.c -o bench-rapidjson.exe
 	@./bench-rapidjson.exe 850 $(LOG)
 	@./bench-rapidjson.exe 860 $(LOG)
 	@./bench-rapidjson.exe 870 $(LOG)
@@ -456,7 +449,7 @@ massif-visu:
 
 ############################################################################
 
-report: report-seq report-sset report-umap report-umap-big report-umap-str report-sort report-queue
+report: report-seq report-sset report-umap report-umap-big report-umap-str report-sort report-queue report-hash report-str-replace report-str-concat
 	mkdir -p doc
 	mv BENCH-*.md doc
 
@@ -529,3 +522,35 @@ report-queue:
 	@echo >> BENCH-QUEUE.md
 	@LANG=C lscpu |grep "Model name" >> BENCH-QUEUE.md
 	cat BENCH-QUEUE.md
+
+report-hash:
+	@echo "Bench for best hash" > BENCH-HASH.md
+	@echo >> BENCH-HASH.md
+	@echo "Rank|Library|Container|Time" >> BENCH-HASH.md
+	@echo "----|-------|---------|----" >> BENCH-HASH.md
+	@grep "Hash" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-HASH.md
+	@echo >> BENCH-HASH.md
+	@LANG=C lscpu |grep "Model name" >> BENCH-HASH.md
+	cat BENCH-HASH.md
+
+report-str-replace:
+	@echo "Bench for best string replacement" > BENCH-STR-REPLACE.md
+	@echo >> BENCH-STR-REPLACE.md
+	@echo "Rank|Library|Container|Time" >> BENCH-STR-REPLACE.md
+	@echo "----|-------|---------|----" >> BENCH-STR-REPLACE.md
+	@grep "String Replace" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-STR-REPLACE.md
+	@echo >> BENCH-STR-REPLACE.md
+	@LANG=C lscpu |grep "Model name" >> BENCH-STR-REPLACE.md
+	@echo "GLIB2, POTTERY, CTL & SDS benchs are not included due to being too slow">> BENCH-STR-REPLACE.md
+	cat BENCH-STR-REPLACE.md
+
+report-str-concat:
+	@echo "Bench for best string concat" > BENCH-STR-CONCAT.md
+	@echo >> BENCH-STR-CONCAT.md
+	@echo "Rank|Library|Container|Time" >> BENCH-STR-CONCAT.md
+	@echo "----|-------|---------|----" >> BENCH-STR-CONCAT.md
+	@grep "String Concat" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-STR-CONCAT.md
+	@echo >> BENCH-STR-CONCAT.md
+	@LANG=C lscpu |grep "Model name" >> BENCH-STR-CONCAT.md
+	@echo "GLIB2, POTTERY, CTL & SDS benchs are not included due to being too slow">> BENCH-STR-CONCAT.md
+	cat BENCH-STR-CONCAT.md
