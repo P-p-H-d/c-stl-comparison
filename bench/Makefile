@@ -236,6 +236,11 @@ bench-sds:
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I ../external/sds bench-sds.c common.c ../external/sds/sds.c -o bench-sds.exe
 #	@./bench-sds.exe 900 $(LOG)	# Result is too slow, so it is not run
 
+bench-bstrlib:
+	@cd .. && make external/bstrlib/libbstrlib.a
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I ../external/bstrlib bench-bstrlib.c common.c ../external/bstrlib/libbstrlib.a -o bench-bstrlib.exe
+	@./bench-bstrlib.exe 900 $(LOG)
+
 ############################################################################
 # C++ Libraries
 ############################################################################
