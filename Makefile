@@ -93,6 +93,9 @@ external/liblfds7.1.1:
 external/xxHash:
 	mkdir -p external && cd external && git clone https://github.com/Cyan4973/xxHash.git
 
+external/sds:
+	mkdir -p external && cd external && git clone https://github.com/antirez/sds
+
 ###########################################################
 # 		Build external Libraries
 ###########################################################

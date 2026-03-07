@@ -148,7 +148,7 @@ bench-ctl:
 	@./bench-ctl.exe 200 $(LOG)
 	@./bench-ctl.exe 300 $(LOG)
 	@./bench-ctl.exe 500 $(LOG)
-#	@./bench-ctl.exe 900 $(LOG)	# Result is too slow, so it is not run
+#	@./bench-ctl.exe 900 $(LOG)	# Result is way too slow, so it is not run
 
 bench-stc:
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(STC)/include bench-stc.c common.c -o bench-stc.exe
@@ -230,6 +230,11 @@ bench-xxhash:
 	@cd .. && make external/xxHash
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I "../external/xxHash/" bench-xxhash.c common.c -o bench-xxhash.exe
 	@./bench-xxhash.exe 700 $(LOG)
+
+bench-sds:
+	@cd .. && make external/sds
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I ../external/sds bench-sds.c common.c ../external/sds/sds.c -o bench-sds.exe
+#	@./bench-sds.exe 900 $(LOG)	# Result is too slow, so it is not run
 
 ############################################################################
 # C++ Libraries
