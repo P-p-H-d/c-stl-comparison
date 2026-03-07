@@ -66,7 +66,7 @@ pre-bench:
 
 #########################################################################
 # Directories of the checkout libraries
-# There are always present (no environement option to set)
+# There are always present (no environment option to set)
 MLIB=../external/mlib
 CMC=../external/C-Macro-Collections/src/
 STC=../external/STC/
@@ -150,6 +150,7 @@ bench-ctl:
 	@./bench-ctl.exe 300 $(LOG)
 	@./bench-ctl.exe 500 $(LOG)
 #	@./bench-ctl.exe 900 $(LOG)	# Result is way too slow, so it is not run
+	@./bench-ctl.exe 910 $(LOG)
 
 bench-stc:
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(STC)/include bench-stc.c common.c -o bench-stc.exe
@@ -172,6 +173,7 @@ bench-pottery:
 	@./bench-pottery.exe 320 $(LOG)
 	@./bench-pottery.exe 500 $(LOG)
 #	@./bench-pottery.exe 900 $(LOG)	# Result is too slow, so it is not run
+	@./bench-pottery.exe 910 $(LOG)
 
 bench-verstable:
 	@cd .. && make external/Verstable
@@ -191,6 +193,7 @@ bench-glib0:
 	@./bench-glib.exe 320 $(LOG)
 	@./bench-glib.exe 500 $(LOG)
 #	@./bench-glib.exe 900 $(LOG)	# Result is too slow, so it is not run
+	@./bench-glib.exe 910 $(LOG)
 
 bench-tommyds:
 	@cd .. && make external/tommyds
@@ -391,9 +394,6 @@ bench-rapidjson0:
 	@./bench-rapidjson.exe 850 $(LOG)
 	@./bench-rapidjson.exe 860 $(LOG)
 	@./bench-rapidjson.exe 870 $(LOG)
-
-# Extract from logs the ranks:
-# grep Seq logs.txt |awk -F'=' '{print $2, "=", $1}'|sort -g|awk -F'=' '{print $2,"=",$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print $1,"|",$2,"|",$3}'
 
 ############################################################################
 

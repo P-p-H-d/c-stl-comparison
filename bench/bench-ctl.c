@@ -242,6 +242,24 @@ static void bench_string_replace(size_t n)
   g_result = length;
 }
 
+static void bench_string_concat(size_t n)
+{
+  str *tab = (str *) malloc (n * sizeof(str)), dst;
+  if (!tab) abort();
+  dst = str_init("");
+  for(size_t i = 0; i < n; i++)
+    tab[i] = str_init("");
+  for(size_t i = 0; i < n; i++)
+    str_append(&tab[i], "THIS IS IT");
+  for(size_t i = 0; i < n; i++)
+    str_append(&dst, str_begin(&tab[i]));
+  for(size_t i = 0; i < n; i++)
+    str_free(&tab[i]);
+  g_result = str_size(&dst);
+  str_free(&dst);
+  free(tab);
+}
+
 /********************************************************************************************/
 
 const config_func_t table[] = {
@@ -250,7 +268,8 @@ const config_func_t table[] = {
   { 200,  "SSet(set)",   C_N_SSET, 0, test_rbtree, 0},
   { 300,    "UMap(umap)",  C_N_UMAP_U64, 0, test_dict, 0},
   { 500,    "Sort",  C_N_SORT, 0, test_sort, 0},
-  { 900, "String Replace", C_N_STR_REPLACE, bench_string_replace_init, bench_string_replace, bench_string_replace_clear}
+  { 900, "String Replace", C_N_STR_REPLACE, bench_string_replace_init, bench_string_replace, bench_string_replace_clear},
+  { 910, "String Concat", C_N_STR_CONCAT, 0, bench_string_concat, 0},
 };
 
 int main(int argc, const char *argv[])

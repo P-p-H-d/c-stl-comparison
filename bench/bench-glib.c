@@ -238,6 +238,24 @@ static void bench_string_replace(size_t n)
   g_result = length;
 }
 
+static void bench_string_concat(size_t n)
+{
+  GString* *tab = (GString* *) malloc (n * sizeof(GString*)), *dst;
+  if (!tab) abort();
+  dst = g_string_new(NULL);
+  for(size_t i = 0; i < n; i++)
+    tab[i] = g_string_new(NULL);
+  for(size_t i = 0; i < n; i++)
+    g_string_append(tab[i], "THIS IS IT");
+  for(size_t i = 0; i < n; i++)
+    g_string_append(dst, tab[i]->str);
+  for(size_t i = 0; i < n; i++)
+    g_string_free(tab[i], TRUE);
+  g_result = dst->len;
+  g_string_free(dst, TRUE);
+  free(tab);
+}
+
 /********************************************************************************************/
 
 const config_func_t table[] = {
@@ -247,7 +265,8 @@ const config_func_t table[] = {
   { 300,    "UMap U64(GHashTable)", C_N_UMAP_U64, 0, test_dict, 0},
   { 320, "UMap Big(GHashTable)", C_N_UMAP_BIG, 0, test_dict_big, 0},
   { 500,           "Sort",C_N_SORT, 0, test_sort, 0},
-  { 900, "String Replace", C_N_STR_REPLACE, bench_string_replace_init, bench_string_replace, bench_string_replace_clear}
+  { 900, "String Replace", C_N_STR_REPLACE, bench_string_replace_init, bench_string_replace, bench_string_replace_clear},
+  { 910, "String Concat", C_N_STR_CONCAT, 0, bench_string_concat, 0},
 };
 
 int main(int argc, const char *argv[])
