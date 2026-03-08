@@ -10,6 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
+          fetch-depth: 0
           token: ${{ secrets.BENCH_TOKEN }}
     - name: CPU Information
       run:  lscpu || echo "CPU information not available"
@@ -27,7 +28,7 @@ jobs:
           git config user.email "16360675+P-p-H-d@users.noreply.github.com"
           git config user.name "Synchronization bot"
           git switch result
-          git reset --hard origin/master
+          git rebase origin/master
           cd bench && make report
           git add bench/doc/BENCH.md
           git commit -m "Publish result by CI" 
