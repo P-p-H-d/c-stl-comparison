@@ -40,7 +40,7 @@ pgo:
 
 #########################################################################
 
-container-c: bench-mlib bench-glib bench-klib bench-ctl bench-stc bench-CC bench-cmc bench-collectionc bench-tommyds bench-uthash bench-qlibc bench-libsrt bench-pottery bench-verstable bench-xxhash
+container-c: bench-mlib bench-glib bench-klib bench-ctl bench-stc bench-CC bench-cmc bench-collectionc bench-tommyds bench-uthash bench-qlibc bench-libsrt bench-pottery bench-verstable bench-xxhash bench-bstrlib bench-sds
 	@echo
 	@echo
 
@@ -455,7 +455,7 @@ report: report-seq report-sset report-umap report-umap-big report-umap-str repor
 	@echo >> doc/BENCH.md
 	@LANG=C lscpu |grep "Model name" >> doc/BENCH.md
 	@echo >> doc/BENCH.md
-	@cd ../external &&  for i in * ; do cd $$i ; echo $$i $$(git show HEAD|grep commit) ; echo ; cd - > /dev/null ;done >> ../bench/doc/BENCH.md
+	@cd ../external &&  for i in * ; do cd $$i ; echo "* $$i $$(git show HEAD|grep commit|head -1|sed -e 's/commit/:/g')" ; cd - > /dev/null ;done >> ../bench/doc/BENCH.md
 	@rm BENCH-*.md
 	@cat doc/BENCH.md
 
