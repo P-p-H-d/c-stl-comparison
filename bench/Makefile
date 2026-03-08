@@ -32,7 +32,7 @@ LOG=--quiet --best --repeat 3| tee -a logs.txt
 
 .PHONY: all pgo container queue string plain bench-mlib bench-stl bench-qt bench-glib bench-klib bench-sparsepp bench-collectionc bench-tommyds bench-flathashmap bench-emilib bench-emhash bench-hopscotchmap bench-mlib-thread bench-liblfds bench-concurrentqueue bench-boost bench-string bench-plain bench-rigtorp-mpmc-queue bench-cmc
 
-all: container-c container-cpp queue string plain bench-find-sort
+all: container-c container-cpp queue plain bench-find-sort
 
 pgo:
 	$(MAKE) all XCFLAGS="-fprofile-generate=pgo"
