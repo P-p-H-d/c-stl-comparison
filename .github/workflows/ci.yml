@@ -30,7 +30,7 @@ jobs:
           git switch result
           git rebase origin/master
           cd bench && make report
-          git add bench/doc/BENCH.md
+          git add doc/BENCH.md
           git commit -m "Publish result by CI" 
           git push --force-with-lease origin result
 
