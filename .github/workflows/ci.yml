@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest    
     steps:
     - uses: actions/checkout@v4
+      with:
+          token: ${{ secrets.BENCH_TOKEN }}
     - name: CPU Information
       run:  lscpu || echo "CPU information not available"
     - name: Compiler Information
@@ -19,5 +21,15 @@ jobs:
       run: make
     - name: make bench
       working-directory: ./bench
-      run: make BOOST=/usr/include && make report
- 
+      run: make BOOST=/usr/include
+    - name: Publish on branch result
+      run: |
+          git config user.email "16360675+P-p-H-d@users.noreply.github.com"
+          git config user.name "Synchronization bot"
+          git switch result
+          git reset --hard origin/master
+          cd bench && make report
+          git add bench/doc/BENCH.md
+          git commit -m "Publish result by CI" 
+          git push --force-with-lease origin result
+
