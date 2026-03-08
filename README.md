@@ -5,7 +5,7 @@ that provide some STL like capabilities of the C++ (container template) but are 
 A STL like library for C is a C library providing several classic generic containers for the C language,
 like vector, list, sorted set, unordered_map, and so on.
 
-A small benchmark to compare their performance is includes in the bench directory.
+A small benchmark to compare their performance is included in the bench directory.
 
 To do this, the same simple programs will be implemented by the libraries
 in the more straight-forward way possible,
@@ -13,13 +13,6 @@ for different kind of containers and for different types.
 Then the API ergonomics of each programs can be compared each other according to the user taste.
 
 Objective characteristics of the libraries are directly compared in this file.
-
-
-# Disclaimer
-
-I am the main author of M\*LIB, one of theses libraries.
-
-This work is still a WIP.
 
 
 # Test Program
@@ -369,6 +362,14 @@ do not hesitate to open a pull request.
 The [bench](https://github.com/P-p-H-d/c-stl-comparison/tree/master/bench)
 directory contains a small benchmark comparing
 the performance of different libraries.
-Results are available [here](https://github.com/P-p-H-d/c-stl-comparison/wiki/Benchmark-result)
+Results are available [for i5-3210M](https://github.com/P-p-H-d/c-stl-comparison/blob/master/bench/doc/BENCH.md) and [for AMD EPYC 7763](https://github.com/P-p-H-d/c-stl-comparison/blob/result/bench/doc/BENCH.md)
+
+
+# Disclaimer
+
+This work is still a WIP.
+
+I am the main author of M\*LIB, one of theses libraries.
+
 
 
