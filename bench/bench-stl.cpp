@@ -373,7 +373,7 @@ const config_func_t table[] = {
   { 320, "UMap Big(umap)", C_N_UMAP_BIG, 0, test_dict_big, 0},
   { 330, "UMap Str(umap)", C_N_UMAP_BIG, 0, test_dict_str, 0},
   { 331,  "UMap Str(map)", C_N_UMAP_BIG, 0, test_dict_str2, 0},
-  { 340, "USet Longest Seq(dict oa)", C_N_FIND_SEQ, 0, bench_find_longest, 0},
+  { 340, "USet Longest(dict oa)", C_N_FIND_SEQ, 0, bench_find_longest, 0},
   { 310, "UMAP U64 Linear(umap)", C_N_UMAP_U64, 0, test_dict2_linear, 0},
   { 500,          "Sort", C_N_SORT, 0, test_sort, 0},
   { 510,   "Stable Sort", C_N_SORT, 0, test_stable_sort, 0},

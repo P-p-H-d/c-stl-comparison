@@ -167,7 +167,7 @@ const config_func_t table[] = {
   { 110,   "Seq(Array)", C_N_SEQ_ARRAY, 0, test_array, 0},
   { 300,    "UMap U64(map)", C_N_UMAP_U64, 0, test_dict, 0},
   { 320, "UMap Big(map)", C_N_UMAP_BIG, 0, test_dict_big, 0},
-  { 340, "USet Longest Seq(hset)", C_N_FIND_SEQ, 0, bench_find_longest, 0},
+  { 340, "USet Longest(hset)", C_N_FIND_SEQ, 0, bench_find_longest, 0},
 };
 
 int main(int argc, const char *argv[])

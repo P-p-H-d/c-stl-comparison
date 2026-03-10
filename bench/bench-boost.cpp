@@ -224,7 +224,7 @@ const config_func_t table[] = {
   { 310, "UMAP U64 Linear(uflat_map)", C_N_UMAP_U64, 0, test_dict2_linear, 0},
   { 320, "UMap Big(uflat_map)",  C_N_UMAP_BIG, 0, test_dict_big, 0},
   { 330, "UMap Str(uflat_map)",  C_N_UMAP_BIG, 0, test_dict_str, 0},
-  { 340, "USet Longest Seq(uflat_seq)", C_N_FIND_SEQ, 0, bench_find_longest, 0},
+  { 340, "USet Longest(uflat_seq)", C_N_FIND_SEQ, 0, bench_find_longest, 0},
   { 600, "Queue MPMC (lockfree)", C_N_THR_QUEUE, 0, test_queue, 0}
 };
 

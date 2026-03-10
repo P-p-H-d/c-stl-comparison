@@ -296,7 +296,7 @@ const config_func_t table[] = {
   { 200,  "SSet(sset)", C_N_SSET, 0, test_rbtree, 0},
   { 300,    "UMap U64(hmap)", C_N_UMAP_U64, 0, test_dict, 0},
   { 320, "UMap Big(hmap)", C_N_UMAP_BIG, 0, test_dict_big, 0},
-  { 340, "USet Longest Seq(hset)", C_N_FIND_SEQ, 0, bench_find_longest, 0},
+  { 340, "USet Longest(hset)", C_N_FIND_SEQ, 0, bench_find_longest, 0},
   { 500,    "Sort", C_N_SORT, 0, test_sort, 0},
   { 900, "String Replace", C_N_STR_REPLACE, bench_string_replace_init, bench_string_replace, bench_string_replace_clear},
   { 910, "String Concat", C_N_STR_CONCAT, 0, bench_string_concat, 0},
