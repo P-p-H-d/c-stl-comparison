@@ -125,12 +125,49 @@ test_dict_big(size_t  n)
 }
 
 /********************************************************************************************/
+#define TST_MAX(a,b) ((a) < (b) ? (b): (a))
+
+// Returns length of the longest contiguous subsequence 
+void bench_find_longest(size_t n)
+{
+  int *arr = (int*) malloc(n * sizeof(int));
+  for(size_t i = 0; i < n; i++)
+    arr[i] = rand_get();
+
+  set(int) S;
+  init(&S);
+  int ans = 0;
+
+  // Hash all the array elements
+  for (size_t i = 0; i < n; i++)
+    insert(&S, arr[i]);
+  
+  // check each possible sequence from the start then update optimal length
+  for (size_t i = 0; i < n; i++) {
+    // if current element is the starting element of a sequence
+    if (get(&S, arr[i]-1) == NULL) {
+      // Then check for next elements in the sequence
+      int j = arr[i] + 1;
+      while (get(&S, j) != NULL)
+        j++;
+      // update  optimal length if this length is more
+      ans = TST_MAX(ans, j - arr[i]);
+    }
+  }
+
+  cleanup(&S);
+  free(arr);
+  g_result = ans;
+}
+
+/********************************************************************************************/
 
 const config_func_t table[] = {
   { 100,    "Seq(List)", C_N_SEQ_LIST, 0, test_list, 0},
   { 110,   "Seq(Array)", C_N_SEQ_ARRAY, 0, test_array, 0},
   { 300,    "UMap U64(map)", C_N_UMAP_U64, 0, test_dict, 0},
   { 320, "UMap Big(map)", C_N_UMAP_BIG, 0, test_dict_big, 0},
+  { 340, "USet Longest Seq(hset)", C_N_FIND_SEQ, 0, bench_find_longest, 0},
 };
 
 int main(int argc, const char *argv[])

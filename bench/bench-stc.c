@@ -158,6 +158,45 @@ test_dict_big(size_t  n)
 }
 
 /********************************************************************************************/
+#define TST_MAX(a,b) ((a) < (b) ? (b): (a))
+
+#define i_tag int
+#define i_key int
+#include <stc/hset.h>
+
+// Returns length of the longest contiguous subsequence 
+void bench_find_longest(size_t n)
+{
+  int *arr = (int*) malloc(n * sizeof(int));
+  for(size_t i = 0; i < n; i++)
+    arr[i] = rand_get();
+
+  hset_int S = hset_int_init();
+  int ans = 0; 
+
+  // Hash all the array elements 
+  for (size_t i = 0; i < n; i++) 
+    hset_int_insert(&S, arr[i]);
+  
+  // check each possible sequence from the start then update optimal length
+  for (size_t i = 0; i < n; i++) { 
+    // if current element is the starting element of a sequence
+    if (hset_int_get(&S, arr[i]-1) == NULL) {
+      // Then check for next elements in the sequence 
+      int j = arr[i] + 1; 
+      while (hset_int_get(&S, j) != NULL)
+        j++;
+      // update  optimal length if this length is more 
+      ans = TST_MAX(ans, j - arr[i]); 
+    } 
+  }
+
+  hset_int_drop(&S);
+  free(arr);
+  g_result = ans;
+}
+
+/********************************************************************************************/
 
 #define i_key float
 #define i_tag float
@@ -257,6 +296,7 @@ const config_func_t table[] = {
   { 200,  "SSet(sset)", C_N_SSET, 0, test_rbtree, 0},
   { 300,    "UMap U64(hmap)", C_N_UMAP_U64, 0, test_dict, 0},
   { 320, "UMap Big(hmap)", C_N_UMAP_BIG, 0, test_dict_big, 0},
+  { 340, "USet Longest Seq(hset)", C_N_FIND_SEQ, 0, bench_find_longest, 0},
   { 500,    "Sort", C_N_SORT, 0, test_sort, 0},
   { 900, "String Replace", C_N_STR_REPLACE, bench_string_replace_init, bench_string_replace, bench_string_replace_clear},
   { 910, "String Concat", C_N_STR_CONCAT, 0, bench_string_concat, 0},

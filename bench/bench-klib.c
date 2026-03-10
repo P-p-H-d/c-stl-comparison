@@ -166,6 +166,48 @@ test_dict_big(size_t  n)
 }
 
 /********************************************************************************************/
+#define TST_MAX(a,b) ((a) < (b) ? (b): (a))
+
+KHASH_SET_INIT_INT(int)
+
+// Returns length of the longest contiguous subsequence 
+void bench_find_longest(size_t n)
+{
+  int ret;
+  int *arr = (int*) malloc(n * sizeof(int));
+  for(size_t i = 0; i < n; i++)
+    arr[i] = rand_get();
+
+  khash_t(int) *dict = kh_init(int);
+  int ans = 0; 
+
+  // Hash all the array elements 
+  for (size_t i = 0; i < n; i++) 
+    kh_put(int, dict, arr[i], &ret);
+  
+  // check each possible sequence from the start then update optimal length
+  for (size_t i = 0; i < n; i++) {
+    // if current element is the starting element of a sequence
+    khiter_t k = kh_get(int, dict, arr[i]-1);
+    if (!kh_exist(dict, k)) {
+      // Then check for next elements in the sequence 
+      int j = arr[i] + 1;
+      k = kh_get(int, dict, j);
+      while (kh_exist(dict, k)) {
+        j++;
+        k = kh_get(int, dict, j);
+      }
+      // update  optimal length if this length is more 
+      ans = TST_MAX(ans, j - arr[i]); 
+    }
+  }
+
+  kh_destroy(int, dict);
+  free(arr);
+  g_result = ans;
+}
+
+/********************************************************************************************/
 // NOTE: Needed for compiling
 double drand48(void) { return rand_get(); }
 
@@ -193,6 +235,7 @@ const config_func_t table[] = {
   { 200,  "SSet(Btree)", C_N_SSET, 0, test_rbtree, 0},
   { 300,    "UMap U64(khash)", C_N_UMAP_U64, 0, test_dict, 0},
   { 320, "UMap Big(khash)", C_N_UMAP_BIG, 0, test_dict_big, 0},
+  { 340, "USet Longest Seq(hset)", C_N_FIND_SEQ, 0, bench_find_longest, 0},
   { 500,    "Sort", C_N_SORT, 0, test_sort, 0},
 };
 

@@ -341,19 +341,14 @@ void bench_find_longest(size_t n)
   for (size_t i = 0; i < n; i++) 
     dict_int_push(S, arr[i]);
   
-  // check each possible sequence from 
-  // the start then update optimal length 
+  // check each possible sequence from the start then update optimal length
   for (size_t i = 0; i < n; i++) { 
-    // if current element is the starting 
-    // element of a sequence
-    int *p = dict_int_get(S, arr[i]-1);
-    if (p == NULL) {
-      // Then check for next elements 
-      // in the sequence 
+    // if current element is the starting element of a sequence
+    if (dict_int_get(S, arr[i]-1) == NULL) {
+      // Then check for next elements in the sequence 
       int j = arr[i] + 1; 
       while (dict_int_get(S, j) != NULL)
         j++; 
-      
       // update  optimal length if 
       // this length is more 
       ans = M_MAX(ans, j - arr[i]); 
@@ -363,7 +358,43 @@ void bench_find_longest(size_t n)
   dict_int_clear(S);
   free(arr);
   g_result = ans;
-} 
+}
+
+DICT_SET_DEF(dict_int2, int)
+
+// Returns length of the longest contiguous subsequence 
+void bench_find_longest2(size_t n)
+{
+  int *arr = (int*) malloc(n * sizeof(int));
+  for(size_t i = 0; i < n; i++)
+    arr[i] = rand_get();
+
+  dict_int2_t S;
+  int ans = 0; 
+
+  dict_int2_init(S);
+  
+  // Hash all the array elements 
+  for (size_t i = 0; i < n; i++) 
+    dict_int2_push(S, arr[i]);
+  
+  // check each possible sequence from the start then update optimal length
+  for (size_t i = 0; i < n; i++) { 
+    // if current element is the starting element of a sequence
+    if (dict_int2_get(S, arr[i]-1) == NULL) {
+      // Then check for next elements in the sequence 
+      int j = arr[i] + 1;
+      while (dict_int2_get(S, j) != NULL)
+        j++;
+      // update  optimal length if this length is more 
+      ans = M_MAX(ans, j - arr[i]);
+    } 
+  }
+
+  dict_int2_clear(S);
+  free(arr);
+  g_result = ans;
+}
 
 /********************************************************************************************/
 
@@ -1155,7 +1186,8 @@ const config_func_t table[] = {
   { 320, "UMap Big(dict)", C_N_UMAP_BIG, 0, test_dict_big, 0},
   { 321, "UMap Big(dict OA)", C_N_UMAP_BIG, 0, test_dict_oa_big, 0},
   { 330, "UMap Str(dict)", C_N_UMAP_BIG, 0, test_dict_str, 0},
-  { 340, "UMap Longest Seq(dict oa)", C_N_FIND_SEQ, 0, bench_find_longest, 0},
+  { 340, "USet Longest Seq(dict)", C_N_FIND_SEQ, 0, bench_find_longest2, 0},
+  { 341, "USet Longest Seq(dict oa)", C_N_FIND_SEQ, 0, bench_find_longest, 0},
   { 500,           "Sort", C_N_SORT, 0, test_sort, 0},
   { 510,    "Stable Sort", C_N_SORT, 0, test_stable_sort, 0},
   { 600, "Queue(Buffer)", C_N_THR_QUEUE, 0, test_buffer, 0},

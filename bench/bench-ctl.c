@@ -147,6 +147,62 @@ test_dict(size_t  n)
   umap_pair_ulong_free(&dict);
 }
 
+
+/********************************************************************************************/
+#define TST_MAX(a,b) ((a) < (b) ? (b): (a))
+
+#define T int
+#define POD
+#include <ctl/unordered_set.h>
+
+static inline size_t
+int_hash(int *a)
+{
+  return M_HASH_DEFAULT(*a);
+}
+
+static inline int
+int_equal(int *a, int *b)
+{
+  return *a == *b;
+}
+
+// Returns length of the longest contiguous subsequence 
+void bench_find_longest(size_t n)
+{
+  int *arr = (int*) malloc(n * sizeof(int));
+  for(size_t i = 0; i < n; i++)
+    arr[i] = rand_get();
+
+  uset_int S = uset_int_init(int_hash, int_equal);
+  int ans = 0; 
+
+  // Hash all the array elements 
+  for (size_t i = 0; i < n; i++) 
+    uset_int_insert(&S, arr[i]);
+  
+  // check each possible sequence from the start then update optimal length
+  for (size_t i = 0; i < n; i++) { 
+    // if current element is the starting element of a sequence
+    uset_int_it it = uset_int_find(&S, arr[i]-1);
+    if (uset_int_it_done(&it)) {
+      // Then check for next elements in the sequence 
+      int j = arr[i] + 1;
+      it = uset_int_find(&S, j);
+      while (!uset_int_it_done(&it)) {
+        j++;
+        it = uset_int_find(&S, j);
+      }
+      // update  optimal length if this length is more 
+      ans = TST_MAX(ans, j - arr[i]); 
+    }
+  }
+
+  uset_int_free(&S);
+  free(arr);
+  g_result = ans;
+}
+
 /********************************************************************************************/
 
 #define POD
@@ -267,6 +323,7 @@ const config_func_t table[] = {
   { 110,   "Seq(Array)", C_N_SEQ_ARRAY, 0, test_array, 0},
   { 200,  "SSet(set)",   C_N_SSET, 0, test_rbtree, 0},
   { 300,    "UMap(umap)",  C_N_UMAP_U64, 0, test_dict, 0},
+  { 340, "USet Longest Seq(hset)", C_N_FIND_SEQ, 0, bench_find_longest, 0},
   { 500,    "Sort",  C_N_SORT, 0, test_sort, 0},
   { 900, "String Replace", C_N_STR_REPLACE, bench_string_replace_init, bench_string_replace, bench_string_replace_clear},
   { 910, "String Concat", C_N_STR_CONCAT, 0, bench_string_concat, 0},

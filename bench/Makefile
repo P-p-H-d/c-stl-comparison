@@ -121,6 +121,7 @@ bench-CC:
 	@./bench-CC.exe 110 $(LOG)
 	@./bench-CC.exe 300 $(LOG)
 	@./bench-CC.exe 320 $(LOG)
+	@./bench-CC.exe 340 $(LOG)
 
 bench-klib:
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -Wno-unused-function -I $(KLIB) bench-klib.c common.c -o bench-klib.exe
@@ -129,6 +130,7 @@ bench-klib:
 	@./bench-klib.exe 200 $(LOG)
 	@./bench-klib.exe 300 $(LOG)
 	@./bench-klib.exe 320 $(LOG)
+#	@./bench-klib.exe 340 $(LOG)	# Result is buggy: not run
 	@./bench-klib.exe 500 $(LOG)
 
 bench-cmc:
@@ -152,6 +154,7 @@ bench-ctl:
 	@./bench-ctl.exe 110 $(LOG)
 	@./bench-ctl.exe 200 $(LOG)
 	@./bench-ctl.exe 300 $(LOG)
+	@./bench-ctl.exe 340 $(LOG)
 	@./bench-ctl.exe 500 $(LOG)
 #	@./bench-ctl.exe 900 $(LOG)	# Result is way too slow, so it is not run
 	@./bench-ctl.exe 910 $(LOG)
@@ -163,6 +166,7 @@ bench-stc:
 	@./bench-stc.exe 200 $(LOG)
 	@./bench-stc.exe 300 $(LOG)
 	@./bench-stc.exe 320 $(LOG)
+	@./bench-stc.exe 340 $(LOG)
 	@./bench-stc.exe 500 $(LOG)
 	@./bench-stc.exe 900 $(LOG)
 	@./bench-stc.exe 910 $(LOG)
@@ -184,6 +188,7 @@ bench-verstable:
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I ../external/Verstable -I ../external/mlib bench-verstable.c common.c -o bench-verstable.exe
 	@./bench-verstable.exe 300 $(LOG)
 	@./bench-verstable.exe 320 $(LOG)
+	@./bench-verstable.exe 340 $(LOG)
 
 # GLIB shall point to the the directory containing the file .pc are stored (can be let empty if system installed)
 bench-glib:
@@ -445,7 +450,7 @@ massif-visu:
 
 ############################################################################
 
-report: report-seq report-sset report-umap report-umap-big report-umap-str report-sort report-queue report-hash report-str-replace report-str-concat
+report: report-seq report-sset report-umap report-umap-big report-umap-str report-sort report-queue report-hash report-str-replace report-str-concat report-uset
 	@mkdir -p doc
 	@cat BENCH-*.md > doc/BENCH.md
 	@echo >> doc/BENCH.md
@@ -496,6 +501,14 @@ report-umap-str:
 	@echo "----|-------|---------|----" >> BENCH-UMAP-STR.md
 	@grep "UMap Str" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-UMAP-STR.md
 	@echo >> BENCH-UMAP-STR.md
+
+report-uset:
+	@echo "# Bench for best unordered set container" > BENCH-USET.md
+	@echo >> BENCH-USET.md
+	@echo "Rank|Library|Container|Time" >> BENCH-USET.md
+	@echo "----|-------|---------|----" >> BENCH-USET.md
+	@grep "USet Longest" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-USET.md
+	@echo >> BENCH-USET.md
 
 report-sort:
 	@echo "# Bench for best sort container" > BENCH-SORT.md

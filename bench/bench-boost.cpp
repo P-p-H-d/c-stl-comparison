@@ -6,6 +6,7 @@
 #include "m-thread.h"
 
 #include <boost/unordered/unordered_flat_map.hpp>
+#include <boost/unordered/unordered_flat_set.hpp>
 #include <boost/lockfree/queue.hpp>
 
 #include "common.h"
@@ -109,6 +110,39 @@ test_dict_str(size_t  n)
 }
 
 /********************************************************************************************/
+
+// Returns length of the longest contiguous subsequence 
+void bench_find_longest(size_t n)
+{
+  int *arr = (int*) malloc(n * sizeof(int));
+  for(size_t i = 0; i < n; i++)
+    arr[i] = rand_get();
+
+  boost::unordered_flat_set<int> S; 
+  int ans = 0; 
+  
+  // Hash all the array elements
+  for (size_t i = 0; i < n; i++)
+    S.insert(arr[i]);
+  
+  // check each possible sequence from the start then update optimal length
+  for (size_t i = 0; i < n; i++) { 
+    // if current element is the starting element of a sequence 
+    if (S.find(arr[i] - 1) == S.end()) { 
+      // Then check for next elements in the sequence 
+      int j = arr[i] + 1;
+      while (S.find(j) != S.end())
+        j++;
+      // update  optimal length if this length is more 
+      ans = max(ans, j - arr[i]);
+    }
+  }
+
+  free(arr);
+  g_result = ans;
+}
+
+/********************************************************************************************/
 boost::lockfree::queue<unsigned int, boost::lockfree::capacity<4*64>> g_buff;
 boost::lockfree::queue<unsigned long long, boost::lockfree::capacity<4*64>> g_final;
 
@@ -190,6 +224,7 @@ const config_func_t table[] = {
   { 310, "UMAP U64 Linear(uflat_map)", C_N_UMAP_U64, 0, test_dict2_linear, 0},
   { 320, "UMap Big(uflat_map)",  C_N_UMAP_BIG, 0, test_dict_big, 0},
   { 330, "UMap Str(uflat_map)",  C_N_UMAP_BIG, 0, test_dict_str, 0},
+  { 340, "USet Longest Seq(uflat_seq)", C_N_FIND_SEQ, 0, bench_find_longest, 0},
   { 600, "Queue MPMC (lockfree)", C_N_THR_QUEUE, 0, test_queue, 0}
 };
 
