@@ -95,6 +95,7 @@ bench-mlib: pre-bench
 	@./bench-mlib.exe 321 $(LOG)
 	@./bench-mlib.exe 330 $(LOG)
 	@./bench-mlib.exe 340 $(LOG)
+	@./bench-mlib.exe 341 $(LOG)
 	@./bench-mlib.exe 500 $(LOG)
 	@./bench-mlib.exe 510 $(LOG)
 	@./bench-mlib.exe 700 $(LOG)
@@ -300,6 +301,7 @@ bench-boost0:
 	@./bench-boost.exe 310 $(LOG)
 	@./bench-boost.exe 320 $(LOG)
 	@./bench-boost.exe 330 $(LOG)
+	@./bench-boost.exe 340 $(LOG)
 
 bench-boost-queue:
 	@if test -n "$${BOOST}" ; then $(MAKE) bench-boost-queue0 ; else echo "Nothing to be done for BOOST." ; fi
