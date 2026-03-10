@@ -320,6 +320,53 @@ test_dict_oa_big(size_t  n)
 
 /********************************************************************************************/
 
+static inline bool int_oor_equal_p(int a, unsigned char c) { return a == ((c == 0) ? INT_MIN : INT_MAX); }
+static inline void int_oor_set(int *a, unsigned char c) { *a = ((c == 0) ? INT_MIN : INT_MAX); }
+
+DICT_OASET_DEF(dict_int, int, M_OPEXTEND(M_BASIC_OPLIST, OOR_EQUAL(int_oor_equal_p), OOR_SET(int_oor_set M_IPTR)))
+
+// Returns length of the longest contiguous subsequence 
+void bench_find_longest(size_t n)
+{
+  int *arr = (int*) malloc(n * sizeof(int));
+  for(size_t i = 0; i < n; i++)
+    arr[i] = rand_get();
+
+  dict_int_t S;
+  int ans = 0; 
+
+  dict_int_init(S);
+  
+  // Hash all the array elements 
+  for (size_t i = 0; i < n; i++) 
+    dict_int_push(S, arr[i]);
+  
+  // check each possible sequence from 
+  // the start then update optimal length 
+  for (size_t i = 0; i < n; i++) { 
+    // if current element is the starting 
+    // element of a sequence
+    int *p = dict_int_get(S, arr[i]-1);
+    if (p == NULL) {
+      // Then check for next elements 
+      // in the sequence 
+      int j = arr[i] + 1; 
+      while (dict_int_get(S, j) != NULL)
+        j++; 
+      
+      // update  optimal length if 
+      // this length is more 
+      ans = M_MAX(ans, j - arr[i]); 
+    } 
+  }
+
+  dict_int_clear(S);
+  free(arr);
+  g_result = ans;
+} 
+
+/********************************************************************************************/
+
 DICT_DEF2(dict_str, string_t, STRING_OPLIST, string_t, STRING_OPLIST)
 
 static void
@@ -1101,13 +1148,14 @@ const config_func_t table[] = {
   { 210,  "SSet(B+tree)", C_N_SSET, 0, test_bptree, 0},
   { 300, "UMap U64(dict)", C_N_UMAP_U64, 0, test_dict, 0},
   { 301, "UMap U64(dict OA)", C_N_UMAP_U64, 0, test_dict_oa, 0},
+#ifdef M_USE_MAX_PREFETCH
+  { 302,  "UMap U64 (dict Bulk)", C_N_UMAP_U64, 0, test_dict_oa_bulk, 0},
+#endif
   { 310, "UMAP U64 Linear(dict OA)", C_N_UMAP_U64, 0, test_dict_oa_linear, 0},
   { 320, "UMap Big(dict)", C_N_UMAP_BIG, 0, test_dict_big, 0},
   { 321, "UMap Big(dict OA)", C_N_UMAP_BIG, 0, test_dict_oa_big, 0},
   { 330, "UMap Str(dict)", C_N_UMAP_BIG, 0, test_dict_str, 0},
-#ifdef M_USE_MAX_PREFETCH
-  { 340,  "UMap Bulk (dict oa)", C_N_UMAP_U64, 0, test_dict_oa_bulk, 0},
-#endif
+  { 340, "UMap Longest Seq(dict oa)", C_N_FIND_SEQ, 0, bench_find_longest, 0},
   { 500,           "Sort", C_N_SORT, 0, test_sort, 0},
   { 510,    "Stable Sort", C_N_SORT, 0, test_stable_sort, 0},
   { 600, "Queue(Buffer)", C_N_THR_QUEUE, 0, test_buffer, 0},

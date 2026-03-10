@@ -32,7 +32,7 @@ LOG=--quiet --best --repeat 3| tee -a logs.txt
 
 .PHONY: all pgo container queue string plain bench-mlib bench-stl bench-qt bench-glib bench-klib bench-sparsepp bench-collectionc bench-tommyds bench-flathashmap bench-emilib bench-emhash bench-hopscotchmap bench-mlib-thread bench-liblfds bench-concurrentqueue bench-boost bench-string bench-plain bench-rigtorp-mpmc-queue bench-cmc
 
-all: container-c container-cpp queue plain bench-find-sort
+all: container-c container-cpp queue plain
 
 pgo:
 	$(MAKE) all XCFLAGS="-fprofile-generate=pgo"
@@ -89,11 +89,12 @@ bench-mlib: pre-bench
 	@./bench-mlib.exe 210 $(LOG)
 	@./bench-mlib.exe 300 $(LOG)
 	@./bench-mlib.exe 301 $(LOG)
+	@./bench-mlib.exe 302 2> /dev/null $(LOG)
 	@./bench-mlib.exe 310 $(LOG)
 	@./bench-mlib.exe 320 $(LOG)
 	@./bench-mlib.exe 321 $(LOG)
 	@./bench-mlib.exe 330 $(LOG)
-	@./bench-mlib.exe 340 2> /dev/null $(LOG)
+	@./bench-mlib.exe 340 $(LOG)
 	@./bench-mlib.exe 500 $(LOG)
 	@./bench-mlib.exe 510 $(LOG)
 	@./bench-mlib.exe 700 $(LOG)
@@ -266,6 +267,7 @@ bench-stl:
 	@./bench-stl.exe 320 $(LOG)
 	@./bench-stl.exe 330 $(LOG)
 	@./bench-stl.exe 331 $(LOG)
+	@./bench-stl.exe 340 $(LOG)
 	@./bench-stl.exe 500 $(LOG)
 	@./bench-stl.exe 510 $(LOG)
 	@./bench-stl.exe 900 $(LOG)
@@ -417,12 +419,6 @@ bench-string-step4:
 bench-string-step6:
 	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -I ../external/pottery/util -I ../external/pottery/include -I ../external/libsrt/src bench-string.cpp common.c ../external/pottery/util/pottery/string/string.c ../external/libsrt/src/.libs/libsrt.a $(BENCH_DEF) -o bench-string.exe 
 	@./bench-string.exe
-
-############################################################################
-
-bench-find-sort:
-	g++ bench-find-sort.cpp -O2 -march=native -std=c++11 -I $(MLIB) -g common.c -o bench-find-sort.exe
-	./bench-find-sort.exe 10000000
 
 ############################################################################
 
