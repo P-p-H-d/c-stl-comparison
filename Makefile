@@ -124,7 +124,7 @@ external/liblfds7.1.1/bin/liblfds711.a: external/liblfds7.1.1
 	cd external/liblfds7.1.1/ && ln -s liblfds7.1.1/liblfds711/bin/ . || echo "Already done"
 	cd external/liblfds7.1.1/ && ln -s liblfds7.1.1/liblfds711/inc/ . || echo "Already done"
 
-external/bstrlib/libbstrlib.a:
+external/bstrlib/libbstrlib.a: external/bstrlib
 	cd external/bstrlib && $(CC) -O2 -march=native -Wall *.c -c
 	cd external/bstrlib && $(AR) $(ARFLAGS) libbstrlib.a *.o
 
