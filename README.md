@@ -380,7 +380,7 @@ do not hesitate to open a pull request.
 
 The [bench](https://github.com/P-p-H-d/c-stl-comparison/tree/master/bench)
 directory contains a small benchmark comparing
-the performance of different libraries.
+the performance of different C libraries (including some C++ ones, like STL and BOOST)
 
 Results are available [for i5-3210M](https://github.com/P-p-H-d/c-stl-comparison/blob/master/bench/doc/BENCH.md) and [for AMD EPYC 7763](https://github.com/P-p-H-d/c-stl-comparison/blob/result/bench/doc/BENCH.md)
 
