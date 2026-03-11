@@ -27,8 +27,11 @@ jobs:
       run: |
           git config user.email "16360675+P-p-H-d@users.noreply.github.com"
           git config user.name "Synchronization bot"
-          git switch result
           cd bench && make report
+          cp doc/BENCH.md .
+          git reset --hard HEAD
+          git switch result
+          mv BENCH.md doc/BENCH.md
           git add doc/BENCH.md
           git commit -m "Publish result by CI" 
           git push --force-with-lease origin result
