@@ -1,4 +1,4 @@
-# Bench for best hash
+# Performance test: hash function
 
 Rank|Library|Container|Time
 ----|-------|---------|----
@@ -6,7 +6,7 @@ Rank|Library|Container|Time
 2 |  XXHASH |      Hash (xxhash64)   |   700.12 ms 
 3 |  M*LIB |        Hash (M_HASH)   |   1317.08 ms 
 
-# Bench for best thread queue container
+# Performance test: thread communication queue container
 
 Rank|Library|Container|Time
 ----|-------|---------|----
@@ -20,7 +20,7 @@ Rank|Library|Container|Time
 8 |  M*LIB |        Queue(Buffer)   |   2017.28 ms 
 9 |  M*LIB |    Queue(Shared ptr)   |   3537.95 ms 
 
-# Bench for best sequence container
+# Performance test: sequence container
 
 Rank|Library|Container|Time
 ----|-------|---------|----
@@ -54,9 +54,9 @@ Rank|Library|Container|Time
 28 |  GLIB |           Seq(Array)   |   7278.17 ms 
 29 |  QLIBC |           Seq(Array)   |   7932.05 ms 
 
-Note: Bench for Array based containers works on dataset 10x bigger than size of List based containers.
+Note: Performance test: Array based containers works on dataset 10x bigger than size of List based containers.
 
-# Bench for best sort container
+# Performance test: sort algorithm
 
 Rank|Library|Container|Time
 ----|-------|---------|----
@@ -73,7 +73,7 @@ Rank|Library|Container|Time
 11 |  GLIB |                 Sort   |   1844.17 ms 
 12 |  CollectionC |                 Sort   |   3937.01 ms 
 
-# Bench for best sorted set container
+# Performance test: sorted set container
 
 Rank|Library|Container|Time
 ----|-------|---------|----
@@ -89,7 +89,7 @@ Rank|Library|Container|Time
 10 |  GLIB |          SSet(GTree)   |   5222.53 ms 
 11 |  QLIBC |         SSet(Rbtree)   |   5685.38 ms 
 
-# Bench for best string concat
+# Performance test: string concat
 
 Rank|Library|Container|Time
 ----|-------|---------|----
@@ -102,7 +102,7 @@ Rank|Library|Container|Time
 7 |  BSTRLIB |        String Concat   |   5928.81 ms 
 8 |  GLIB |        String Concat   |   6556.66 ms 
 
-# Bench for best string replacement
+# Performance test: string replacement
 
 Rank|Library|Container|Time
 ----|-------|---------|----
@@ -113,7 +113,7 @@ Rank|Library|Container|Time
 
 GLIB2, POTTERY, CTL & SDS benchs are not included due to being too slow
 
-# Bench for best unordered map string container
+# Performance test: unordered map string container
 
 Rank|Library|Container|Time
 ----|-------|---------|----
@@ -122,7 +122,7 @@ Rank|Library|Container|Time
 3 |  STL |       UMap Str(umap)   |   3049.62 ms 
 4 |  STL |        UMap Str(map)   |   8089.04 ms 
 
-# Bench for best unordered map U64 container
+# Performance test: unordered map U64 container
 
 Rank|Library|Container|Time
 ----|-------|---------|----
@@ -142,7 +142,7 @@ Rank|Library|Container|Time
 14 |  CMC |       UMap U64(hmap)   |   14338.24 ms 
 15 |  UT-HASH |       UMap U64(dict)   |   15649.82 ms 
 
-# Bench for best unordered map BIG container
+# Performance test: unordered map BIG container
 
 Rank|Library|Container|Time
 ----|-------|---------|----
@@ -160,7 +160,7 @@ Rank|Library|Container|Time
 12 |  STL |       UMap Big(umap)   |   5386.81 ms 
 13 |  UT-HASH |       UMap Big(dict)   |   5990.57 ms 
 
-# Bench for best unordered set container
+# Performance test: unordered set container
 
 Rank|Library|Container|Time
 ----|-------|---------|----

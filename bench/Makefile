@@ -463,17 +463,17 @@ report: report-seq report-sset report-umap report-umap-big report-umap-str repor
 	@cat doc/BENCH.md
 
 report-seq:
-	@echo "# Bench for best sequence container" > BENCH-SEQ.md
+	@echo "# Performance test: sequence container" > BENCH-SEQ.md
 	@echo >> BENCH-SEQ.md
 	@echo "Rank|Library|Container|Time" >> BENCH-SEQ.md
 	@echo "----|-------|---------|----" >> BENCH-SEQ.md
 	@grep Seq logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-SEQ.md
 	@echo >> BENCH-SEQ.md
-	@echo "Note: Bench for Array based containers works on dataset 10x bigger than size of List based containers." >> BENCH-SEQ.md
+	@echo "Note: Performance test: Array based containers works on dataset 10x bigger than size of List based containers." >> BENCH-SEQ.md
 	@echo >> BENCH-SEQ.md
 
 report-sset:
-	@echo "# Bench for best sorted set container" > BENCH-SSET.md
+	@echo "# Performance test: sorted set container" > BENCH-SSET.md
 	@echo >> BENCH-SSET.md
 	@echo "Rank|Library|Container|Time" >> BENCH-SSET.md
 	@echo "----|-------|---------|----" >> BENCH-SSET.md
@@ -481,7 +481,7 @@ report-sset:
 	@echo >> BENCH-SSET.md
 
 report-umap:
-	@echo "# Bench for best unordered map U64 container" > BENCH-UMAP.md
+	@echo "# Performance test: unordered map U64 container" > BENCH-UMAP.md
 	@echo >> BENCH-UMAP.md
 	@echo "Rank|Library|Container|Time" >> BENCH-UMAP.md
 	@echo "----|-------|---------|----" >> BENCH-UMAP.md
@@ -489,7 +489,7 @@ report-umap:
 	@echo >> BENCH-UMAP.md
 
 report-umap-big:
-	@echo "# Bench for best unordered map BIG container" > BENCH-UMAP2.md
+	@echo "# Performance test: unordered map BIG container" > BENCH-UMAP2.md
 	@echo >> BENCH-UMAP2.md
 	@echo "Rank|Library|Container|Time" >> BENCH-UMAP2.md
 	@echo "----|-------|---------|----" >> BENCH-UMAP2.md
@@ -497,7 +497,7 @@ report-umap-big:
 	@echo >> BENCH-UMAP2.md
 
 report-umap-str:
-	@echo "# Bench for best unordered map string container" > BENCH-UMAP-STR.md
+	@echo "# Performance test: unordered map string container" > BENCH-UMAP-STR.md
 	@echo >> BENCH-UMAP-STR.md
 	@echo "Rank|Library|Container|Time" >> BENCH-UMAP-STR.md
 	@echo "----|-------|---------|----" >> BENCH-UMAP-STR.md
@@ -505,7 +505,7 @@ report-umap-str:
 	@echo >> BENCH-UMAP-STR.md
 
 report-uset:
-	@echo "# Bench for best unordered set container" > BENCH-USET.md
+	@echo "# Performance test: unordered set container" > BENCH-USET.md
 	@echo >> BENCH-USET.md
 	@echo "Rank|Library|Container|Time" >> BENCH-USET.md
 	@echo "----|-------|---------|----" >> BENCH-USET.md
@@ -513,7 +513,7 @@ report-uset:
 	@echo >> BENCH-USET.md
 
 report-sort:
-	@echo "# Bench for best sort container" > BENCH-SORT.md
+	@echo "# Performance test: sort algorithm" > BENCH-SORT.md
 	@echo >> BENCH-SORT.md
 	@echo "Rank|Library|Container|Time" >> BENCH-SORT.md
 	@echo "----|-------|---------|----" >> BENCH-SORT.md
@@ -521,7 +521,7 @@ report-sort:
 	@echo >> BENCH-SORT.md
 
 report-queue:
-	@echo "# Bench for best thread queue container" > BENCH-QUEUE.md
+	@echo "# Performance test: thread communication queue container" > BENCH-QUEUE.md
 	@echo >> BENCH-QUEUE.md
 	@echo "Rank|Library|Container|Time" >> BENCH-QUEUE.md
 	@echo "----|-------|---------|----" >> BENCH-QUEUE.md
@@ -529,7 +529,7 @@ report-queue:
 	@echo >> BENCH-QUEUE.md
 
 report-hash:
-	@echo "# Bench for best hash" > BENCH-HASH.md
+	@echo "# Performance test: hash function" > BENCH-HASH.md
 	@echo >> BENCH-HASH.md
 	@echo "Rank|Library|Container|Time" >> BENCH-HASH.md
 	@echo "----|-------|---------|----" >> BENCH-HASH.md
@@ -537,7 +537,7 @@ report-hash:
 	@echo >> BENCH-HASH.md
 
 report-str-replace:
-	@echo "# Bench for best string replacement" > BENCH-STR-REPLACE.md
+	@echo "# Performance test: string replacement" > BENCH-STR-REPLACE.md
 	@echo >> BENCH-STR-REPLACE.md
 	@echo "Rank|Library|Container|Time" >> BENCH-STR-REPLACE.md
 	@echo "----|-------|---------|----" >> BENCH-STR-REPLACE.md
@@ -547,7 +547,7 @@ report-str-replace:
 	@echo >> BENCH-STR-REPLACE.md
 
 report-str-concat:
-	@echo "# Bench for best string concat" > BENCH-STR-CONCAT.md
+	@echo "# Performance test: string concat" > BENCH-STR-CONCAT.md
 	@echo >> BENCH-STR-CONCAT.md
 	@echo "Rank|Library|Container|Time" >> BENCH-STR-CONCAT.md
 	@echo "----|-------|---------|----" >> BENCH-STR-CONCAT.md
