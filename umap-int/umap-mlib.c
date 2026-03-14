@@ -12,8 +12,8 @@ int main(void)
       printf("Value of 42 is %d\n", *it);
     }
     for M_EACH(item, map, umap_int_t) {
-	printf("%d --> %d\n", item->key, item->value);
-      }
+      printf("%d --> %d\n", item->key, item->value);
+    }
   }
   return 0;
 }

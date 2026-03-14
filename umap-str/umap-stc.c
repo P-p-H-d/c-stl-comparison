@@ -19,7 +19,7 @@ int main(void)
   if (res.inserted != true) {
     abort();
   }
-  res = umap_str_emplace_or_assign(&map, "Sincerey", "Your map");
+  res = umap_str_emplace_or_assign(&map, "Sincerely", "Your map");
   if (res.inserted != true) {
     abort();
   }

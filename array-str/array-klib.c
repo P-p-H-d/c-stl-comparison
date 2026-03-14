@@ -46,6 +46,7 @@ int main(void)
     printf("%s\n", ks_str(&kv_A(array, i )) );
   }
 
+  // WORKAROUND: No destructor registered. Call it by hand
   for(size_t i = 0; i < kv_size(array); i++) {
     free( ks_str(&kv_A(array, i)));
   }

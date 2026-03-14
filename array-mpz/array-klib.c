@@ -18,29 +18,14 @@ int main(void)
   kvec_t(mpz) array;
 
   kv_init(array);
-  {
-    mpz tmp;
-    mpz_init_set_ui(tmp.z, 17);
-    kv_push(mpz, array, tmp);
-    // LIMITATION: No detection of memory allocation failure / no abort in case of error
-    // LIMITATION: content of tmp has been stolen by array, no free of tmp
-  }
-  
-  {
-    mpz tmp;
-    mpz_init_set_ui(tmp.z, 42);
-    kv_push(mpz, array, tmp );
-    // LIMITATION: No detection of memory allocation failure / no abort in case of error
-    // LIMITATION: content of tmp has been stolen by array, no free of tmp
-  }
-    
-  {
-    mpz tmp;
-    mpz_init_set_ui(tmp.z, 9);
-    kv_push(mpz, array, tmp );
-    // LIMITATION: No detection of memory allocation failure / no abort in case of error
-    // LIMITATION: content of tmp has been stolen by array, no free of tmp
-  }
+  mpz tmp;
+  // WORKAROUND: content of z has been stolen by array, no free of z (move semantics)
+  mpz_init_set_ui(tmp.z, 17);
+  kv_push(mpz, array, tmp);
+  mpz_init_set_ui(tmp.z, 42);
+  kv_push(mpz, array, tmp );
+  mpz_init_set_ui(tmp.z, 9);
+  kv_push(mpz, array, tmp );
     
   // WORKAROUND: Hack around the internal array
   ks_introsort_mpz(kv_size(array), & kv_A(array, 0));
@@ -49,6 +34,7 @@ int main(void)
     gmp_printf("%Zd\n", kv_A(array, i).z );
   }
 
+  // WORKAROUND: No destructor registered. Call it by hand
   for(size_t i = 0; i < kv_size(array); i++) {
     mpz_clear( kv_A(array, i).z);
   }
