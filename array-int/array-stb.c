@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Workaround: stb doesn't check for allocation failure.
+// WORKAROUND: stb doesn't check for allocation failure.
 static void *xrealloc(void *ptr, size_t size)
 {
   void * p = realloc(ptr, size);
