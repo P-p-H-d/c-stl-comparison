@@ -102,6 +102,9 @@ external/bstrlib:
 external/rapidjson:
 	mkdir -p external && cd external && git clone https://github.com/Tencent/rapidjson.git
 
+external/stb:
+	mkdir -p external && cd external && git clone https://github.com/nothings/stb.git
+
 ###########################################################
 # 		Build external Libraries
 ###########################################################
@@ -209,6 +212,14 @@ array-int-klib.exe: array-int/array-klib.c external/klib
 array-str-klib.exe: array-str/array-klib.c external/klib
 	$(CC) $(CFLAGS) -Iexternal/klib $< -o $@ $(LDFLAGS)
 
+array-int-stb.exe: array-int/array-stb.c external/stb
+	$(CC) $(CFLAGS) -Iexternal/stb $< -o $@ $(LDFLAGS)
+
+array-mpz-stb.exe: array-mpz/array-stb.c external/stb
+	$(CC) $(CFLAGS) -Iexternal/stb $< -o $@ $(LDFLAGS)
+
+array-str-stb.exe: array-str/array-stb.c external/stb
+	$(CC) $(CFLAGS) -Iexternal/stb $< -o $@ $(LDFLAGS)
 
 
 ###########################################################
@@ -282,6 +293,13 @@ umap-int-CC.exe: umap-int/umap-CC.c external/CC
 umap-str-CC.exe: umap-str/umap-CC.c external/CC 
 	$(C11) $(CFLAGS) -Iexternal/CC $< -o $@ $(LDFLAGS)
 
+umap-int-stb.exe: umap-int/umap-stb.c external/stb
+	$(C11) $(CFLAGS) -Iexternal/stb $< -o $@ $(LDFLAGS)
+
+umap-str-stb.exe: umap-str/umap-stb.c external/stb
+	$(C11) $(CFLAGS) -Iexternal/stb $< -o $@ $(LDFLAGS)
+
+#umap-mpz-stb is not possible: there is no way to give as proper hash and comparison function.
 
 ###########################################################
 # 		Build example for system GLIB
