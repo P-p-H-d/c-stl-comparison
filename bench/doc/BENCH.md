@@ -48,29 +48,30 @@ Rank|Library|Container|Time
 4 |  UT-HASH |           Seq(Array)    |   725.90 ms 
 5 |  KLIB |           Seq(Array)    |   731.27 ms 
 6 |  M*LIB |           Seq(Deque)    |   950.96 ms 
-7 |  GLIB |            Seq(List)    |   1383.70 ms 
-8 |  UT-HASH |            Seq(List)    |   1459.38 ms 
-9 |  STC |            Seq(List)    |   1478.17 ms 
-10 |  M*LIB |          Seq(DPList)    |   1478.85 ms 
-11 |  CTL |            Seq(List)    |   1483.12 ms 
-12 |  POTTERY |            Seq(List)    |   1486.21 ms 
-13 |  CollectionC |            Seq(List)    |   1546.96 ms 
-14 |  STL |           Seq(Array)    |   1600.91 ms 
-15 |  STL |            Seq(List)    |   1653.76 ms 
-16 |  CC |            Seq(List)    |   1708.23 ms 
-17 |  CMC |           Seq(Array)    |   1763.53 ms 
-18 |  M*LIB |            Seq(List)    |   1779.96 ms 
-19 |  TommyDS |            Seq(List)    |   1798.43 ms 
-20 |  STL |           Seq(Deque)    |   1820.54 ms 
-21 |  TommyDS |           Seq(Array)    |   1848.12 ms 
-22 |  CC |           Seq(Array)    |   2442.61 ms 
-23 |  KLIB |            Seq(List)    |   2487.40 ms 
-24 |  CollectionC |           Seq(Array)    |   2786.02 ms 
-25 |  POTTERY |           Seq(Array)    |   3939.73 ms 
-26 |  QLIBC |            Seq(List)    |   4155.04 ms 
-27 |  LIBSRT |           Seq(Array)    |   6368.50 ms 
-28 |  GLIB |           Seq(Array)    |   7386.94 ms 
-29 |  QLIBC |           Seq(Array)    |   8403.00 ms 
+7 | STB-DS |           Seq(DynArray) |  1320.01 ms
+8 |  GLIB |            Seq(List)    |   1383.70 ms 
+9 |  UT-HASH |            Seq(List)    |   1459.38 ms 
+10 |  STC |            Seq(List)    |   1478.17 ms 
+11 |  M*LIB |          Seq(DPList)    |   1478.85 ms 
+12 |  CTL |            Seq(List)    |   1483.12 ms 
+13 |  POTTERY |            Seq(List)    |   1486.21 ms 
+14 |  CollectionC |            Seq(List)    |   1546.96 ms 
+15 |  STL |           Seq(Array)    |   1600.91 ms 
+16 |  STL |            Seq(List)    |   1653.76 ms 
+17 |  CC |            Seq(List)    |   1708.23 ms 
+18 |  CMC |           Seq(Array)    |   1763.53 ms 
+19 |  M*LIB |            Seq(List)    |   1779.96 ms 
+20 |  TommyDS |            Seq(List)    |   1798.43 ms 
+21 |  STL |           Seq(Deque)    |   1820.54 ms 
+22 |  TommyDS |           Seq(Array)    |   1848.12 ms 
+23 |  CC |           Seq(Array)    |   2442.61 ms 
+24 |  KLIB |            Seq(List)    |   2487.40 ms 
+25 |  CollectionC |           Seq(Array)    |   2786.02 ms 
+26 |  POTTERY |           Seq(Array)    |   3939.73 ms 
+27 |  QLIBC |            Seq(List)    |   4155.04 ms 
+28 |  LIBSRT |           Seq(Array)    |   6368.50 ms 
+29 |  GLIB |           Seq(Array)    |   7386.94 ms 
+30 |  QLIBC |           Seq(Array)    |   8403.00 ms 
 
 Rank|Library|Container|Mem
 ----|-------|---------|----
@@ -95,14 +96,15 @@ Rank|Library|Container|Mem
 19 |  KLIB |           Seq(Array)   |   1.60G
 20 |  QLIBC |           Seq(Array)   |   1.60G
 21 |  M*LIB |           Seq(Deque)   |   1.60G
-22 |  STL |           Seq(Array)   |   1.62G
-23 |  STL |           Seq(Deque)   |   1.68G
-24 |  POTTERY |           Seq(Array)   |   1.70G
-25 |  TommyDS |            Seq(List)   |   1.92G
-26 |  TommyDS |           Seq(Array)   |   3.20G
-27 |  QLIBC |            Seq(List)   |   3.20G
-28 |  CollectionC |           Seq(Array)   |   3.22G
-29 |  GLIB |           Seq(Array)   |   4.81G
+22 |  STB-DS |           Seq(DynArray)   |   1.60G
+23 |  STL |           Seq(Array)   |   1.62G
+24 |  STL |           Seq(Deque)   |   1.68G
+25 |  POTTERY |           Seq(Array)   |   1.70G
+26 |  TommyDS |            Seq(List)   |   1.92G
+27 |  TommyDS |           Seq(Array)   |   3.20G
+28 |  QLIBC |            Seq(List)   |   3.20G
+29 |  CollectionC |           Seq(Array)   |   3.22G
+30 |  GLIB |           Seq(Array)   |   4.81G
 
 Note: Performance test: Array based containers work on dataset 10x bigger than the ones used by List based containers.
 
@@ -263,6 +265,8 @@ Rank|Library|Container|Mem
 13 |  GLIB | UMap U64(GHashTable)   |   1.95G
 14 |  CMC |       UMap U64(hmap)   |   2.42G
 15 |  TommyDS |       UMap U64(dict)   |   4.16G
+
+STB-DS bench is not included due to an incorrect result being reported
 
 # Performance test: unordered map BIG container
 
