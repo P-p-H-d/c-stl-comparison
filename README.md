@@ -205,7 +205,7 @@ a working C11 compiler, a make tool, git,
 the GMP library, and the GLIB library
 to build then.
 
-Simply run "make" to perform a clone of the project
+Simply run "make" to perform clones of the C libraries
 and generate the different executables.
 
 ## Analysis and synthesis
