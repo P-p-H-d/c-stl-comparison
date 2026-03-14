@@ -152,63 +152,41 @@ Some mix of the previous solutions can also be chosen for a specific usage.
 For example, mixing the macro solution and the voidp solution can mitigates the Cons of both solution.
 
 
+# C libraries Selection
+
+The following C libraries have been selected as their aim is to provide generic containers to the C language:
+
+* [C-Macro-Collections](https://github.com/LeoVen/C-Macro-Collections)
+* [COLLECTIONS-C](https://github.com/srdja/Collections-C)
+* CTL [by glouw](https://github.com/glouw/ctl) or [by rurban](https://github.com/rurban/ctl)
+* [M\*LIB](https://github.com/P-p-H-d/mlib)
+* [STC - Smart Template Container for C](https://github.com/tylov/STC)
+* [CC](https://github.com/JacksonAllan/CC.git)
+* [GLIB](https://docs.gtk.org/glib/index.html)
+* [STB_DS](https://github.com/nothings/stb)
+
+with C++ STL used as the reference baseline.
+
+The used versions for the manual comparison are:
+
+COMPONENT      | VERSION
+---------------|-----------------------------------------
+C Macro Collections | v0.23.1
+CollectionsC   | ff1be366329e2c82cd85b2c803114ef8d2115f7f
+CTL            | 3923e6776a231e5d58cf91225ca8a1d61879401b
+M\*LIB         | a0818419ab959e05517336e1bea699c1854b29f3
+STC            | 5fb5ed08250b5ad4eadd6e7a9fdc44f4519b15ff
+CC             | 2012d9d2eb8f035d7dc69f36ec03ca3199ede1bf
+GLIB           | 2.74
+STB_DS         | 904aa67e1e2d1dec92959df63e700b166d5c1022
+
+More specialized C libraries which provides only one kind of container are not included in this chapter.
+sglib is not included due to being abandoned.
+
 
 # Feature Comparison
 
-## Rules
-
-The test programs shall respect the following conditions:
-
-* it shall use a basic type (int), a non POD type (the type mpz\_t of the GMP library) and a string as the primary type of the container.
-* if a dynamic string container exists in the container library, it shall be used instead of a C string,
-* it shall not comment the code (the code is assumed to be clear on what it does by itself) except if there is some workaround,
-* it shall not produce any compilation warnings,
-* it shall execute properly,
-* it shall not leak any memory,
-* it shall abort on error,
-* it shall link dynamically with the GMP library (https://gmplib.org/) if needed,
-* it shall link statically with the container library if needed,
-* the optional assertions shall be turned off.
-
-A workaround is defined as a way to implement this program which is **not natural** for the library. This typically includes:
-
-* create wrapper structure,
-* create wrapper functions or macros,
-* accessing internal fields of the containers (typically for using the qsort function).
-
-For example, if a container library manual requests to define some macro for its use, then it won't be considered as a workaround. 
-
-## Array tests
-
-The program shall perform the following operations:
-
-* declare a dynamic array of int (resp. mpz_t, a string),
-* initialize this array with the small unsigned integers values 17, 42 and 9 (performing a conversion from unsigned integer to mpz_t for GMP) or the constant strings "Hello", "World" and "!" for strings,
-* sort this array,
-* iterate the array to print the values.
-
-## Associative array tests
-
-The program shall perform the following operations:
-
-* declare a non-ordered associative array from int (resp. mpz_t, a string) to int (resp. mpz_t, a string),
-* initialize this array with the association of signed integers values 17 to 4585, 42 to 4856 and -9 to 1452 (performing a conversion from signed integer to mpz_t for GMP) or the strings "Hello" to "LIB", "Welcome" to "Program" and "Sincerely" to "Your map" for strings,
-* search for the key "Hello" and display it if successful,
-* iterate the associative array to print the values.
-
-
-## Execution
-
-The different programs are available in this repository.
-To build then, you just need to have
-a working C11 compiler, a make tool, git,
-the GMP library, and the GLIB library
-to build then.
-
-Simply run "make" to perform clones of the C libraries
-and generate the different executables.
-
-## Analysis and synthesis
+## Analysis
 
 The following characteristics are compared. The C++ STL is also included as as reference.
 
@@ -244,38 +222,6 @@ The following characteristics are compared. The C++ STL is also included as as r
 * optional per-container context for custom memory functions
 * support of forward declaration of container
 * support of serialization (JSON, XML)
-
-## C libraries Selection
-
-The following C libraries have been selected as their aim is to provide generic containers to the C language:
-
-* [C-Macro-Collections](https://github.com/LeoVen/C-Macro-Collections)
-* [COLLECTIONS-C](https://github.com/srdja/Collections-C)
-* CTL [by glouw](https://github.com/glouw/ctl) or [by rurban](https://github.com/rurban/ctl)
-* [M\*LIB](https://github.com/P-p-H-d/mlib)
-* [STC - Smart Template Container for C](https://github.com/tylov/STC)
-* [CC](https://github.com/JacksonAllan/CC.git)
-* [GLIB](https://docs.gtk.org/glib/index.html)
-* [STB_DS](https://github.com/nothings/stb)
-
-with C++ STL used as the reference baseline.
-
-The used versions for the manual comparison are:
-
-COMPONENT      | VERSION
----------------|-----------------------------------------
-C Macro Collections | v0.23.1
-CollectionsC   | ff1be366329e2c82cd85b2c803114ef8d2115f7f
-CTL            | 3923e6776a231e5d58cf91225ca8a1d61879401b
-M\*LIB         | a0818419ab959e05517336e1bea699c1854b29f3
-STC            | 5fb5ed08250b5ad4eadd6e7a9fdc44f4519b15ff
-CC             | 2012d9d2eb8f035d7dc69f36ec03ca3199ede1bf
-GLIB           | 2.74
-STB_DS         | 904aa67e1e2d1dec92959df63e700b166d5c1022
-
-More specialized C libraries which provides only one kind of container are not included in this chapter.
-sglib is not included due to being abandoned.
-
 
 ## Synthesis
 
@@ -377,8 +323,61 @@ or want to include another C library,
 or want to include another point of comparison,
 do not hesitate to open a pull request.
 
+# Ergonomic comparison
 
-# Ergonomic Comparison
+## Rules
+
+The test programs shall respect the following conditions:
+
+* it shall use a basic type (int), a non POD type (the type mpz\_t of the GMP library) and a string as the primary type of the container.
+* if a dynamic string container exists in the container library, it shall be used instead of a C string,
+* it shall not comment the code (the code is assumed to be clear on what it does by itself) except if there is some workaround,
+* it shall not produce any compilation warnings,
+* it shall execute properly,
+* it shall not leak any memory,
+* it shall abort on error,
+* it shall link dynamically with the GMP library (https://gmplib.org/) if needed,
+* it shall link statically with the container library if needed,
+* the optional assertions shall be turned off.
+
+A workaround is defined as a way to implement this program which is **not natural** for the library. This typically includes:
+
+* create wrapper structure,
+* create wrapper functions or macros,
+* accessing internal fields of the containers (typically for using the qsort function).
+
+For example, if a container library manual requests to define some macro for its use, then it won't be considered as a workaround. 
+
+## Array tests
+
+The program shall perform the following operations:
+
+* declare a dynamic array of int (resp. mpz_t, a string),
+* initialize this array with the small unsigned integers values 17, 42 and 9 (performing a conversion from unsigned integer to mpz_t for GMP) or the constant strings "Hello", "World" and "!" for strings,
+* sort this array,
+* iterate the array to print the values.
+
+## Associative array tests
+
+The program shall perform the following operations:
+
+* declare a non-ordered associative array from int (resp. mpz_t, a string) to int (resp. mpz_t, a string),
+* initialize this array with the association of signed integers values 17 to 4585, 42 to 4856 and -9 to 1452 (performing a conversion from signed integer to mpz_t for GMP) or the strings "Hello" to "LIB", "Welcome" to "Program" and "Sincerely" to "Your map" for strings,
+* search for the key "Hello" and display it if successful,
+* iterate the associative array to print the values.
+
+## Execution
+
+The different programs are available in this repository.
+To build then, you just need to have
+a working C11 compiler, a make tool, git,
+the GMP library, and the GLIB library
+to build then.
+
+Simply run "make" to perform clones of the C libraries
+and generate the different executables.
+
+## Conclusion
 
 What can be objectively compared is the size of the programs:
 
@@ -401,7 +400,11 @@ As ergonomic is a personal judgement, you should open the different programs pro
 
 The [bench](https://github.com/P-p-H-d/c-stl-comparison/tree/master/bench)
 directory contains a small benchmark comparing
-the performance of different C libraries (including some C++ ones, like STL and BOOST as references). More specialized C libraries are added:
+the performance of different C libraries (including some C++ ones, like STL and BOOST as references). 
+
+Time and memory usage are provided for theses tests.
+
+More specialized C libraries are added. The tested C libraries are:
 
 * Bstrlib (for string)
 * CC
@@ -439,10 +442,9 @@ The performance tests are performed around the following functionalities:
 * hash function,
 * multithread communication queue container.
 
+## Conclusion
 
 Results are available [for i5-3210M](https://github.com/P-p-H-d/c-stl-comparison/blob/master/bench/doc/BENCH.md) and [for AMD EPYC 7763](https://github.com/P-p-H-d/c-stl-comparison/blob/result/bench/doc/BENCH.md) (the later is generated by CI).
-
-Time and memory usage are provided for theses tests.
 
 The conclusion is that the best C libraries can be much faster than the STL. Even for C++, more specialized C++ libraries (like boost) are needed to achieve good performance.
 
