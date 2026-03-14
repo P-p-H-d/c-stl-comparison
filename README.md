@@ -418,7 +418,7 @@ the performance of different C libraries (including some C++ ones, like STL and 
 * XXHASH (for hash function)
 
 Rather than measuring the performance of each individual methods exported by the library on some dataset,
-it measures the time taken by some test programs computing the solution of a small problem using the methods of the containers for this (to reduce bias).
+it measures the time taken by some test programs computing the solution of a small problem using the methods of the containers for this (to provide more real world examples).
 
 Each dataset size is chosen so that the time using by the best library is around 1 second (which is a compromise between execution time and reliability of the test result).
 
@@ -441,7 +441,7 @@ The conclusion is that the best C libraries can be much faster than the STL. Eve
 
 # Continuous Integration
 
-This project includes continuous integration to:
+This project includes all sources used for this comparison and provides continuous integration to:
 
 * perform the run of the benchmark,
 * automated validation
