@@ -40,7 +40,7 @@ pgo:
 
 #########################################################################
 
-container-c: bench-mlib bench-glib bench-klib bench-ctl bench-stc bench-CC bench-cmc bench-collectionc bench-tommyds bench-uthash bench-qlibc bench-libsrt bench-pottery bench-verstable bench-xxhash bench-bstrlib bench-sds
+container-c: bench-mlib bench-glib bench-klib bench-ctl bench-stc bench-CC bench-cmc bench-collectionc bench-tommyds bench-uthash bench-qlibc bench-libsrt bench-pottery bench-verstable bench-xxhash bench-bstrlib bench-sds bench-stb
 	@echo
 	@echo
 
@@ -257,6 +257,12 @@ bench-bstrlib:
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I ../external/bstrlib bench-bstrlib.c common.c ../external/bstrlib/libbstrlib.a -o bench-bstrlib.exe
 	@./bench-bstrlib.exe 900 $(LOG)
 	@./bench-bstrlib.exe 910 $(LOG)
+
+bench-stb:
+	@cd .. && make external/stb
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I ../external/stb bench-stb.c common.c -o bench-stb.exe
+	@./bench-stb.exe 110 $(LOG)
+#	@./bench-stb.exe 300 $(LOG)	# Result is incorrect, so it is not run
 
 ############################################################################
 # C++ Libraries
@@ -498,6 +504,8 @@ report-umap:
 	@echo "Rank|Library|Container|Mem" >> BENCH-UMAP.md
 	@echo "----|-------|---------|----" >> BENCH-UMAP.md
 	@grep "UMap U64" logs.txt |awk -F'~' '{print $$2, "~", $$1}'|LANG=C sort -h|awk -F'~' '{print $$2,"~",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\} time.*//g'|sed -r 's/\{mem  ~/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}'>> BENCH-UMAP.md
+	@echo >> BENCH-UMAP.md
+	@echo "STB-DS bench is not included due to an incorrect result being reported">> BENCH-UMAP.md
 	@echo >> BENCH-UMAP.md
 
 report-umap-big:
