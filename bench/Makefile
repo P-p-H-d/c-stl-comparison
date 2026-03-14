@@ -469,7 +469,7 @@ report-seq:
 	@echo "----|-------|---------|----" >> BENCH-SEQ.md
 	@grep Seq logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-SEQ.md
 	@echo >> BENCH-SEQ.md
-	@echo "Note: Performance test: Array based containers works on dataset 10x bigger than size of List based containers." >> BENCH-SEQ.md
+	@echo "Note: Performance test: Array based containers work on dataset 10x bigger than the ones used by List based containers." >> BENCH-SEQ.md
 	@echo >> BENCH-SEQ.md
 
 report-sset:

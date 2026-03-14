@@ -13,6 +13,3 @@ Just run `make` to run the benchmark after having running the toplevel Make to g
 # Results
 
 Results are available [for i5-3210M](https://github.com/P-p-H-d/c-stl-comparison/blob/master/bench/doc/BENCH.md) and [for AMD EPYC 7763](https://github.com/P-p-H-d/c-stl-comparison/blob/result/bench/doc/BENCH.md)
-
-Older results are available [here](https://github.com/P-p-H-d/c-stl-comparison/wiki/Benchmark-result)
-

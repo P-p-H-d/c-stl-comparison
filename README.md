@@ -128,7 +128,7 @@ You can perform heavy context-dependent customization of the code (transforming 
 Properly done, you can also chain the methods from a container to another one easily, enabling quick and easy expansion of the containers. 
 Errors in user code are easy to read and natural. Code usage is a little bit more verbose as it uses specialized function names, and not generic ones.
 
-Some people reported "issue" of the template macros with their look due to the use of backslash at the end of the lines: this was because they didn't align properly the backslashes at the 80. Another one of the reported "issue" is the lack of support of syntax highlighting and autocomplete in macros but... it was an issue in their textual editor.
+Some people reported "issue" of the template macros with their look due to the use of backslash at the end of the lines however it is due to their coding practices (you need to align backslash at the same column). Another one of the reported "issue" is the lack of support of syntax highlighting and autocomplete in macros but... it was more an issue in their used text editor.
 
 Pros:
 
@@ -153,7 +153,7 @@ For example, mixing the macro solution and the voidp solution can mitigates the 
 
 
 
-# Comparison
+# Feature Comparison
 
 ## Rules
 
@@ -205,7 +205,7 @@ a working C11 compiler, a make tool, git,
 the GMP library, and the GLIB library
 to build then.
 
-Simply run "make" to perform a clone of the projects
+Simply run "make" to perform a clone of the project
 and generate the different executables.
 
 ## Analysis and synthesis
@@ -245,6 +245,35 @@ The following characteristics are compared. The C++ STL is also included as as r
 * support of forward declaration of container
 * support of serialization (JSON, XML)
 
+## C libraries Selection
+
+The following C libraries have been selected as their aim is to provide generic containers to the C language:
+
+* [C-Macro-Collections](https://github.com/LeoVen/C-Macro-Collections)
+* [COLLECTIONS-C](https://github.com/srdja/Collections-C)
+* CTL [by glouw](https://github.com/glouw/ctl) or [by rurban](https://github.com/rurban/ctl)
+* [M\*LIB](https://github.com/P-p-H-d/mlib)
+* [STC - Smart Template Container for C](https://github.com/tylov/STC)
+* [CC](https://github.com/JacksonAllan/CC.git)
+* [GLIB](https://docs.gtk.org/glib/index.html)
+
+with C++ STL used as the reference baseline.
+
+The used versions for the manual comparison are:
+
+COMPONENT      | VERSION
+---------------|-----------------------------------------
+C Macro Collections | v0.23.1
+CollectionsC   | ff1be366329e2c82cd85b2c803114ef8d2115f7f
+CTL            | 3923e6776a231e5d58cf91225ca8a1d61879401b
+M\*LIB         | a0818419ab959e05517336e1bea699c1854b29f3
+STC            | 5fb5ed08250b5ad4eadd6e7a9fdc44f4519b15ff
+CC             | 2012d9d2eb8f035d7dc69f36ec03ca3199ede1bf
+GLIB           | 2.74
+
+More specialized C libraries which provides only one kind of container are not included in this chapter.
+sglib is not included due to being abandoned.
+
 
 ## Synthesis
 
@@ -273,7 +302,7 @@ The following characteristics are compared. The C++ STL is also included as as r
 | Contract violation checks         | Y         | Y      | N       | N       | N     | N            | N      | N      |
 | Natural usage                     | Y         | N      | N       | N       | N     | N            | N      | N      |
 | Basic type is stored              | Y         | Y      | Y       | Y       | Y     | N            | Y      | N      |
-| Explicit instanciation            | N         | Y      | Y       | Y       | Y     | N            | N      | N      |
+| Explicit instantiation            | N         | Y      | Y       | Y       | Y     | N            | N      | N      |
 | prefixed function                 | Y         | Y      | Y       | Y       | Y     | Y            | Y      | Y      |
 | memory handling                   | exception | abort, exception | retcode | retcode | none|retcode |retcode|retcode|
 | destructors on exception          | Y         | Y*     | NA      | NA      | NA    | NA           | NA     | N      |
@@ -284,15 +313,6 @@ The following characteristics are compared. The C++ STL is also included as as r
 
 * C11*: means C11 + extension
 * Y*: Yes with some limitations.
-
-| Comparison programs               | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     |  GLIB  |
-|-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|--------|
-| int:number of characters          | 236       | 370    | 558     | 1011    | 593   | 885          | 611    | 696    |
-| int:number of line of codes       | 12        | 16     | 28      | 36      | 22    | 35           | 31     | 36     |
-| int:number of workarounds         | 0         | 0      | 0       | 2       | 2     | 1            | 1      | 0      |
-| mpz:number of characters          | 261       | 500    | 1222    | 1740    | 1407  | 1337         | 1120   | 840    |
-| mpz:number of line of codes       | 13        | 18     | 37      | 52      | 37    | 58           | 40     | 45     |
-| mpz:number of workarounds         | 0         | 0      | 3       | 7       | 5     | 1            | 2      | 0      |
 
 | Containers                        | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     | GLIB |
 |-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|------|
@@ -348,27 +368,6 @@ The following characteristics are compared. The C++ STL is also included as as r
 |-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|------|
 | TODO                              | Y         | Y      | Y       | N       | Y     | Y            | Y      | Y    |
 
-The used versions are:
-
-COMPONENT      | VERSION
----------------|-----------------------------------------
-GCC            | 10.2
-C Macro Collections | v0.23.1
-CollectionsC   | ff1be366329e2c82cd85b2c803114ef8d2115f7f
-CTL            | 3923e6776a231e5d58cf91225ca8a1d61879401b
-M\*LIB         | a0818419ab959e05517336e1bea699c1854b29f3
-STC            | 5fb5ed08250b5ad4eadd6e7a9fdc44f4519b15ff
-CC             | 2012d9d2eb8f035d7dc69f36ec03ca3199ede1bf
-GLIB           | 2.74
-
-* [C-Macro-Collections](https://github.com/LeoVen/C-Macro-Collections)
-* [COLLECTIONS-C](https://github.com/srdja/Collections-C)
-* CTL [by glouw](https://github.com/glouw/ctl) or [by rurban](https://github.com/rurban/ctl)
-* [M\*LIB](https://github.com/P-p-H-d/mlib)
-* [STC - Smart Template Container for C](https://github.com/tylov/STC)
-* [CC](https://github.com/JacksonAllan/CC.git)
-* [GLIB](https://docs.gtk.org/glib/index.html)
-
 **This is a WIP, and some reviews are needed to help this comparison.**
 
 If you see any mistakes in this report,
@@ -376,11 +375,75 @@ or want to include another C library,
 or want to include another point of comparison,
 do not hesitate to open a pull request.
 
-# Benchmark
+
+# Ergonomic Comparison
+
+What can be objectively compared is the size of the programs:
+
+| Comparison programs               | STL       | M*LIB  | STC     | CMC     | CTL   | CollectionsC | CC     |  GLIB  |
+|-----------------------------------|-----------|--------|---------|---------|-------|--------------|--------|--------|
+| int:number of characters          | 236       | 370    | 558     | 1011    | 593   | 885          | 611    | 696    |
+| int:number of line of codes       | 12        | 16     | 28      | 36      | 22    | 35           | 31     | 36     |
+| int:number of workarounds         | 0         | 0      | 0       | 2       | 2     | 1            | 1      | 0      |
+| mpz:number of characters          | 261       | 500    | 1222    | 1740    | 1407  | 1337         | 1120   | 840    |
+| mpz:number of line of codes       | 13        | 18     | 37      | 52      | 37    | 58           | 40     | 45     |
+| mpz:number of workarounds         | 0         | 0      | 3       | 7       | 5     | 1            | 2      | 0      |
+
+As ergonomic is a personal judgement, you should open the different programs provided and make your own choice based on your own ergonomic criteria.
+
+
+# Performance Comparison
 
 The [bench](https://github.com/P-p-H-d/c-stl-comparison/tree/master/bench)
 directory contains a small benchmark comparing
-the performance of different C libraries (including some C++ ones, like STL and BOOST)
+the performance of different C libraries (including some C++ ones, like STL and BOOST as references). More specialized C libraries are added:
 
-Results are available [for i5-3210M](https://github.com/P-p-H-d/c-stl-comparison/blob/master/bench/doc/BENCH.md) and [for AMD EPYC 7763](https://github.com/P-p-H-d/c-stl-comparison/blob/result/bench/doc/BENCH.md)
+* Bstrlib (for string)
+* CC
+* CMC
+* Collections C
+* CTL
+* GLIB
+* KLIB
+* liblfds (for thread communication)
+* libsrt
+* M\*LIB
+* Poterry
+* Qlibc
+* SDS (for string)
+* STC
+* TOMMY DS 
+* UT HASH (for hash table)
+* VERSTABLE (for hash table)
+* XXHASH (for hash function)
+
+Rather than measuring the performance of each individual methods exported by the library on some dataset,
+it measures the time taken by some test programs computing the solution of a small problem using the methods of the containers for this (to reduce bias).
+
+Each dataset size is chosen so that the time using by the best library is around 1 second (which is a compromise between execution time and reliability of the test result).
+
+The performance tests are performed around the following functionalities:
+
+* sequence container (array, list and deque),
+* sorted set container,
+* unordered map container (on unsigned 64 bits type, on 256 bits type and on string type),
+* unordered set container,
+* string concat,
+* string replacement,
+* sort algorithm,
+* hash function,
+* multithread communication queue container.
+
+
+Results are available [for i5-3210M](https://github.com/P-p-H-d/c-stl-comparison/blob/master/bench/doc/BENCH.md) and [for AMD EPYC 7763](https://github.com/P-p-H-d/c-stl-comparison/blob/result/bench/doc/BENCH.md) (the later is generated by CI).
+
+The conclusion is that the best C libraries can be much faster than the STL. Even for C++, more specialized C++ libraries (like boost) are needed to achieve good performance.
+
+# Continuous Integration
+
+This project includes continuous integration to:
+
+* perform the run of the benchmark,
+* automated validation
+* regression detection
 

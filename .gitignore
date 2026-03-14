@@ -1,3 +1,5 @@
 *.exe
 *~
 external
+logs.txt
+tmp-serial.json
