@@ -51,7 +51,7 @@ struct parse_opt_s {
   double from, to, step, grow;
   double within;
   unsigned repeat;
-  bool graph, best, best_within, average, quiet, clear_cache, sleep;
+  bool graph, best, best_within, average, quiet, clear_cache, sleep, mem;
 };
 
 static void
@@ -70,6 +70,7 @@ parse_config(struct parse_opt_s *opt, int argc, const char *argv[])
   opt->average = false;
   opt->quiet = false;
   opt->sleep = false;
+  opt->mem = false;
   opt->clear_cache = false;
   opt->repeat = 1;
   opt->within = .05;
@@ -119,6 +120,8 @@ parse_config(struct parse_opt_s *opt, int argc, const char *argv[])
           opt->sleep = true;
         } else if (strcmp(argv[i], "--clear-cache") == 0) {
           opt->clear_cache = true;
+        } else if (strcmp(argv[i], "--mem") == 0) {
+          opt->mem = true;
         } else {
           fprintf(stderr, "ERROR: Option unkown: %s.\n",
             argv[i]);
@@ -230,6 +233,39 @@ clear_cache(unsigned long n)
   free((void*)p);
 }
 
+static long memusage_start;
+
+static long 
+get_memusage(void)
+{
+	struct rusage r;
+	getrusage(RUSAGE_SELF, &r);
+#if defined(__linux__)
+	return r.ru_maxrss * 1024; /* This is the maximum resident set size used (in KiB) */
+#elif defined(__APPLE__)
+	return r.ru_maxrss;
+#else
+  return 0;
+#endif
+}
+
+const char *
+get_memusage_str(void)
+{
+  long m = get_memusage() - memusage_start;
+  static char buffer[100];
+  if (m > 1000000000LL) {
+    sprintf(buffer, "%.2fG", (double) m / 1E9);
+  } else if (m > 1000000LL) {
+    sprintf(buffer, "%.2fM", (double) m / 1E6);
+  } else if (m > 1000LL) {
+    sprintf(buffer, "%.2fK", (double) m / 1E3);
+  } else {
+    sprintf(buffer, "%ld", m);
+  }
+  return buffer;
+}
+
 void
 test(const char library[], size_t n, const config_func_t functions[], int argc, const char *argv[])
 {
@@ -256,7 +292,7 @@ test(const char library[], size_t n, const config_func_t functions[], int argc, 
     }
     fprintf(graph_file, "# plotting %s-%d : %s\n# N T", library, arg.test_function, functions[i].funcname);
   }
-  
+  memusage_start = get_memusage();
   // Do the bench
   for(double n = from; n <= to ; n = ((arg.grow == 0) ? n + arg.step : n * arg.grow))
     {
@@ -307,7 +343,7 @@ test(const char library[], size_t n, const config_func_t functions[], int argc, 
         }
       } else if (arg.quiet) {
         double result = arg.average ? avg : arg.best ? best : ba;
-        printf ("%s:%20.20s [n:%9lu r:%10lu] time = %.2f ms\n", library, functions[i].funcname, (unsigned long) n, 0UL, result);
+        printf ("%s:%20.20s [n:%9lu r:%10lu] {mem ~ %s} time = %.2f ms\n", library, functions[i].funcname, (unsigned long) n, 0UL, get_memusage_str(), result);
       } else if (arg.repeat > 1) {
         if (arg.average == false && arg.best_within == false)
           printf ("%20.20s time %.2f ms for n = %lu ***   BEST  ***\n", functions[i].funcname, best, (unsigned long) n);
@@ -325,6 +361,9 @@ test(const char library[], size_t n, const config_func_t functions[], int argc, 
 	   "Run in gnuplot the following command:\n"
 	   "\tplot 'plot-%s-%d.dat' with linespoints linestyle 1\n",
 	   library, arg.test_function, library, arg.test_function);
+  }
+  if (arg.mem) {
+    printf ("Memory usage: %s\n", get_memusage_str());
   }
   return;
 }

@@ -467,7 +467,11 @@ report-seq:
 	@echo >> BENCH-SEQ.md
 	@echo "Rank|Library|Container|Time" >> BENCH-SEQ.md
 	@echo "----|-------|---------|----" >> BENCH-SEQ.md
-	@grep Seq logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-SEQ.md
+	@grep Seq logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\{.*\}//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-SEQ.md
+	@echo >> BENCH-SEQ.md
+	@echo "Rank|Library|Container|Mem" >> BENCH-SEQ.md
+	@echo "----|-------|---------|----" >> BENCH-SEQ.md
+	@grep "Seq" logs.txt |awk -F'~' '{print $$2, "~", $$1}'|LANG=C sort -h|awk -F'~' '{print $$2,"~",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\} time.*//g'|sed -r 's/\{mem  ~/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}'>> BENCH-SEQ.md
 	@echo >> BENCH-SEQ.md
 	@echo "Note: Performance test: Array based containers work on dataset 10x bigger than the ones used by List based containers." >> BENCH-SEQ.md
 	@echo >> BENCH-SEQ.md
@@ -477,7 +481,11 @@ report-sset:
 	@echo >> BENCH-SSET.md
 	@echo "Rank|Library|Container|Time" >> BENCH-SSET.md
 	@echo "----|-------|---------|----" >> BENCH-SSET.md
-	@grep SSet logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-SSET.md
+	@grep "SSet" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\{.*\}//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-SSET.md
+	@echo >> BENCH-SSET.md
+	@echo "Rank|Library|Container|Mem" >> BENCH-SSET.md
+	@echo "----|-------|---------|----" >> BENCH-SSET.md
+	@grep "SSet" logs.txt |awk -F'~' '{print $$2, "~", $$1}'|LANG=C sort -h|awk -F'~' '{print $$2,"~",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\} time.*//g'|sed -r 's/\{mem  ~/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}'>> BENCH-SSET.md
 	@echo >> BENCH-SSET.md
 
 report-umap:
@@ -485,7 +493,11 @@ report-umap:
 	@echo >> BENCH-UMAP.md
 	@echo "Rank|Library|Container|Time" >> BENCH-UMAP.md
 	@echo "----|-------|---------|----" >> BENCH-UMAP.md
-	@grep "UMap U64" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-UMAP.md
+	@grep "UMap U64" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\{.*\}//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-UMAP.md
+	@echo >> BENCH-UMAP.md
+	@echo "Rank|Library|Container|Mem" >> BENCH-UMAP.md
+	@echo "----|-------|---------|----" >> BENCH-UMAP.md
+	@grep "UMap U64" logs.txt |awk -F'~' '{print $$2, "~", $$1}'|LANG=C sort -h|awk -F'~' '{print $$2,"~",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\} time.*//g'|sed -r 's/\{mem  ~/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}'>> BENCH-UMAP.md
 	@echo >> BENCH-UMAP.md
 
 report-umap-big:
@@ -493,7 +505,11 @@ report-umap-big:
 	@echo >> BENCH-UMAP2.md
 	@echo "Rank|Library|Container|Time" >> BENCH-UMAP2.md
 	@echo "----|-------|---------|----" >> BENCH-UMAP2.md
-	@grep "UMap Big" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-UMAP2.md
+	@grep "UMap Big" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\{.*\}//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-UMAP2.md
+	@echo >> BENCH-UMAP2.md
+	@echo "Rank|Library|Container|Mem" >> BENCH-UMAP2.md
+	@echo "----|-------|---------|----" >> BENCH-UMAP2.md
+	@grep "UMap Big" logs.txt |awk -F'~' '{print $$2, "~", $$1}'|LANG=C sort -h|awk -F'~' '{print $$2,"~",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\} time.*//g'|sed -r 's/\{mem  ~/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}'>> BENCH-UMAP2.md
 	@echo >> BENCH-UMAP2.md
 
 report-umap-str:
@@ -501,15 +517,23 @@ report-umap-str:
 	@echo >> BENCH-UMAP-STR.md
 	@echo "Rank|Library|Container|Time" >> BENCH-UMAP-STR.md
 	@echo "----|-------|---------|----" >> BENCH-UMAP-STR.md
-	@grep "UMap Str" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-UMAP-STR.md
+	@grep "UMap Str" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\{.*\}//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-UMAP-STR.md
 	@echo >> BENCH-UMAP-STR.md
+	@echo "Rank|Library|Container|Mem" >> BENCH-UMAP-STR.md
+	@echo "----|-------|---------|----" >> BENCH-UMAP-STR.md
+	@grep "UMap Str" logs.txt |awk -F'~' '{print $$2, "~", $$1}'|LANG=C sort -h|awk -F'~' '{print $$2,"~",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\} time.*//g'|sed -r 's/\{mem  ~/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}'>> BENCH-UMAP-STR.md
+	@echo >> BENCH-UMAP-UMAP-STR.md
 
 report-uset:
 	@echo "# Performance test: unordered set container" > BENCH-USET.md
 	@echo >> BENCH-USET.md
 	@echo "Rank|Library|Container|Time" >> BENCH-USET.md
 	@echo "----|-------|---------|----" >> BENCH-USET.md
-	@grep "USet Longest" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-USET.md
+	@grep "USet Longest" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\{.*\}//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-USET.md
+	@echo >> BENCH-USET.md
+	@echo "Rank|Library|Container|Mem" >> BENCH-USET.md
+	@echo "----|-------|---------|----" >> BENCH-USET.md
+	@grep "USet Longest" logs.txt |awk -F'~' '{print $$2, "~", $$1}'|LANG=C sort -h|awk -F'~' '{print $$2,"~",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\} time.*//g'|sed -r 's/\{mem  ~/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}'>> BENCH-USET.md
 	@echo >> BENCH-USET.md
 
 report-sort:
@@ -517,7 +541,11 @@ report-sort:
 	@echo >> BENCH-SORT.md
 	@echo "Rank|Library|Container|Time" >> BENCH-SORT.md
 	@echo "----|-------|---------|----" >> BENCH-SORT.md
-	@grep "Sort" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-SORT.md
+	@grep "Sort" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\{.*\}//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-SORT.md
+	@echo >> BENCH-SORT.md
+	@echo "Rank|Library|Container|Mem" >> BENCH-SORT.md
+	@echo "----|-------|---------|----" >> BENCH-SORT.md
+	@grep "Sort" logs.txt |awk -F'~' '{print $$2, "~", $$1}'|LANG=C sort -h|awk -F'~' '{print $$2,"~",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\} time.*//g'|sed -r 's/\{mem  ~/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}'>> BENCH-SORT.md
 	@echo >> BENCH-SORT.md
 
 report-queue:
@@ -525,7 +553,11 @@ report-queue:
 	@echo >> BENCH-QUEUE.md
 	@echo "Rank|Library|Container|Time" >> BENCH-QUEUE.md
 	@echo "----|-------|---------|----" >> BENCH-QUEUE.md
-	@grep "Queue" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-QUEUE.md
+	@grep "Queue" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\{.*\}//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-QUEUE.md
+	@echo >> BENCH-QUEUE.md
+	@echo "Rank|Library|Container|Mem" >> BENCH-QUEUE.md
+	@echo "----|-------|---------|----" >> BENCH-QUEUE.md
+	@grep "Queue" logs.txt |awk -F'~' '{print $$2, "~", $$1}'|LANG=C sort -h|awk -F'~' '{print $$2,"~",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\} time.*//g'|sed -r 's/\{mem  ~/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}'>> BENCH-QUEUE.md
 	@echo >> BENCH-QUEUE.md
 
 report-hash:
@@ -533,7 +565,11 @@ report-hash:
 	@echo >> BENCH-HASH.md
 	@echo "Rank|Library|Container|Time" >> BENCH-HASH.md
 	@echo "----|-------|---------|----" >> BENCH-HASH.md
-	@grep "Hash " logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-HASH.md
+	@grep "Hash " logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\{.*\}//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-HASH.md
+	@echo >> BENCH-HASH.md
+	@echo "Rank|Library|Container|Mem" >> BENCH-HASH.md
+	@echo "----|-------|---------|----" >> BENCH-HASH.md
+	@grep "Hash " logs.txt |awk -F'~' '{print $$2, "~", $$1}'|LANG=C sort -h|awk -F'~' '{print $$2,"~",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\} time.*//g'|sed -r 's/\{mem  ~/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}'>> BENCH-HASH.md
 	@echo >> BENCH-HASH.md
 
 report-str-replace:
@@ -541,7 +577,11 @@ report-str-replace:
 	@echo >> BENCH-STR-REPLACE.md
 	@echo "Rank|Library|Container|Time" >> BENCH-STR-REPLACE.md
 	@echo "----|-------|---------|----" >> BENCH-STR-REPLACE.md
-	@grep "String Replace" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-STR-REPLACE.md
+	@grep "String Replace" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\{.*\}//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-STR-REPLACE.md
+	@echo >> BENCH-STR-REPLACE.md
+	@echo "Rank|Library|Container|Mem" >> BENCH-STR-REPLACE.md
+	@echo "----|-------|---------|----" >> BENCH-STR-REPLACE.md
+	@grep "String Replace" logs.txt |awk -F'~' '{print $$2, "~", $$1}'|LANG=C sort -h|awk -F'~' '{print $$2,"~",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\} time.*//g'|sed -r 's/\{mem  ~/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-STR-REPLACE.md
 	@echo >> BENCH-STR-REPLACE.md
 	@echo "GLIB2, POTTERY, CTL & SDS benchs are not included due to being too slow">> BENCH-STR-REPLACE.md
 	@echo >> BENCH-STR-REPLACE.md
@@ -551,5 +591,9 @@ report-str-concat:
 	@echo >> BENCH-STR-CONCAT.md
 	@echo "Rank|Library|Container|Time" >> BENCH-STR-CONCAT.md
 	@echo "----|-------|---------|----" >> BENCH-STR-CONCAT.md
-	@grep "String Concat" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-STR-CONCAT.md
+	@grep "String Concat" logs.txt |awk -F'=' '{print $$2, "=", $$1}'|sort -g|awk -F'=' '{print $$2,"=",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\{.*\}//g'|sed 's/time  =/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}' >> BENCH-STR-CONCAT.md
+	@echo >> BENCH-STR-CONCAT.md
+	@echo "Rank|Library|Container|Mem" >> BENCH-STR-CONCAT.md
+	@echo "----|-------|---------|----" >> BENCH-STR-CONCAT.md
+	@grep "String Concat" logs.txt |awk -F'~' '{print $$2, "~", $$1}'|LANG=C sort -h|awk -F'~' '{print $$2,"~",$$1}'|sed 's/\[.*\]//g'|sed -r 's/\} time.*//g'|sed -r 's/\{mem  ~/:/g'|awk -F':' '{print NR, "|", $$1,"|",$$2,"|",$$3}'>> BENCH-STR-CONCAT.md
 	@echo >> BENCH-STR-CONCAT.md
