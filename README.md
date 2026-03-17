@@ -325,6 +325,7 @@ or want to include another C library,
 or want to include another point of comparison,
 do not hesitate to open a pull request.
 
+
 # Ergonomic comparison
 
 ## Rules
