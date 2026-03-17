@@ -164,7 +164,7 @@ The following C libraries have been selected as their aim is to provide generic 
 * [CC](https://github.com/JacksonAllan/CC.git)
 * [GLIB](https://docs.gtk.org/glib/index.html)
 * [STB_DS](https://github.com/nothings/stb)
-* [KLIB](ttps://github.com/attractivechaos/klib)
+* [KLIB](https://github.com/attractivechaos/klib)
 
 with C++ STL used as the reference baseline.
 
