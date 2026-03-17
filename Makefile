@@ -293,6 +293,15 @@ umap-int-CC.exe: umap-int/umap-CC.c external/CC
 umap-str-CC.exe: umap-str/umap-CC.c external/CC 
 	$(C11) $(CFLAGS) -Iexternal/CC $< -o $@ $(LDFLAGS)
 
+umap-int-klib.exe: umap-int/umap-klib.c external/klib
+	$(C11) $(CFLAGS) -Iexternal/klib $< -o $@ $(LDFLAGS)
+
+umap-str-klib.exe: umap-str/umap-klib.c external/klib
+	$(C11) $(CFLAGS) -Iexternal/klib $< -o $@ $(LDFLAGS)
+
+umap-mpz-klib.exe: umap-mpz/umap-klib.c external/klib
+	$(C11) $(CFLAGS) -Iexternal/klib $< -o $@ $(LDFLAGS)
+
 umap-int-stb.exe: umap-int/umap-stb.c external/stb
 	$(C11) $(CFLAGS) -Iexternal/stb $< -o $@ $(LDFLAGS)
 
