@@ -45,7 +45,7 @@ DICT_OA_DEF2(dict_oligonucleotide,
 BPTREE_DEF2(tree_dict_oligonucleotide, 21, uint32_t, M_OPEXTEND(M_DEFAULT_OPLIST, CMP(TREE_CMP)), uint64_t, M_DEFAULT_OPLIST)
 #define M_OPL_tree_dict_oligonucleotide_t() BPTREE_OPLIST2(tree_dict_oligonucleotide, M_DEFAULT_OPLIST, M_DEFAULT_OPLIST)
 
-/* Define the data to analyse (a plain array) */
+/* Define the data to analyze (a plain array) */
 ARRAY_DEF(polynucleotide, unsigned char)
 
 // Macro to convert a nucleotide character to a code. Note that upper and lower
@@ -80,7 +80,7 @@ static void polynucleotide_init_stream(polynucleotide_t p, FILE *stream)
 }
 
 // This is the function which does 95% of the work.
-/* NOTE: paralelisation is not done by cutting the input set in two.
+/* NOTE: parallelization is not done by cutting the input set in two.
    This is not efficient as the size of the output table will be the same
    as for the whole table. */
 static void init_hash(dict_oligonucleotide_t hash_Table, const size_t size, const unsigned char tab[size], const size_t desiredLength, const size_t offset, const size_t skip)
@@ -107,9 +107,9 @@ static void init_hash(dict_oligonucleotide_t hash_Table, const size_t size, cons
       key &= mask;
       uint32_t *p = dict_oligonucleotide_get(hash, key);
       if (p != NULL) {
-	(*p) ++;
+        (*p) ++;
       } else {
-	dict_oligonucleotide_set_at(hash, key, 1);
+        dict_oligonucleotide_set_at(hash, key, 1);
       }
     }
   } else { // skip = 4
@@ -119,9 +119,9 @@ static void init_hash(dict_oligonucleotide_t hash_Table, const size_t size, cons
       key &= mask;
       uint32_t *p = dict_oligonucleotide_get(hash, key);
       if (p != NULL) {
-	(*p) ++;
+        (*p) ++;
       } else {
-	dict_oligonucleotide_set_at(hash, key, 1);
+        dict_oligonucleotide_set_at(hash, key, 1);
       }
     }
   }
