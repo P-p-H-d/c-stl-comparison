@@ -115,7 +115,7 @@ static void init_hash(dict_oligonucleotide_t hash_Table, const size_t size, cons
   } else { // skip = 4
     for(size_t i = desiredLength-1+offset ; i < size; i+=4) {
       for (size_t j = 0; j < 4; j++)
-	key = (key<<2) | tab[i+j];
+        key = (key<<2) | tab[i+j];
       key &= mask;
       uint32_t *p = dict_oligonucleotide_get(hash, key);
       if (p != NULL) {
