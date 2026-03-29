@@ -114,7 +114,7 @@ Cons:
 
 * Explicit instance needed
 * can generate code bloat if incorrectly used
-* can have cryptic error message at instantiation stage if incorrectly used
+* can have cryptic error message at **instantiation** stage if incorrectly used
 * method names are more verbose
 
 ## Template macros
@@ -142,8 +142,8 @@ Cons:
 
 * Explicit instance needed
 * can generate code bloat if incorrectly used
-* little harder to debug for library developer
-* can have cryptic error message at instantiation stage if incorrectly used
+* little harder to debug for **library** developer
+* can have cryptic error message at **instantiation** stage if incorrectly used
 * method names are verbose
 
 ## Mix
@@ -238,6 +238,9 @@ The following characteristics are compared. The C++ STL is also included as as r
 | struct POD support          | Y        | Y      | Y       | Y       | Y     | N       | Y      | Y*     | Y      | Y    |
 | C++ class support           | Y        | Y      | N       | N       | N     | N       | N      | N      | N      | N    |
 | C object support            | Y        | Y      | Y       | Y       | Y     | N       | Y      | Y*     | N      | Y    |
+
+| Characteristics             | STL      | M*LIB  | STC     | CMC     | CTL   | CollecC | CC     |  GLIB  | STB_DS | KLIB |
+|-----------------------------|----------|--------|---------|---------|-------|---------|--------|--------|--------|------|
 | Copy semantics              | Y        | Y      | N       | N       | N     | Y       | N      | Y      | N      | N    |
 | Move semantics              | Y        | Y      | Y       | Y       | Y     | N       | Y      | N      | Y      | Y    |
 | spatial separation          | Y        | Y      | N       | N       | N     | NA      | Y      | NA     | N      | N    |
@@ -247,6 +250,9 @@ The following characteristics are compared. The C++ STL is also included as as r
 | Iterator support            | Y        | Y      | Y       | N       | Y     | Y       | Y      | N      | N      | Y    |
 | Sort algorithm              | Y        | Y      | Y       | N       | Y     | Y       | N      | Y      | N      | Y    |
 | Enhanced Sort algorithm     | Y        | Y      | Y       | N       | Y     | Y       | N      | Y      | N      | N    |
+
+| Characteristics             | STL      | M*LIB  | STC     | CMC     | CTL   | CollecC | CC     |  GLIB  | STB_DS | KLIB |
+|-----------------------------|----------|--------|---------|---------|-------|---------|--------|--------|--------|------|
 | single linkage definition   | N*       | Y      | Y       | Y       | N     | Y       | N      | Y      | Y      | N    |
 | Full abstraction            | Y        | Y      | N       | Y       | N     | Y       | Y      | N      | Y      | Y    |
 | Contract violation checks   | Y        | Y      | N       | N       | N     | N       | N      | N      | N      | N    |
@@ -254,6 +260,9 @@ The following characteristics are compared. The C++ STL is also included as as r
 | Basic type is stored        | Y        | Y      | Y       | Y       | Y     | N       | Y      | N      | Y      | Y    |
 | Explicit instantiation      | N        | Y      | Y       | Y       | Y     | N       | N      | N      | N      | Y    |
 | prefixed function           | Y        | Y      | Y       | Y       | Y     | Y       | Y      | Y      | Y      | Y    |
+
+| Characteristics             | STL      | M*LIB  | STC     | CMC     | CTL   | CollecC | CC     |  GLIB  | STB_DS | KLIB |
+|-----------------------------|----------|--------|---------|---------|-------|---------|--------|--------|--------|------|
 | memory handling             | except   | abort, except | retcode | retcode |none|retcode |retcode|retcode| none  |retcode|
 | destructors on exception    | Y        | Y*     | NA      | NA      | NA    | NA      | NA     | N      | N      | N    |
 | custom memory support       | Y        | Y      | Y       | Y       | N     | Y       | Y      | N      | Y      | Y    |
@@ -275,6 +284,9 @@ The following characteristics are compared. The C++ STL is also included as as r
 | Doubly Linked Intrusive list      | N         | Y      | N       | N       | N     | N       | N      | N    |N      | N    |
 | Dynamic array                     | Y         | Y      | Y       | Y       | Y     | Y       | Y      | Y    |Y      | Y    |
 | Static array                      | Y         | N      | N       | N       | Y     | N       | N      | N    |N      | N    |
+
+| Containers                        | STL       | M*LIB  | STC     | CMC     | CTL   | CollecC | CC     | GLIB |STB_DS | KLIB |
+|-----------------------------------|-----------|--------|---------|---------|-------|---------|--------|------|-------|------|
 | pair                              | Y         | Y      | N       | N       | N     | N       | N      | N    |N      | N    |
 | tuple                             | Y         | Y      | N       | N       | N     | N       | N      | N    |N      | N    |
 | optional                          | Y         | Y      | N       | N       | N     | N       | N      | N    |N      | N    |
@@ -287,6 +299,9 @@ The following characteristics are compared. The C++ STL is also included as as r
 | priority queue                    | Y         | Y      | Y       | Y       | Y     | Y       | N      | N    |N      | N    |
 | stack                             | Y         | Y      | Y       | N       | Y     | Y       | N      | N    |N      | N    |
 | Bounded Queue                     | N         | Y      | N       | N       | N     | N       | N      | Y    |N      | N    |
+
+| Containers                        | STL       | M*LIB  | STC     | CMC     | CTL   | CollecC | CC     | GLIB |STB_DS | KLIB |
+|-----------------------------------|-----------|--------|---------|---------|-------|---------|--------|------|-------|------|
 | set                               | Y         | Y      | Y       | N       | N     | Y       | N      | Y    |N      | Y    |
 | multiset                          | Y         | Y      | N       | N       | N     | N       | N      | N    |N      | N    |
 | map                               | Y         | Y      | N       | N       | Y     | Y       | N      | N    |N      | Y    |
@@ -299,6 +314,9 @@ The following characteristics are compared. The C++ STL is also included as as r
 | flat_multiset                     | Y         | N      | N       | Y       | N     | N       | N      | N    |N      | N    |
 | flat_map                          | Y         | N      | N       | Y       | N     | N       | N      | N    |N      | N    |
 | flat_multimap                     | Y         | N      | N       | Y       | N     | N       | N      | N    |N      | N    |
+
+| Containers                        | STL       | M*LIB  | STC     | CMC     | CTL   | CollecC | CC     | GLIB |STB_DS | KLIB |
+|-----------------------------------|-----------|--------|---------|---------|-------|---------|--------|------|-------|------|
 | unique_ptr                        | Y         | N      | Y       | N       | N     | N       | N      | N    |N      | N    |
 | shared_ptr                        | Y         | Y      | Y       | N       | N     | N       | N      | N    |N      | N    |
 | advanced shared_ptr               | N         | Y      | N       | N       | N     | N       | N      | N    |N      | N    |
@@ -307,6 +325,9 @@ The following characteristics are compared. The C++ STL is also included as as r
 | Span                              | Y         | N      | Y       | N       | N     | N       | N      | N    |N      | N    |
 | MDSpan                            | Y         | N      | Y       | N       | N     | N       | N      | N    |N      | N    |
 | Bounded String                    | N         | Y      | N       | N       | N     | N       | N      | N    |N      | N    |
+
+| Containers                        | STL       | M*LIB  | STC     | CMC     | CTL   | CollecC | CC     | GLIB |STB_DS | KLIB |
+|-----------------------------------|-----------|--------|---------|---------|-------|---------|--------|------|-------|------|
 | Atomic Shared Register SPSC       | N         | Y      | N       | N       | N     | N       | N      | N    |N      | N    |
 | Atomic Shared Register MPSC       | N         | Y      | N       | N       | N     | N       | N      | N    |N      | N    |
 | Atomic Shared Register SPMC       | N         | Y      | N       | N       | N     | N       | N      | N    |N      | N    |
@@ -407,10 +428,11 @@ You should open the different provided programs and make your own choice based o
 # Performance Comparison
 
 The [bench](https://github.com/P-p-H-d/c-stl-comparison/tree/master/bench)
-directory contains a small benchmark comparing
+directory contains a benchmark comparing
 the performance of different C libraries (including some C++ ones, like STL and BOOST as references). 
 
-Time and memory usage are provided for theses tests.
+Time and memory usage are provided for theses tests and the best run out of 3 is kept to remove external interference, which is a compromise between execution time and reliability.
+Compiler flags are `-O2 -march=native`.
 
 More specialized C libraries are added. The tested C libraries are:
 
@@ -434,27 +456,34 @@ More specialized C libraries are added. The tested C libraries are:
 * XXHASH (for hash function)
 
 Rather than measuring the performance of each individual methods exported by the library on some dataset,
-it measures the time taken by some test programs computing the solution of a small problem using the methods of the containers for this (to provide more real world examples).
+it measures the time taken by some test programs implementing a defined algorithm using the methods of the containers for this (to provide more real world examples). Of course, it doesn't mean that theses algorithms match with your use cases, so you should take them with a grain of salt.
 
 Each dataset size is chosen so that the time using by the best library is around 1 second (which is a compromise between execution time and reliability of the test result).
 
-The performance tests are performed around the following functionalities:
+The performance programs are performed around the following functionalities:
 
 * sequence container (array, list and deque),
 * sorted set container,
-* unordered map container (on unsigned 64 bits type, on 256 bits type and on string type),
-* unordered set container,
+* unordered map container (on unsigned 64 bits type, on 256 bits type and on string type) with a 50% found/un-found ratio,
+* unordered set container (on 32 bits type) with a low found/un-found ratio,
 * string concat,
 * string replacement,
 * sort algorithm,
 * hash function,
 * multithread communication queue container.
 
+Exact program exact behaviors, code source and dataset size are provided in the bench directory for further analysis.
+
 ## Conclusion
 
 Results are available [for i5-3210M](https://github.com/P-p-H-d/c-stl-comparison/blob/master/bench/doc/BENCH.md) and [for AMD EPYC 7763](https://github.com/P-p-H-d/c-stl-comparison/blob/result/bench/doc/BENCH.md) (the later is generated by CI).
 
-The conclusion is that the best C libraries can be much faster than the STL. Even for C++, more specialized C++ libraries (like boost) are needed to achieve good performance.
+The results are archived in git so that you can look at the history of the different runs.
+
+The conclusion is that the best C libraries can be much faster than the STL.
+Such libraries are all based on template-header or template-macros paradigm.
+This is due to the over specification of the C++ standard which prevents the STL to achieve good performances in all cases.
+Even for C++, more specialized C++ libraries (like boost) are needed to achieve good performance.
 
 # Continuous Integration
 
