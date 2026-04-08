@@ -192,6 +192,7 @@ sglib is not included due to being abandoned.
 
 The following characteristics are compared. The C++ STL is also included as as reference.
 
+* What is the license?
 * What is the supported C language (C89, C99, C11 or C23)?
 * Is it a pure C program (no need for external preprocessor)?
 * Is it a Header only library?
@@ -200,10 +201,11 @@ The following characteristics are compared. The C++ STL is also included as as r
 * support of integer/floats as basic type,
 * support of struct POD data as basic type,
 * support of array as basic type,
-* support of object like data (needing custom constructor, destructor...) as basic type,
+* support of object like data (needing custom constructor, copy, destructor...) as basic type,
 * support of C++ class as basic type,
-* support of copy semantics: containers don't steal the ownership of the object given as parameter (passing an object data to a container will create a proper copy of the object data as per the object semantic),
-* support of move semantics: containers steal the ownership of the object given as parameter,
+* support of Assignment semantics: containers uses the C Assignment operators to set object in them,
+* support of copy semantics: containers create a proper copy of the object data as per the object semantic (aka if there is pointer in the structure, it performs a proper copy of the pointed objects),
+* support of move semantics: containers steal the ownership of the object given as parameter as per the object semantic, rendering the original object useless (in a destroy or nearly destroy state),
 * container / basic type spatial separation: the association of the methods of the basic type to the needed operators of the container library can be defined when the basic type is defined (ensuring spatial coherency of the basic type) and not only when the container is defined,
 * support of an adaptation layer to transform the interface of the provided method to the expected interface of the operator, 
 * support of basic 'emplace'
@@ -229,10 +231,11 @@ The following characteristics are compared. The C++ STL is also included as as r
 
 | Characteristics             | STL      | M*LIB  | STC     | CMC     | CTL   | CollecC | CC     |  GLIB  | STB_DS | KLIB |
 |-----------------------------|----------|--------|---------|---------|-------|---------|--------|--------|--------|------|
+| Licence                     | NA       | BSD2   | MIT     | MIT     | MIT   | LGPL3   | MIT    | LGPL2.1| MIT    | MIT  |
 | C language                  | NA       | >=C99  | >=C99   | >=C99   | >=C99 | >=C99| >=C11* or >=C23 | >=C89 | >=C99* or >= C23 | >= C99 |
 | Pure C                      | NA       | Y      | Y       | Y       | Y     | Y       | Y      | Y      | Y      | Y    |
 | Header only                 | Y        | Y      | Y       | Y       | Y     | N       | Y      | N      | Y      | Y    |
-| Generic mechanism           | template | TM     | TH      | TM      | TH    | VP      | GO     | VP     | M      | TM   |
+| Generic mechanism           | template | TM     | TH      | TM      | TH    | VP      | M+GO   | VP     | M      | TM   |
 | type safe                   | Y        | Y      | Y       | Y       | Y     | N       | Y*     | N      | N*     | Y    |
 | integer/float support       | Y        | Y      | Y       | Y       | Y     | Y       | Y      | Y*     | Y      | Y    |
 | struct POD support          | Y        | Y      | Y       | Y       | Y     | N       | Y      | Y*     | Y      | Y    |
@@ -241,8 +244,9 @@ The following characteristics are compared. The C++ STL is also included as as r
 
 | Characteristics             | STL      | M*LIB  | STC     | CMC     | CTL   | CollecC | CC     |  GLIB  | STB_DS | KLIB |
 |-----------------------------|----------|--------|---------|---------|-------|---------|--------|--------|--------|------|
+| Assignment semantics        | Y        | Y      | Y       | Y       | Y     | Y       | Y      | Y      | Y      | Y    |
 | Copy semantics              | Y        | Y      | N       | N       | N     | Y       | N      | Y      | N      | N    |
-| Move semantics              | Y        | Y      | Y       | Y       | Y     | N       | Y      | N      | Y      | Y    |
+| Move semantics              | Y        | Y      | N       | N       | N     | N       | N      | N      | N      | N    |
 | spatial separation          | Y        | Y      | N       | N       | N     | NA      | Y      | NA     | N      | N    |
 | Adaptator Layer             | N        | Y      | N       | N       | N     | N       | N      | N      | N      | N    |
 | Basic emplace support       | Y        | Y      | Y       | N       | N     | N       | N      | N      | N      | N    |
@@ -339,7 +343,7 @@ The following characteristics are compared. The C++ STL is also included as as r
 
 | Algorithms                        | STL  | M*LIB | STC | CMC | CTL |CollecC| CC | GLIB |STB_DS | KLIB |
 |-----------------------------------|------|-------|-----|-----|-----|-------|----|------|-------|------|
-| TODO                              | Y    | Y     | Y   | N   | Y   | Y     | Y  | Y    | N     |  Y   |
+| Sort/Min/Max/...                  | Y    | Y     | Y   | N   | Y   | Y     | Y  | Y    | N     |  Y   |
 
 If you see any mistakes in this report,
 or want to include another C library,
