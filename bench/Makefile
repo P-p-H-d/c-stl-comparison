@@ -466,6 +466,7 @@ report: report-seq report-sset report-umap report-umap-big report-umap-str repor
 	@echo >> doc/BENCH.md
 	@cd ../external &&  for i in * ; do cd $$i ; echo "* $$i $$(git show HEAD|grep commit|head -1|sed -e 's/commit/:/g')" ; cd - > /dev/null ;done >> ../bench/doc/BENCH.md
 	@rm BENCH-*.md
+	@python3 doc/update_bench_rank_history.py
 	@cat doc/BENCH.md
 
 report-seq:

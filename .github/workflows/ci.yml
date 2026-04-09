@@ -32,6 +32,7 @@ jobs:
           git reset --hard HEAD
           git switch result
           mv BENCH.md doc/BENCH.md
+          python3 doc/update_bench_rank_history.py
           git add doc/BENCH.md
           git commit -m "Publish result by CI" 
           git push --force-with-lease origin result
