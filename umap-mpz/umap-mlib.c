@@ -32,8 +32,8 @@ int main(void)
       gmp_printf("Value of 42 is %Zd\n", *it);
     }
     for M_EACH(item, map, umap_mpz_t) {
-	gmp_printf("%Zd --> %Zd\n", item->key, item->value);
-      }
+      gmp_printf("%Zd --> %Zd\n", item->key, item->value);
+    }
   }
   return 0;
 }

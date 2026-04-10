@@ -13,8 +13,8 @@ int main(void)
       printf("Value of 'Hello' is %s\n", string_get_cstr(*it));
     }
     for M_EACH(item, map, umap_str_t) {
-	printf("%s --> %s\n", string_get_cstr(item->key), string_get_cstr(item->value));
-      }
+      printf("%s --> %s\n", string_get_cstr(item->key), string_get_cstr(item->value));
+    }
   }
   return 0;
 }

@@ -13,7 +13,7 @@ int main(void)
   M_LET( ( array, (17), (42), (9) ), array_mpz_t) {
     array_mpz_sort(array);
     for M_EACH(item, array, array_mpz_t) {
-	gmp_printf("%Zd\n", *item);
+      gmp_printf("%Zd\n", *item);
     }
   }
   return 0;

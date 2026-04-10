@@ -11,8 +11,8 @@ int main(void)
   M_LET( ( array, 17, 42, 9), array_int_t) {
     array_int_sort(array);
     for M_EACH(item, array, array_int_t) {
-	printf("%d\n", *item);
-      }
+      printf("%d\n", *item);
+    }
   }
   return 0;
 }

@@ -12,7 +12,7 @@ int main(void)
   M_LET( ( array, ("World"), ("Hello"), ("!") ), array_str_t) {
     array_str_sort(array);
     for M_EACH(item, array, array_str_t) {
-	printf("%s\n", string_get_cstr(*item) );
+      printf("%s\n", string_get_cstr(*item) );
     }
   }
   return 0;
