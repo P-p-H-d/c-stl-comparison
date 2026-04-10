@@ -409,17 +409,23 @@ and generate the different executables.
 
 What can be objectively compared is the size of the programs:
 
-| Array programs                    | STL | M*LIB | STC  | CMC  | CTL  |CollecC| CC   | GLIB |STB_DS| KLIB |
-|-----------------------------------|-----|-------|------|------|------|-------|------|------|------|------|
-| int:number of characters          | 236 | 370   | 558  | 1011 | 593  | 885   | 611  | 696  | 817  | 783  |
-| int:number of line of codes       | 12  | 16    | 28   | 36   | 22   | 35    | 31   | 36   |  43  |  28  |
-| int:number of workarounds         | 0   | 0     | 0    | 2    | 2    | 1     | 1    | 0    |   1  |   2  |
-| mpz:number of characters          | 261 | 500   | 1222 | 1740 | 1407 | 1337  | 1120 | 840  | 1255 | 1041 |
-| mpz:number of line of codes       | 13  | 18    | 37   | 52   | 37   | 58    | 40   | 45   |  61  |  43  |
-| mpz:number of workarounds         | 0   | 0     | 3    | 7    | 5    | 1     | 2    | 0    |   4  |   5  |
-| str:number of characters          | 274 | 437   | 564  | 1053 | 762  | 839   | 651  | 908  | 881  | 1497 |
-| str:number of line of codes       | 14  | 19    | 36   | 45   | 29   | 47    | 33   | 44   |  45  |  55  |
-| str:number of workarounds         | 0   | 0     | 3    | 2    | 3    | 1     | 0    | 0    |   1  |   3  |
+| Array-Int programs      | STL | M*LIB | STC  | CMC  | CTL  |CollecC| CC   | GLIB |STB_DS| KLIB |
+|-------------------------|-----|-------|------|------|------|-------|------|------|------|------|
+| number of characters    | 236 | 370   | 558  | 1011 | 593  | 885   | 611  | 696  | 817  | 783  |
+| number of line of codes | 12  | 16    | 28   | 36   | 22   | 35    | 31   | 36   |  43  |  28  |
+| number of workarounds   | 0   | 0     | 0    | 2    | 2    | 1     | 1    | 0    |   1  |   2  |
+
+| Array-Str programs      | STL | M*LIB | STC  | CMC  | CTL  |CollecC| CC   | GLIB |STB_DS| KLIB |
+|-------------------------|-----|-------|------|------|------|-------|------|------|------|------|
+| number of characters    | 274 | 437   | 564  | 1053 | 762  | 839   | 651  | 908  | 881  | 1497 |
+| number of line of codes | 14  | 19    | 36   | 45   | 29   | 47    | 33   | 44   |  45  |  55  |
+| number of workarounds   | 0   | 0     | 3    | 2    | 3    | 1     | 0    | 0    |   1  |   3  |
+
+| Array-mpz programs      | STL | M*LIB | STC  | CMC  | CTL  |CollecC| CC   | GLIB |STB_DS| KLIB |
+|-------------------------|-----|-------|------|------|------|-------|------|------|------|------|
+| number of characters    | 261 | 500   | 1222 | 1740 | 1407 | 1337  | 1120 | 840  | 1255 | 1041 |
+| number of line of codes | 13  | 18    | 37   | 52   | 37   | 58    | 40   | 45   |  61  |  43  |
+| number of workarounds   | 0   | 0     | 3    | 7    | 5    | 1     | 2    | 0    |   4  |   5  |
 
 As ergonomic is a personal judgement, no conclusion will be provided.
 You should open the different provided programs and make your own choice based on your own ergonomic criteria:
