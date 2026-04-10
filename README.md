@@ -409,23 +409,42 @@ and generate the different executables.
 
 What can be objectively compared is the size of the programs:
 
-| Array-Int programs      | STL | M*LIB | STC  | CMC  | CTL  |CollecC| CC   | GLIB |STB_DS| KLIB |
-|-------------------------|-----|-------|------|------|------|-------|------|------|------|------|
-| number of characters    | 236 | 370   | 558  | 1011 | 593  | 885   | 611  | 696  | 817  | 783  |
-| number of line of codes | 12  | 16    | 28   | 36   | 22   | 35    | 31   | 36   |  43  |  28  |
-| number of workarounds   | 0   | 0     | 0    | 2    | 2    | 1     | 1    | 0    |   1  |   2  |
+| Array-Int programs      | STL | M*LIB | STC | CMC  | CTL | CollecC | CC  | GLIB | STB_DS | KLIB |
+|-------------------------|-----|-------|-----|------|-----|---------|-----|------|--------|------|
+| number of characters    | 236 | 373   | 558 | 1011 | 593 | 885     | 611 | 696  | 817    | 783  |
+| number of line of codes | 13  | 18    | 34  | 46   | 25  | 46      | 34  | 38   | 43     | 28   |
+| number of workarounds   | 0   | 0     | 0   | 2    | 2   | 2       | 0   | 0    | 1      | 2    |
 
-| Array-Str programs      | STL | M*LIB | STC  | CMC  | CTL  |CollecC| CC   | GLIB |STB_DS| KLIB |
-|-------------------------|-----|-------|------|------|------|-------|------|------|------|------|
-| number of characters    | 274 | 437   | 564  | 1053 | 762  | 839   | 651  | 908  | 881  | 1497 |
-| number of line of codes | 14  | 19    | 36   | 45   | 29   | 47    | 33   | 44   |  45  |  55  |
-| number of workarounds   | 0   | 0     | 3    | 2    | 3    | 1     | 0    | 0    |   1  |   3  |
+| Array-Str programs      | STL | M*LIB | STC | CMC  | CTL | CollecC | CC  | GLIB | STB_DS | KLIB |
+|-------------------------|-----|-------|-----|------|-----|---------|-----|------|--------|------|
+| number of characters    | 274 | 442   | 564 | 1053 | 762 | 839     | 651 | 908  | 881    | 1497 |
+| number of line of codes | 14  | 19    | 36  | 45   | 29  | 47      | 33  | 44   | 45     | 55   |
+| number of workarounds   | 0   | 0     | 0   | 2    | 3   | 1       | 0   | 0    | 1      | 3    |
 
-| Array-mpz programs      | STL | M*LIB | STC  | CMC  | CTL  |CollecC| CC   | GLIB |STB_DS| KLIB |
-|-------------------------|-----|-------|------|------|------|-------|------|------|------|------|
-| number of characters    | 261 | 500   | 1222 | 1740 | 1407 | 1337  | 1120 | 840  | 1255 | 1041 |
-| number of line of codes | 13  | 18    | 37   | 52   | 37   | 58    | 40   | 45   |  61  |  43  |
-| number of workarounds   | 0   | 0     | 3    | 7    | 5    | 1     | 2    | 0    |   4  |   5  |
+| Array-mpz programs      | STL | M*LIB | STC  | CMC  | CTL  | CollecC | CC   | GLIB | STB_DS | KLIB |
+|-------------------------|-----|-------|------|------|------|---------|------|------|--------|------|
+| number of characters    | 261 | 505   | 1222 | 1740 | 1407 | 1337    | 1120 | 840  | 1255   | 1041 |
+| number of line of codes | 14  | 20    | 44   | 65   | 42   | 68      | 49   | 47   | 61     | 43   |
+| number of workarounds   | 0   | 0     | 3    | 7    | 5    | 1       | 2    | 0    | 4      | 5    |
+
+| UMap-Int programs       | STL | M*LIB | STC | CMC  | CTL  | CollecC | CC  | GLIB | STB_DS | KLIB |
+|-------------------------|-----|-------|-----|------|------|---------|-----|------|--------|------|
+| number of characters    | 359 | 462   | 777 | 1640 | 1090 | 1241    | 442 | 984  | 1035   | 774  |
+| number of line of codes | 15  | 19    | 37  | 62   | 47   | 54      | 26  | 42   | 50     | 43   |
+| number of workarounds   | 0   | 0     | 0   | 1    | 1    | 0       | 0   | 0    | 3      | 0    |
+
+| UMap-Str programs       | STL | M*LIB | STC | CMC  | CTL  | CollecC | CC  | GLIB | STB_DS | KLIB |
+|-------------------------|-----|-------|-----|------|------|---------|-----|------|--------|------|
+| number of characters    | 436 | 615   | 870 | 1627 | 1756 | 929     | 522 | 1514 | 991    | 837  |
+| number of line of codes | 16  | 20    | 37  | 63   | 64   | 35      | 26  | 58   | 48     | 43   |
+| number of workarounds   | 0   | 0     | 0   | 1    | 4    | 0       | 0   | 0    | 2      | 0    |
+
+| UMap-mpz programs       | STL | M*LIB | STC  | CMC  | CTL  | CollecC | CC   | GLIB | STB_DS | KLIB |
+|-------------------------|-----|-------|------|------|------|---------|------|------|--------|------|
+| number of characters    | 797 | 1018  | 1849 | 2387 | 1964 | 1893    | 1443 | 1667 | NA     | 1754 |
+| number of line of codes | 38  | 39    | 55   | 99   | 79   | 87      | 62   | 75   | NA     | 84   |
+| number of workarounds   | 0   | 0     | 4    | 2    | 4    | 0       | 2    | 0    | NA     | 3    |
+
 
 As ergonomic is a personal judgement, no conclusion will be provided.
 You should open the different provided programs and make your own choice based on your own ergonomic criteria:
