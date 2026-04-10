@@ -116,6 +116,9 @@ external/stb:
 external/ccc:
 	mkdir -p external && cd external && git clone https://github.com/SkeletOSS/ccc.git
 
+external/OpenCSTL:
+	mkdir -p external && cd external && git clone https://github.com/springkim/OpenCSTL.git
+
 ###########################################################
 # 		Build external Libraries
 ###########################################################
@@ -251,6 +254,9 @@ array-str-ccc.exe: array-str/array-ccc.c external/ccc/libccc.a
 
 array-mpz-ccc.exe: array-mpz/array-ccc.c external/ccc/libccc.a
 	$(C23) $(CFLAGS) -Iexternal/ccc $< -o $@ external/ccc/libccc.a $(LDFLAGS)
+
+array-int-opencstl.exe: array-int/array-opencstl.c external/OpenCSTL
+	$(C99) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ $(LDFLAGS)
 
 ###########################################################
 # 		Build example for Unordered map
