@@ -22,6 +22,7 @@
 
 CC=cc -std=c99
 C11=cc -std=c11
+C23=cc -std=c23
 CXX=c++ -std=c++11
 # To mesure code size, we need to remove the sanitizers
 CFLAGS=-O0 -Wall -DNDEBUG -fsanitize=address,undefined,leak -Werror=incompatible-pointer-types -g
@@ -105,6 +106,9 @@ external/rapidjson:
 external/stb:
 	mkdir -p external && cd external && git clone https://github.com/nothings/stb.git
 
+external/ccc:
+	mkdir -p external && cd external && git clone https://github.com/SkeletOSS/ccc.git
+
 ###########################################################
 # 		Build external Libraries
 ###########################################################
@@ -131,6 +135,10 @@ external/bstrlib/libbstrlib.a: external/bstrlib
 	cd external/bstrlib && $(CC) -O2 -march=native -Wall *.c -c
 	cd external/bstrlib && $(AR) $(ARFLAGS) libbstrlib.a *.o
 
+external/ccc/libccc.a: external/ccc
+	cd external/ccc && $(C23) -O2 -march=native -Wall -I . source/*.c -c
+	cd external/ccc && $(AR) $(ARFLAGS) libccc.a *.o
+
 ###########################################################
 # 		Build example for array
 ###########################################################
@@ -138,7 +146,16 @@ external/bstrlib/libbstrlib.a: external/bstrlib
 array: array-mpz-mlib.exe array-mpz-stc.exe array-mpz-ctl.exe array-mpz-cmc.exe array-mpz-stl.exe array-mpz-collectionsC.exe array-mpz-CC.exe \
        array-int-mlib.exe array-int-stc.exe array-int-ctl.exe array-int-cmc.exe array-int-stl.exe array-int-collectionsC.exe array-int-CC.exe \
        array-str-mlib.exe array-str-stc.exe array-str-ctl.exe array-str-cmc.exe array-str-stl.exe array-str-collectionsC.exe array-str-CC.exe  \
-	array-mpz-klib.exe array-int-klib.exe array-str-klib.exe
+	   array-mpz-klib.exe array-int-klib.exe array-str-klib.exe \
+	   array-c23-test
+
+array-c23-test:
+	@echo "int main() { return 0; }" > test.c
+	@$(C23) test.c -o test.exe 2> /dev/null && $(MAKE) array-c23 || echo "WARNING: C23 compiler not available, skipping C23 examples"
+	@$(RM) test.c test.exe
+
+# Tests that depend on a working C23 compiler, so that we can test the C23 implementation of the libraries.
+array-c23: array-int-ccc.exe
 
 array-mpz-stl.exe: array-mpz/array-stl.cc
 	$(CXX) $(CFLAGS) $< -o $@ -lgmpxx $(LDFLAGS)
@@ -220,6 +237,9 @@ array-mpz-stb.exe: array-mpz/array-stb.c external/stb
 
 array-str-stb.exe: array-str/array-stb.c external/stb
 	$(CC) $(CFLAGS) -Iexternal/stb $< -o $@ $(LDFLAGS)
+
+array-int-ccc.exe: array-int/array-ccc.c external/ccc/libccc.a
+	$(C23) $(CFLAGS) -Iexternal/ccc $< -o $@ external/ccc/libccc.a $(LDFLAGS)
 
 
 ###########################################################
