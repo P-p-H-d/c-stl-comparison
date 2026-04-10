@@ -105,6 +105,9 @@ external/rapidjson:
 external/stb:
 	mkdir -p external && cd external && git clone https://github.com/nothings/stb.git
 
+external/OpenCSTL:
+	mkdir -p external && cd external && git clone https://github.com/springkim/OpenCSTL.git
+
 ###########################################################
 # 		Build external Libraries
 ###########################################################
@@ -221,6 +224,8 @@ array-mpz-stb.exe: array-mpz/array-stb.c external/stb
 array-str-stb.exe: array-str/array-stb.c external/stb
 	$(CC) $(CFLAGS) -Iexternal/stb $< -o $@ $(LDFLAGS)
 
+array-int-opencstl.exe: array-int/array-opencstl.c external/OpenCSTL
+	$(CC) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ $(LDFLAGS)
 
 ###########################################################
 # 		Build example for Unordered map
