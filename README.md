@@ -191,47 +191,48 @@ sglib is not included due to being abandoned.
 ## Analysis
 
 The following characteristics are compared. The C++ STL is also included as reference.
+For a container of such library that encapsulates a collection of objects of basic type, the following criterions are analyzed:
 
 * What is the license?
-* What is the supported C language (C89, C99, C11 or C23)?
-* Is it a pure C program (no need for external preprocessor)?
-* Is it a Header only library?
+* What is the supported C language? (C89, C99, C11 or C23, with or without extension)
+* Is it a pure C program? (no need for external preprocessor)
+* Is it Header only?
 * How is implemented the Generic mechanism? By using  (VP) void pointer, (M) macro, (GO) Generic objects, (IF) intrusive field, (TH) template header, (TM) template macro
 * Is it type safe (aka. using an incompatible type produces at least a compilation warning)?
-* support of integer/floats as basic type,
-* support of struct POD data as basic type,
-* support of array as basic type,
-* support of object like data (needing custom constructor, copy, destructor...) as basic type,
-* support of C++ class as basic type,
-* support of Assignment semantics: containers uses the C Assignment operators to set object in them,
-* support of copy semantics: containers create a proper copy of the object data as per the object semantic (aka if there is pointer in the structure, it performs a proper copy of the pointed objects),
-* support of move semantics: containers steal the ownership of the object given as parameter as per the object semantic, rendering the original object useless (in a destroy or nearly destroy state),
-* container / basic type spatial separation: the association of the methods of the basic type to the needed operators of the container library can be defined when the basic type is defined (ensuring spatial coherency of the basic type) and not only when the container is defined,
-* support of an adaptation layer to transform the interface of the provided method to the expected interface of the operator, 
-* support of basic 'emplace'
-* support of multiple, enhanced 'emplace' based on the initialized arguments,
-* support of iterator abstraction
-* support of sort algorithm
-* support of sort algorithm with custom comparison,
-* support of single linkage definition (use of declaration only for all files except one than include the container definition),
-* full abstraction of the container type (user shall not use internal fields)
-* contract violation checks (assertions on invalid inputs, on input contract violation or error reporting)
-* natural usage of array (using of [] operator on the object)
-* basic type is stored in the container, not a pointer to it.
-* Need explicit instantiation of the container with the basic type,
-* functions are properly prefixed,
-* error handling (return code, exception, abort, none)
-* On exception, destructors of objects on stack are properly called.
-* custom memory functions
-* optional per-container context for custom memory functions
-* support of forward declaration of container
-* support of serialization (JSON, XML)
+* Does it support of integer/floats as basic type?
+* Does it support of struct POD data as basic type?
+* Does it support of array as basic type?
+* Does it support of object like data (needing custom constructor, copy, destructor...) as basic type?
+* Does it support of C++ class as basic type?
+* Does it support of Assignment semantics? (container uses the C Assignment operators to set object in them)
+* Does it support of copy semantics? (container creates a proper copy of the object data as per the object semantic: if there is pointer in the structure, it performs a proper copy of the pointed objects)
+* Does it support of move semantics? (container steals the ownership of the object given as parameter as per the object semantic, rendering the original object in a destroyed or nearly destroyed state)
+* Can the container and its basic type be defined fully separately in the source code? (spatial separation: the association of the methods of the basic type to the needed operators of the container library can be defined when the basic type is defined -ensuring spatial coherency of the basic type- and not only when the container is defined)
+* Does it support of an adaptation layer? (a way to transform the interface of the provided method of the basic type to the expected interface of the operator of the container without writing explicitly a wrapper) 
+* Does it support of basic 'emplace'?
+* Does it support of multiple, enhanced 'emplace' based on the initialized arguments?
+* Does it support of iterator abstraction?
+* Does it support of sort algorithm?
+* Does it support of sort algorithm with custom comparison?
+* Does it support of single definition for the whole program? (use of declaration only for all files except one that includes the container definition)
+* Does it support of full abstraction of the container type? (user shall not have to use internal fields)
+* Does it support of contract violation checks? (assertions on invalid inputs, on input contract violation or error reporting)
+* Does it support of natural usage of array? (using of Array subscripting on the container)
+* Is the basic type stored in the container, not a pointer to it?
+* Does it need an explicit instantiation of the container with the basic type before its usage?
+* Are the functions properly prefixed?
+* What are the error handling methods supported? (return code, exception, abort, none)
+* Are destructors of objects on stack properly called on exception?
+* Does it support custom memory functions?
+* Does it support optional per-container context for custom memory functions?
+* Does it support support of forward declaration of container?
+* Does it support support of serialization? (JSON, XML, YAML)
 
 ## Synthesis
 
 | Characteristics             | STL      | M*LIB  | STC     | CMC     | CTL   | CollecC | CC     |  GLIB  | STB_DS | KLIB |
 |-----------------------------|----------|--------|---------|---------|-------|---------|--------|--------|--------|------|
-| Licence                     | NA       | BSD2   | MIT     | MIT     | MIT   | LGPL3   | MIT    | LGPL2.1| MIT    | MIT  |
+| License                     | NA       | BSD2   | MIT     | MIT     | MIT   | LGPL3   | MIT    | LGPL2.1| MIT    | MIT  |
 | C language                  | NA       | >=C99  | >=C99   | >=C99   | >=C99 | >=C99| >=C11* or >=C23 | >=C89 | >=C99* or >= C23 | >= C99 |
 | Pure C                      | NA       | Y      | Y       | Y       | Y     | Y       | Y      | Y      | Y      | Y    |
 | Header only                 | Y        | Y      | Y       | Y       | Y     | N       | Y      | N      | Y      | Y    |
@@ -239,8 +240,9 @@ The following characteristics are compared. The C++ STL is also included as refe
 | type safe                   | Y        | Y      | Y       | Y       | Y     | N       | Y*     | N      | N*     | Y    |
 | integer/float support       | Y        | Y      | Y       | Y       | Y     | Y       | Y      | Y*     | Y      | Y    |
 | struct POD support          | Y        | Y      | Y       | Y       | Y     | N       | Y      | Y*     | Y      | Y    |
-| C++ class support           | Y        | Y      | N       | N       | N     | N       | N      | N      | N      | N    |
+| array support               | Y        | Y      | N       | N       | N     | N       | N      | Y*     | N      | N    |
 | C object support            | Y        | Y      | Y       | Y       | Y     | N       | Y      | Y*     | N      | Y    |
+| C++ class support           | Y        | Y      | N       | N       | N     | N       | N      | N      | N      | N    |
 
 | Characteristics             | STL      | M*LIB  | STC     | CMC     | CTL   | CollecC | CC     |  GLIB  | STB_DS | KLIB |
 |-----------------------------|----------|--------|---------|---------|-------|---------|--------|--------|--------|------|
