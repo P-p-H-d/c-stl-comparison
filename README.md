@@ -374,7 +374,7 @@ A workaround is defined as a way to implement this program which is **not natura
 * create wrapper functions or macros,
 * accessing internal fields of the containers (typically for using the qsort function).
 
-For example, if a container library manual requests to define some macro for its use, then it won't be considered as a workaround. 
+For example, if a container library manual requests to define some macro for its use, then it won't be considered as a workaround. Workarounds are allowed but are counted separately.
 
 ## Array tests
 
