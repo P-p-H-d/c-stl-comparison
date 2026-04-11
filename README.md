@@ -25,7 +25,7 @@ There are several ways of doing so:
 
 ## voidp: Everything is a pointer to void.
 
-Each object is handled through a pointer to void. The container store only pointers to theses objects.
+Each object is handled through a pointer to void. The container store only pointers to these objects.
 Potentially, it may also register some callback functions to handle the contained objects for the needed specialized methods (copy, drop, ...). 
 From a user point of view, this makes the code harder to use (as you don't have any help from the compiler) and type unsafe since a lot of cast is needed to handle it (so no formal proof of the code is possible). This also generally generate slower code (due to the multiple reduction, indirect callback, increase memory usage and cache miss) even if using link time optimization could reduce this a little. Properly used, it can yet be the most space efficient for the code, but can consume a lot more for the data due to the obligation of using pointers. This is however the easiest to design & code.
 
@@ -190,14 +190,14 @@ sglib is not included due to being abandoned.
 
 ## Analysis
 
-The following characteristics are compared. The C++ STL is also included as as reference.
+The following characteristics are compared. The C++ STL is also included as reference.
 
 * What is the license?
 * What is the supported C language (C89, C99, C11 or C23)?
 * Is it a pure C program (no need for external preprocessor)?
 * Is it a Header only library?
-* How is implemented the Generic mechanism? By using  VP)void pointer, M)macro, GO) Generic objects, IF)intrusive field, TH)template header, TM)template macro
-* Is-it type safe (aka. using an incompatible type produces at least a compilation warning)?
+* How is implemented the Generic mechanism? By using  (VP) void pointer, (M) macro, (GO) Generic objects, (IF) intrusive field, (TH) template header, (TM) template macro
+* Is it type safe (aka. using an incompatible type produces at least a compilation warning)?
 * support of integer/floats as basic type,
 * support of struct POD data as basic type,
 * support of array as basic type,
@@ -283,7 +283,7 @@ The following characteristics are compared. The C++ STL is also included as as r
 |-----------------------------------|-----------|--------|---------|---------|-------|---------|--------|------|-------|------|
 | Singly Linked Non-Intrusive list  | Y         | Y      | N       | N       | Y     | Y       | N      | Y    |N      | Y    |
 | Doubly Linked Non-Intrusive list  | Y         | N      | N       | N       | Y     | Y       | Y      | Y    |N      | N    |
-| Singly Linked, Dualy Push Non-Intrusive list  | N | Y  | Y       | N       | N     | N       | N      | N    |N      | N    |
+| Singly Linked, Dually Push Non-Intrusive list  | N | Y  | Y       | N       | N     | N       | N      | N    |N      | N    |
 | Singly Linked Intrusive list      | N         | N      | N       | N       | N     | N       | N      | N    |N      | N    |
 | Doubly Linked Intrusive list      | N         | Y      | N       | N       | N     | N       | N      | N    |N      | N    |
 | Dynamic array                     | Y         | Y      | Y       | Y       | Y     | Y       | Y      | Y    |Y      | Y    |
@@ -397,10 +397,9 @@ The program shall perform the following operations:
 ## Execution
 
 The different programs are available in this repository.
-To build then, you just need to have
+To build them, you just need to have
 a working C11 compiler, a make tool, git,
-the GMP library, and the GLIB library
-to build then.
+the GMP library, and the GLIB library.
 
 Simply run "make" to perform clones of the C libraries
 and generate the different executables.
@@ -460,7 +459,7 @@ The [bench](https://github.com/P-p-H-d/c-stl-comparison/tree/master/bench)
 directory contains a benchmark comparing
 the performance of different C libraries (including some C++ ones, like STL and BOOST as references). 
 
-Time and memory usage are provided for theses tests and the best run out of 3 is kept to remove external interference, which is a compromise between execution time and reliability.
+Time and memory usage are provided for these tests and the best run out of 3 is kept to remove external interference, which is a compromise between execution time and reliability.
 Compiler flags are `-O2 -march=native`.
 
 More specialized C libraries are added. The tested C libraries are:
@@ -475,7 +474,7 @@ More specialized C libraries are added. The tested C libraries are:
 * liblfds (for thread communication)
 * libsrt
 * M\*LIB
-* Poterry
+* Pottery
 * Qlibc
 * SDS (for string)
 * STC
@@ -485,7 +484,7 @@ More specialized C libraries are added. The tested C libraries are:
 * XXHASH (for hash function)
 
 Rather than measuring the performance of each individual methods exported by the library on some dataset,
-it measures the time taken by some test programs implementing a defined algorithm using the methods of the containers for this (to provide more real world examples). Of course, it doesn't mean that theses algorithms match with your use cases, so you should take them with a grain of salt.
+it measures the time taken by some test programs implementing a defined algorithm using the methods of the containers for this (to provide more real world examples). Of course, it doesn't mean that these algorithms match with your use cases, so you should take them with a grain of salt.
 
 Each dataset size is chosen so that the time using by the best library is around 1 second (which is a compromise between execution time and reliability of the test result).
 
@@ -505,7 +504,7 @@ Exact program exact behaviors, code source and dataset size are provided in the 
 
 ## Conclusion
 
-Results are available [for i5-3210M](https://github.com/P-p-H-d/c-stl-comparison/blob/master/bench/doc/BENCH.md) and [for AMD EPYC 7763](https://github.com/P-p-H-d/c-stl-comparison/blob/result/bench/doc/BENCH.md) (the later is generated by CI).
+Results are available [for i5-3210M](https://github.com/P-p-H-d/c-stl-comparison/blob/master/bench/doc/BENCH.md) and [for AMD EPYC 7763](https://github.com/P-p-H-d/c-stl-comparison/blob/result/bench/doc/BENCH.md) (the latter is generated by CI).
 
 The results are archived in git so that you can look at the history of the different runs. Thanks to that, the best rank and worst rank of the 10 previous runs are extracted: this enables detecting external interference during the run (for example, the sequence bench is dependent on the performance of the kernel to allocate pages, and the top 5 libraries are challenger for the first place). This enables to see if the rank is solid (best rank / worst rank are the same rank) or fluctuating.
 
