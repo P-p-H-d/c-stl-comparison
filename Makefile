@@ -155,7 +155,7 @@ array-c23-test:
 	@$(RM) test.c test.exe
 
 # Tests that depend on a working C23 compiler, so that we can test the C23 implementation of the libraries.
-array-c23: array-int-ccc.exe
+array-c23: array-int-ccc.exe array-str-ccc.exe array-mpz-ccc.exe
 
 array-mpz-stl.exe: array-mpz/array-stl.cc
 	$(CXX) $(CFLAGS) $< -o $@ -lgmpxx $(LDFLAGS)
@@ -241,6 +241,11 @@ array-str-stb.exe: array-str/array-stb.c external/stb
 array-int-ccc.exe: array-int/array-ccc.c external/ccc/libccc.a
 	$(C23) $(CFLAGS) -Iexternal/ccc $< -o $@ external/ccc/libccc.a $(LDFLAGS)
 
+array-str-ccc.exe: array-str/array-ccc.c external/ccc/libccc.a
+	$(C23) $(CFLAGS) -Iexternal/ccc $< -o $@ external/ccc/libccc.a $(LDFLAGS)
+
+array-mpz-ccc.exe: array-mpz/array-ccc.c external/ccc/libccc.a
+	$(C23) $(CFLAGS) -Iexternal/ccc $< -o $@ external/ccc/libccc.a $(LDFLAGS)
 
 ###########################################################
 # 		Build example for Unordered map
