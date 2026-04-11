@@ -43,7 +43,7 @@ Cons:
 
 ## macro: Everything is a macro
 
-Macros are used to access structures in a generic way (using known named fields of a structure — typically size, capacity, etc.). The macro is fully always expanded in the user code. From a user point of view, this can create subtle bugs in the use of the library (as everything is done through macro expansion in the user defined code) and hard to understand warnings. This can be mitigated using proper macros expansion and type checking, but it increases the complexity of the solution. This can generates fully efficient code. From a library developer point of view, this can be quite limiting in what you can offer.
+Macros are expanded in the user code and used to access structures in a generic way (using known named fields of a structure — typically size, capacity, etc.). The macro is fully always expanded in the user code. From a user point of view, this can create subtle bugs in the use of the library (as everything is done through macro expansion in the user defined code) and hard to understand warnings. This can be mitigated using proper macros expansion and type checking, but it increases the complexity of the solution. This can generates fully efficient code. From a library developer point of view, this can be quite limiting in what you can offer.
 
 Pros:
 
@@ -128,7 +128,9 @@ You can perform heavy context-dependent customization of the code (transforming 
 Properly done, you can also chain the methods from a container to another one easily, enabling quick and easy expansion of the containers. 
 Errors in user code are easy to read and natural. Code usage is a little bit more verbose as it uses specialized function names, and not generic ones.
 
-Some people reported "issue" of the template macros with their look due to the use of backslash at the end of the lines however it is due to their coding practices (you need to align backslash at the same column). Another one of the reported "issue" is the lack of support of syntax highlighting and autocomplete in macros but... it was more an issue in their used text editor.
+>Note: not to be confused with usage of Macro for meta-programming. Template Macros are much closer to Template Headers.
+
+>Note: Some people reported "issue" of the template macros with their look due to the use of backslash at the end of the lines however it is due to their coding practices (you need to align backslash at the same column). Another one of the reported "issue" is the lack of support of syntax highlighting and autocomplete in macros but... it was more an issue in their used text editor.
 
 Pros:
 
@@ -221,23 +223,26 @@ For a container of such library that encapsulates a collection of objects of bas
 * Is the basic type stored in the container, not a pointer to it?
 * Does it need an explicit instantiation of the container with the basic type before its usage?
 * Are the functions properly prefixed?
-* What are the error handling methods supported? (return code, exception, abort, none)
+* How are the memory errors handled? (return code, exception, abort, none)
 * Are destructors of objects on stack properly called on exception?
 * Does it support custom memory functions?
 * Does it support optional per-container context for custom memory functions?
-* Does it support support of forward declaration of container?
-* Does it support support of serialization? (JSON, XML, YAML)
+* Does it support of forward declaration of container?
+* Does it support of serialization? (JSON, XML, YAML)
 
 ## Synthesis
 
 | Characteristics             | STL      | M*LIB  | STC     | CMC     | CTL   | CollecC | CC     |  GLIB  | STB_DS | KLIB |
 |-----------------------------|----------|--------|---------|---------|-------|---------|--------|--------|--------|------|
 | License                     | NA       | BSD2   | MIT     | MIT     | MIT   | LGPL3   | MIT    | LGPL2.1| MIT    | MIT  |
-| C language                  | NA       | >=C99  | >=C99   | >=C99   | >=C99 | >=C99| >=C11* or >=C23 | >=C89 | >=C99* or >= C23 | >= C99 |
+| C language                  | NA       | >=C99  | >=C99   | >=C99   | >=C99 | >=C99|>=C11* or >=C23|>=C89|>=C99* or >=C23|>=C99|
 | Pure C                      | NA       | Y      | Y       | Y       | Y     | Y       | Y      | Y      | Y      | Y    |
 | Header only                 | Y        | Y      | Y       | Y       | Y     | N       | Y      | N      | Y      | Y    |
 | Generic mechanism           | template | TM     | TH      | TM      | TH    | VP      | M+GO   | VP     | M      | TM   |
 | type safe                   | Y        | Y      | Y       | Y       | Y     | N       | Y*     | N      | N*     | Y    |
+
+| Characteristics             | STL      | M*LIB  | STC     | CMC     | CTL   | CollecC | CC     |  GLIB  | STB_DS | KLIB |
+|-----------------------------|----------|--------|---------|---------|-------|---------|--------|--------|--------|------|
 | integer/float support       | Y        | Y      | Y       | Y       | Y     | Y       | Y      | Y*     | Y      | Y    |
 | struct POD support          | Y        | Y      | Y       | Y       | Y     | N       | Y      | Y*     | Y      | Y    |
 | array support               | Y        | Y      | N       | N       | N     | N       | N      | Y*     | N      | N    |
@@ -250,7 +255,7 @@ For a container of such library that encapsulates a collection of objects of bas
 | Copy semantics              | Y        | Y      | N       | N       | N     | Y       | N      | Y      | N      | N    |
 | Move semantics              | Y        | Y      | N       | N       | N     | N       | N      | N      | N      | N    |
 | spatial separation          | Y        | Y      | N       | N       | N     | NA      | Y      | NA     | N      | N    |
-| Adaptator Layer             | N        | Y      | N       | N       | N     | N       | N      | N      | N      | N    |
+| Adaptor Layer               | N        | Y      | N       | N       | N     | N       | N      | N      | N      | N    |
 | Basic emplace support       | Y        | Y      | Y       | N       | N     | N       | N      | N      | N      | N    |
 | Enhance emplace support     | Y        | Y      | N       | N       | N     | N       | N      | N      | N      | N    |
 | Iterator support            | Y        | Y      | Y       | N       | Y     | Y       | Y      | N      | N      | Y    |
@@ -269,23 +274,24 @@ For a container of such library that encapsulates a collection of objects of bas
 
 | Characteristics             | STL      | M*LIB  | STC     | CMC     | CTL   | CollecC | CC     |  GLIB  | STB_DS | KLIB |
 |-----------------------------|----------|--------|---------|---------|-------|---------|--------|--------|--------|------|
-| memory handling             | except   | abort, except | retcode | retcode |none|retcode |retcode|retcode| none  |retcode|
-| destructors on exception    | Y        | Y*     | NA      | NA      | NA    | NA      | NA     | N      | N      | N    |
+| memory error handling       | except|abort, except| retcode |retcode|none   | retcode |retcode | retcode| none  |retcode|
+| destructors on exception    | Y        | Y*     | N       | N       | N     | N       | N      | N      | N      | N    |
 | custom memory support       | Y        | Y      | Y       | Y       | N     | Y       | Y      | N      | Y      | Y    |
 | context for memory support  | N        | Y      | Y       | N       | N     | N       | N      | N      | Y      | N    |
-| Forward declaration support | N        | N      | Y       | N       | N     | N       | N      | N      | N      | N    |
+| Forward declaration support | N        | Y*     | Y       | N       | N     | N       | N      | N      | N      | N    |
 | Serialization               | N        | JSON   | N       | N       | N     | N       | N      | N      | N      | N    |
 
 * C11*: means C11 + typeof extension
 * C99*: means C99 + typeof extension
 * Y*: Yes with some limitations.
 * N*: even it appears to be type safe, it is not and it is easy to misuse it.
+* NA: the question has no meaning for this library.
 
 | Containers                        | STL       | M*LIB  | STC     | CMC     | CTL   | CollecC | CC     | GLIB |STB_DS | KLIB |
 |-----------------------------------|-----------|--------|---------|---------|-------|---------|--------|------|-------|------|
 | Singly Linked Non-Intrusive list  | Y         | Y      | N       | N       | Y     | Y       | N      | Y    |N      | Y    |
 | Doubly Linked Non-Intrusive list  | Y         | N      | N       | N       | Y     | Y       | Y      | Y    |N      | N    |
-| Singly Linked, Dually Push Non-Intrusive list  | N | Y  | Y       | N       | N     | N       | N      | N    |N      | N    |
+| Singly Linked, Dually Push Non-Intrusive list | N | Y  | Y       | N       | N     | N       | N      | N    |N      | N    |
 | Singly Linked Intrusive list      | N         | N      | N       | N       | N     | N       | N      | N    |N      | N    |
 | Doubly Linked Intrusive list      | N         | Y      | N       | N       | N     | N       | N      | N    |N      | N    |
 | Dynamic array                     | Y         | Y      | Y       | Y       | Y     | Y       | Y      | Y    |Y      | Y    |
@@ -490,9 +496,11 @@ it measures the time taken by some test programs implementing a defined algorith
 
 Each dataset size is chosen so that the time using by the best library is around 1 second (which is a compromise between execution time and reliability of the test result).
 
+For the hash tables, the load factor is let at the default defined by the library. Instead we measure and rank the memory consumption during the test, the ones using a low load factor being necessarily at a disadvantageous.
+
 The performance programs are performed around the following functionalities:
 
-* sequence container (array, list and deque),
+* sequence container (array, list and deque) of two containers at the same time (on 64 bits type),
 * sorted set container,
 * unordered map container (on unsigned 64 bits type, on 256 bits type and on string type) with a 50% found/un-found ratio,
 * unordered set container (on 32 bits type) with a low found/un-found ratio,
@@ -508,7 +516,7 @@ Exact program exact behaviors, code source and dataset size are provided in the 
 
 Results are available [for i5-3210M](https://github.com/P-p-H-d/c-stl-comparison/blob/master/bench/doc/BENCH.md) and [for AMD EPYC 7763](https://github.com/P-p-H-d/c-stl-comparison/blob/result/bench/doc/BENCH.md) (the latter is generated by CI).
 
-The results are archived in git so that you can look at the history of the different runs. Thanks to that, the best rank and worst rank of the 10 previous runs are extracted: this enables detecting external interference during the run (for example, the sequence bench is dependent on the performance of the kernel to allocate pages, and the top 5 libraries are challenger for the first place). This enables to see if the rank is solid (best rank / worst rank are the same rank) or fluctuating.
+The results are archived in git so that you can look at the history of the different runs. Thanks to that, the best rank and worst rank of the 10 previous runs are extracted: this enables detecting external interference during the run when the ranking is not stable. For example, the sequence bench is dependent on the performance of the kernel to allocate pages, and the top 5 libraries are challenger for the first place. Extracting the best/worst ranks enables to have a better view of the relative performance of the libraries.
 
 The conclusion is that the best C libraries can be much faster than the STL.
 Such libraries are all based on template-header or template-macros paradigm.
