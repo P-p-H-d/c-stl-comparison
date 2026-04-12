@@ -237,7 +237,7 @@ For a container of such library that encapsulates a collection of objects of bas
 | License                     | NA       | BSD2   | MIT     | MIT     | MIT   | LGPL3   | MIT    | LGPL2.1| MIT    | MIT  |
 | C language                  | NA       | >=C99  | >=C99   | >=C99   | >=C99 | >=C99|>=C11* or >=C23|>=C89|>=C99* or >=C23|>=C99|
 | Pure C                      | NA       | Y      | Y       | Y       | Y     | Y       | Y      | Y      | Y      | Y    |
-| Header only                 | Y        | Y      | Y       | Y       | Y     | N       | Y      | N      | Y      | Y    |
+| Header only                 | Y        | Y      | Y*      | Y       | Y     | N       | Y      | N      | Y      | Y    |
 | Generic mechanism           | template | TM     | TH      | TM      | TH    | VP      | M+GO   | VP     | M      | TM   |
 | type safe                   | Y        | Y      | Y       | Y       | Y     | N       | Y*     | N      | N*     | Y    |
 
@@ -252,12 +252,12 @@ For a container of such library that encapsulates a collection of objects of bas
 | Characteristics             | STL      | M*LIB  | STC     | CMC     | CTL   | CollecC | CC     |  GLIB  | STB_DS | KLIB |
 |-----------------------------|----------|--------|---------|---------|-------|---------|--------|--------|--------|------|
 | Assignment semantics        | Y        | Y      | Y       | Y       | Y     | Y       | Y      | Y      | Y      | Y    |
-| Copy semantics              | Y        | Y      | N       | N       | N     | Y       | N      | Y      | N      | N    |
+| Copy semantics              | Y        | Y      | Y*      | N       | Y*    | Y       | N      | Y      | N      | N    |
 | Move semantics              | Y        | Y      | N       | N       | N     | N       | N      | N      | N      | N    |
 | spatial separation          | Y        | Y      | N       | N       | N     | NA      | Y      | NA     | N      | N    |
 | Adaptor Layer               | N        | Y      | N       | N       | N     | N       | N      | N      | N      | N    |
 | Basic emplace support       | Y        | Y      | Y       | N       | N     | N       | N      | N      | N      | N    |
-| Enhance emplace support     | Y        | Y      | N       | N       | N     | N       | N      | N      | N      | N    |
+| Enhanced emplace support    | Y        | Y      | N       | N       | N     | N       | N      | N      | N      | N    |
 | Iterator support            | Y        | Y      | Y       | N       | Y     | Y       | Y      | N      | N      | Y    |
 | Sort algorithm              | Y        | Y      | Y       | N       | Y     | Y       | N      | Y      | N      | Y    |
 | Enhanced Sort algorithm     | Y        | Y      | Y       | N       | Y     | Y       | N      | Y      | N      | N    |
@@ -265,7 +265,7 @@ For a container of such library that encapsulates a collection of objects of bas
 | Characteristics             | STL      | M*LIB  | STC     | CMC     | CTL   | CollecC | CC     |  GLIB  | STB_DS | KLIB |
 |-----------------------------|----------|--------|---------|---------|-------|---------|--------|--------|--------|------|
 | single linkage definition   | N*       | Y      | Y       | Y       | N     | Y       | N      | Y      | Y      | N    |
-| Full abstraction            | Y        | Y      | N       | Y       | N     | Y       | Y      | N      | Y      | Y    |
+| Full abstraction            | Y        | Y      | Y*      | Y       | Y*    | Y       | Y      | N      | Y      | Y    |
 | Contract violation checks   | Y        | Y      | N       | N       | N     | N       | N      | N      | N      | N    |
 | Natural usage               | Y        | N      | N       | N       | N     | N       | N      | N      | Y      | N    |
 | Basic type is stored        | Y        | Y      | Y       | Y       | Y     | N       | Y      | N      | Y      | Y    |
