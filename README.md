@@ -116,6 +116,7 @@ Cons:
 * can generate code bloat if incorrectly used
 * can have cryptic error message at **instantiation** stage if incorrectly used
 * method names are more verbose
+* unnatural usage of headers.
 
 ## Template macros
 
@@ -138,20 +139,22 @@ Pros:
 * type safe
 * easy to use for user
 * maximum flexibility in code generation
-* maximum configuration possible
 
 Cons:
 
 * Explicit instance needed
 * can generate code bloat if incorrectly used
-* little harder to debug for **library** developer
+* little harder to debug for the **library** developer
 * can have cryptic error message at **instantiation** stage if incorrectly used
 * method names are verbose
 
-## Mix
+## Synthesis
 
 Some mix of the previous solutions can also be chosen for a specific usage.
-For example, mixing the macro solution and the voidp solution can mitigates the Cons of both solution.
+For example, mixing the macro solution and the voidp solution can mitigates the Cons of both solution,
+increasing their added value.
+
+In practice, Template header is often the best compromise between ease of development and what is possible with it. Template macro is a little bit harder to develop but increases the generation possibility. voidp solution is often the one that generate the smaller code but at the cost of performance and harder debug at user level.
 
 
 # C libraries Selection
