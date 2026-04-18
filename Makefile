@@ -274,6 +274,7 @@ umap: umap-mpz-mlib.exe umap-mpz-stc.exe umap-mpz-ctl.exe umap-mpz-cmc.exe umap-
       umap-str-mlib.exe umap-str-stc.exe umap-str-ctl.exe umap-str-cmc.exe umap-str-stl.exe umap-str-collectionsC.exe umap-str-CC.exe \
       umap-mpz-klib.exe umap-str-klib.exe umap-int-klib.exe \
       umap-str-stb.exe umap-int-stb.exe \
+	  umap-int-opencstl.exe umap-str-opencstl.exe umap-mpz-opencstl.exe \
 	  umap-c23-test
 
 umap-c23-test:
@@ -355,6 +356,14 @@ umap-str-klib.exe: umap-str/umap-klib.c external/klib
 
 umap-mpz-klib.exe: umap-mpz/umap-klib.c external/klib
 	$(C11) $(CFLAGS) -Iexternal/klib $< -o $@ $(LDFLAGS)
+
+umap-int-opencstl.exe: umap-int/umap-opencstl.c external/OpenCSTL
+	$(CC) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ $(LDFLAGS)
+
+umap-str-opencstl.exe: umap-str/umap-opencstl.c external/OpenCSTL
+	$(CC) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ $(LDFLAGS)
+
+#umap-mpz-opencstl.exe is not possible: there is no way to give as proper hash function.
 
 umap-int-stb.exe: umap-int/umap-stb.c external/stb
 	$(C11) $(CFLAGS) -Iexternal/stb $< -o $@ $(LDFLAGS)
