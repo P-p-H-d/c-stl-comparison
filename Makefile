@@ -274,7 +274,7 @@ umap: umap-mpz-mlib.exe umap-mpz-stc.exe umap-mpz-ctl.exe umap-mpz-cmc.exe umap-
       umap-str-mlib.exe umap-str-stc.exe umap-str-ctl.exe umap-str-cmc.exe umap-str-stl.exe umap-str-collectionsC.exe umap-str-CC.exe \
       umap-mpz-klib.exe umap-str-klib.exe umap-int-klib.exe \
       umap-str-stb.exe umap-int-stb.exe \
-	  umap-int-opencstl.exe umap-str-opencstl.exe umap-mpz-opencstl.exe \
+	  umap-int-opencstl.exe umap-str-opencstl.exe \
 	  umap-c23-test
 
 umap-c23-test:
