@@ -286,6 +286,7 @@ bench-ccc:
 	@./bench-ccc.exe 500 $(LOG)
 
 bench-opencstl:
+	@cd .. && make external/OpenCSTL
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I ../external/OpenCSTL bench-opencstl.c common.c -o bench-opencstl.exe
 	@./bench-opencstl.exe 100 $(LOG)
 	@./bench-opencstl.exe 110 $(LOG)
