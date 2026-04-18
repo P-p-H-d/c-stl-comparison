@@ -27,7 +27,10 @@ There are several ways of doing so:
 
 Each object is handled through a pointer to void. The container store only pointers to these objects.
 Potentially, it may also register some callback functions to handle the contained objects for the needed specialized methods (copy, drop, ...). 
-From a user point of view, this makes the code harder to use (as you don't have any help from the compiler) and type unsafe since a lot of cast is needed to handle it (so no formal proof of the code is possible). This also generally generate slower code (due to the multiple reduction, indirect callback, increase memory usage and cache miss) even if using link time optimization could reduce this a little. Properly used, it can yet be the most space efficient for the code, but can consume a lot more for the data due to the obligation of using pointers. This is however the easiest to design & code.
+From a user point of view, this makes the code harder to use and to debug (as you don't have any help from the compiler) and type unsafe since a lot of cast is needed to handle it (so no formal proof of the code is usually possible). 
+This also generally generate slower code (due to the multiple reduction, indirect callback, increase memory usage and cache miss) even if using link time optimization and full inline functions could reduce this a little (with inlining and LTO, some callback overhead can be reduced but it is really dependent on the compilers and will increase your compilation time).
+Properly used, it can yet be the most space efficient for the code, but can consume more for the data due to the obligation of using pointers (depending on your use case). 
+This is however the easiest to design & code.
 
 Pros:
 
@@ -41,9 +44,15 @@ Cons:
 * hard to debug for user,
 * type unsafe.
 
+> Note: See synthesis for mixing macros with typed handles and void * elements and creating hybrid solutions.
+
 ## macro: Everything is a macro
 
 Macros are expanded in the user code and used to access structures in a generic way (using known named fields of a structure — typically size, capacity, etc.). The macro is fully always expanded in the user code. From a user point of view, this can create subtle bugs in the use of the library (as everything is done through macro expansion in the user defined code) and hard to understand warnings. This can be mitigated using proper macros expansion and type checking, but it increases the complexity of the solution. This can generates fully efficient code. From a library developer point of view, this can be quite limiting in what you can offer.
+
+This technique can also enforce the type consistency by encoding the type in the macro name or by using typeof/_Generic internally to check for the right types.
+
+A key macro pitfall is evaluating arguments multiple times, and a good library should prevent misuse of this if possible.
 
 Pros:
 
@@ -52,55 +61,93 @@ Pros:
 
 Cons:
 
-* type unsafe,
+* potentially type unsafe,
 * error prone,
+* macro Side-effect,
 * can have cryptic error message if usage is incorrect
-* limited scope of what is possible
+* can have incorrect code usage without any error message if usage is incorrect
 
-## Generic objects
+>Note: Not to be confused with Template macros.
+
+## OO-style object
 
 The objects inherited from all the same base object. The base object has a virtual table that provides the callbacks to all the methods needed to handle such object.
 The generic code is a simple classic C code that handles only the base object: therefore it uses the provided callback in its vtable to handle the object for any operation.
 This is an alternative to everything is a void pointer.
 
-Another alternative of this is encapsulating the methods in macros that detect the type of the argument passed as parameter using _Generics, before calling the associated method according to the given type. The difficulty is how to add pure user types in this generic switch.
+Indirect calls are usually slower even if modern CPUs and branch prediction often make this cost modest (the overhead may still be negligible).
+
+It can be a good fit for a specialized API with only custom types and custom algorithms that don't need a lot of speed.
 
 Pros:
 
 * reduce code size
-* support different kind of objects in the same container (for vtable)
+* support different kind of objects in the same container
 
 Cons:
 
-* data memory usage (for vtable)
-* slow code (for vtable)
+* data memory usage
+* slow code
 * new operation requires rework of vtable
 * complex development
-* slow compilation (for _Generic)
+
+## Generic objects
+
+Another alternative is encapsulating the methods in macros that detect the type of the argument passed as parameter using _Generics, before calling the associated method according to the given type. 
+
+The C standard mandates to have valid C expressions in all cases of the _Generic. This is not a problem for very simple use of _Generic (such as the examples provided in the standard to return a different function depending on the types). But more advanced uses cannot be implemented so simply: they need to generate complex expression. Therefore, such library usually uses a double _Generic switch to overcome this limitation (increasing the number of used _Generic a lot and making code more awkward). There is discussion to remove this limitation in future C standards.
+
+The difficulty is how to add pure user types in this generic switch (possible, just awkward and it needs high C skill level to do it).
+
+Using this technique means using a lot of _Generic in the code. Real examples of it show notable slower compilation. Maybe it is due to compiler naive implementation of _Generic?
+
+It is usually not used alone but with other technics (like void pointer or container instantiations) in order to create an hybrid approach.
+
+As they need to hide the _Generic in a macro, they are subject to the key macro pitfall in evaluating arguments multiple times (a good library should prevent misuse of this if possible).
+
+Pros:
+
+* uniform interface provided to the user.
+
+Cons:
+
+* macro Side-effect shall be protected,
+* support of custom user types is difficult.
+* potential slow compilation
 
 ## Intrusive container
 
-A known structure is put in an intrusive way in the type of all the objects you wan to handle. From a user point of view, he needs to modify its structure and has to perform all the allocation & deallocation code itself (which is good or bad depending on the context). This can generate efficient code (both in speed and size). From a library developer point of view, this is easy to design & code. You need internally a cast to go from a pointer to the known structure to the pointed object (a reverse of offsetof) that is generally type unsafe (except if mixed with the macro generating concept). This is quite limited in what you can do: you can't move your objects so any container that has to move some objects is out-of-question (which means that you cannot use the most efficient container).
+A known structure is put in an intrusive way in the type of all the objects you wan to handle. From a user point of view, he needs to modify its structure and has to perform all the allocation & deallocation code itself (which is good or bad depending on the context). This can generate efficient code (both in speed and size). From a library developer point of view, this is easy to design & code. You need internally a cast to go from a pointer to the known structure to the pointed object (a reverse of offsetof) that is generally type unsafe (except if mixed with the macro generating concept). 
+
+This is quite limited in what you can do: you usually don't want to move your objects so any container that has to move some objects is not a good fit (which means that you cannot use the most efficient container). Indeed You can move intrusive objects if you update or rebuild the intrusive links appropriately, but it will be awkward and impact performance.
+
+Intrusive containers are a good fit when object lifetime is managed externally (e.g., kernel structures) as all allocations are usually let to the user.
+They are also a good fit when the same object can be within several containers.
 
 Pros:
 
 * reduce code size
 * efficient code
+* external object lifetime
 
 Cons:
 
 * data memory usage
-* limited scope of what is possible
+* limited scope of the containers
 
 ## Template header
 
 Header files are included multiple times with different macro contexts (which act as arguments of the header) in order to generate different code for each type. 
+
 From a user point of view, this creates a new step before using the container: an instantiating stage that has to be done once per type and per compilation unit (The user is responsible to create only one instance of the container, which can be troublesome if the library doesn't handle proper prefix for its naming convention). This instantiating stage generates the functions handling the container with the correct type, ensuring type safety and control by the compiler. 
+
+This instantiating stage can generate only the external interface (extern declaration), the implementation or inline implementation in function of what the user requests (reducing code bloat for containers which are heavily used so that only one instance exists in the whole program).
+
 The debug of the library is generally reasonable.
 It can generate fully specialized & efficient code. 
 Incorrectly used, this can generate a lot of code bloat. Properly used, this can even create smaller code than the void pointer variant. 
-The interface used to configure the library can be quite tiresome in case of a lot of specialized methods for the used user type to configure: it doesn't enable to chain the configuration from a container to another one easily.
-It also cannot have heavy customization of the code. 
+The interface used to configure the library can be quite tiresome in case of a lot of specialized methods for configuring the used user type: it doesn't enable to chain the configuration from a container to another one easily.
+
 The user code is a little bit more verbose as it uses specialized function names, and not generic ones.
 
 Pros:
@@ -122,12 +169,20 @@ Cons:
 
 Macros are used to generate context-dependent C code enabling to generate code for different type. This is pretty much like the template headers solution but with added flexibility. 
 From a user point of view, this creates a new step before using the container: an instantiating stage that has to be done once per type and per compilation unit (The user is responsible to create only one instance of the container, which can be troublesome if the library doesn't handle proper prefix for its naming convention). 
+
 This can generate fully specialized & efficient code with the correct type ensuring type safety and control by the compiler. Incorrectly used, this can generate a lot of code bloat. Properly used, this can even create smaller code than the void pointer variant. 
-From a library developer point of view, the library is harder to debug: everything being expanded in one line, you can't step in the library (there is however a solution to overcome this limitation by adding another stage to the compilation process). 
-This can also generates cryptic error messages at user level if incorrectly used when creating an instance. You can however see the generated code by looking at the preprocessed file. 
-You can perform heavy context-dependent customization of the code (transforming the macro preprocessing step into its own language): not only generating one method but N methods depending on the given type.
-Properly done, you can also chain the methods from a container to another one easily, enabling quick and easy expansion of the containers. 
+
+This instantiating stage can generate only the external interface (extern declaration), the implementation or inline implementation in function of what the user requests (reducing code bloat for containers which are heavily used so that only one instance exists in the whole program).
+
+From a library developer point of view, the library is harder to debug: everything being expanded in one line, you can't step in the library (there is however a solution to overcome this limitation by adding another stage to the compilation process: generating the preprocessed file (-E), cleaning it of the lines directives, and recompiling this file). But this should not impact the user if the library is properly maintained.
+
+This can also generates cryptic error messages at user level if incorrectly used when creating an instance. You can however see the generated code by looking at the preprocessed file.
+
+You can perform heavy context-dependent customization of the code (transforming the macro preprocessing step into its own language): you can generate a variable number of methods depending on the given arguments of your instantiation, which is not possible easily with any other methods.
+Also, Properly done, you can also chain the methods from a container to another one easily, enabling quick and easy expansion of the containers. 
 Errors in user code are easy to read and natural. Code usage is a little bit more verbose as it uses specialized function names, and not generic ones.
+
+Template macros are not subject to the key macro pitfall of evaluating arguments multiple times.
 
 >Note: not to be confused with usage of Macro for meta-programming. Template Macros are much closer to Template Headers.
 
@@ -150,11 +205,15 @@ Cons:
 
 ## Synthesis
 
-Some mix of the previous solutions can also be chosen for a specific usage.
-For example, mixing the macro solution and the voidp solution can mitigates the Cons of both solution,
+Even if a container is usually slow, it may be a good fit for your use case. There is no universal answer.
+
+Some hybrid patterns of the previous solutions (e.g., _Generic + templates, opaque wrappers around void *)
+can also be chosen for a specific usage, in order to mitigate the Cons of both solution,
 increasing their added value.
 
-In practice, Template header is often the best compromise between ease of development and what is possible with it. Template macro is a little bit harder to develop but increases the generation possibility. voidp solution is often the one that generate the smaller code but at the cost of performance and harder debug at user level.
+For example, a common pattern is to define the public API using some types (e.g., struct my_vec *), but internally performs some cast to void * to use functions on void pointers. This gives better ergonomics and some type safety at the container level, even if element type is ultimately erased.
+
+In practice, Template headers are often the best compromise between ease of development and what is possible with it. Template macros are a little bit harder to develop but increases the generation possibility. void pointer solutions are often the one that generate the smaller code but at the cost of performance and harder debug at user level.
 
 
 # C libraries Selection
@@ -202,7 +261,7 @@ For a container of such library that encapsulates a collection of objects of bas
 * What is the supported C language? (C89, C99, C11 or C23, with or without extension)
 * Is it a pure C program? (no need for external preprocessor)
 * Is it Header only?
-* How is implemented the Generic mechanism? By using  (VP) void pointer, (M) macro, (GO) Generic objects, (IF) intrusive field, (TH) template header, (TM) template macro
+* How is implemented the Generic mechanism? By using  (VP) void pointer, (M) macro, (OO) Object Oriented, (GO) Generic objects, (IF) intrusive field, (TH) template header, (TM) template macro
 * Is it type safe (aka. using an incompatible type produces at least a compilation warning)?
 * Does it support of integer/floats as basic type?
 * Does it support of struct POD data as basic type?
