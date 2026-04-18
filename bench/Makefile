@@ -21,6 +21,7 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 CC=cc -std=c11
+C23=cc -std=c23
 CXX=c++ -std=c++11
 CFLAGS=-O2 -march=native -Wall
 XCFLAGS=
@@ -30,7 +31,7 @@ BENCH_DEF=
 RM=rm -rf
 LOG=--quiet --best --repeat 3| tee -a logs.txt
 
-.PHONY: all pgo container queue string plain bench-mlib bench-stl bench-qt bench-glib bench-klib bench-sparsepp bench-collectionc bench-tommyds bench-flathashmap bench-emilib bench-emhash bench-hopscotchmap bench-mlib-thread bench-liblfds bench-concurrentqueue bench-boost bench-string bench-plain bench-rigtorp-mpmc-queue bench-cmc
+.PHONY: all pgo container queue string plain bench-mlib bench-stl bench-qt bench-glib bench-klib bench-sparsepp bench-collectionc bench-tommyds bench-flathashmap bench-emilib bench-emhash bench-hopscotchmap bench-mlib-thread bench-liblfds bench-concurrentqueue bench-boost bench-string bench-plain bench-rigtorp-mpmc-queue bench-cmc bench-ccc
 
 all: container-c container-cpp queue plain
 
@@ -40,7 +41,16 @@ pgo:
 
 #########################################################################
 
-container-c: bench-mlib bench-glib bench-klib bench-ctl bench-stc bench-CC bench-cmc bench-collectionc bench-tommyds bench-uthash bench-qlibc bench-libsrt bench-pottery bench-verstable bench-xxhash bench-bstrlib bench-sds bench-stb
+container-c: bench-mlib bench-glib bench-klib bench-ctl bench-stc bench-CC bench-cmc container-c23-test bench-collectionc bench-tommyds bench-uthash bench-qlibc bench-libsrt bench-pottery bench-verstable bench-xxhash bench-bstrlib bench-sds bench-stb
+	@echo
+	@echo
+
+container-c23-test:
+	@echo "int main() { return 0; }" > test.c
+	@$(C23) test.c -o test.exe 2> /dev/null && $(MAKE) container-c23 || echo "WARNING: C23 compiler not available, skipping C23 bench"
+	@$(RM) test.c test.exe
+
+container-c23: bench-ccc
 	@echo
 	@echo
 
@@ -263,6 +273,16 @@ bench-stb:
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I ../external/stb bench-stb.c common.c -o bench-stb.exe
 	@./bench-stb.exe 110 $(LOG)
 #	@./bench-stb.exe 300 $(LOG)	# Result is incorrect, so it is not run
+
+bench-ccc:
+	@cd .. && make external/ccc
+	$(C23) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I ../external/ccc bench-ccc.c common.c ../external/ccc/libccc.a -o bench-ccc.exe
+	@./bench-ccc.exe 110 $(LOG)
+	@./bench-ccc.exe 200 $(LOG)
+	@./bench-ccc.exe 300 $(LOG)
+	@./bench-ccc.exe 320 $(LOG)
+	@./bench-ccc.exe 340 $(LOG)
+	@./bench-ccc.exe 500 $(LOG)
 
 ############################################################################
 # C++ Libraries
