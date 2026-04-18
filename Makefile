@@ -241,7 +241,7 @@ array-mpz-opencstl.exe: array-mpz/array-opencstl.c external/OpenCSTL
 umap: umap-mpz-mlib.exe umap-mpz-stc.exe umap-mpz-ctl.exe umap-mpz-cmc.exe umap-mpz-stl.exe umap-mpz-collectionsC.exe umap-mpz-CC.exe \
       umap-int-mlib.exe umap-int-stc.exe umap-int-ctl.exe umap-int-cmc.exe umap-int-stl.exe umap-int-collectionsC.exe umap-int-CC.exe \
 	  umap-str-mlib.exe umap-str-stc.exe umap-str-ctl.exe umap-str-cmc.exe umap-str-stl.exe umap-str-collectionsC.exe umap-str-CC.exe \
-	  umap-int-opencstl.exe umap-str-opencstl.exe umap-mpz-opencstl.exe
+	  umap-int-opencstl.exe umap-str-opencstl.exe
 
 umap-mpz-stl.exe: umap-mpz/umap-stl.cc
 	$(CXX) $(CFLAGS) $< -o $@ -lgmpxx $(LDFLAGS)
