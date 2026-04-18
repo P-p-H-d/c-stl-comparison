@@ -155,6 +155,7 @@ array: array-mpz-mlib.exe array-mpz-stc.exe array-mpz-ctl.exe array-mpz-cmc.exe 
        array-str-mlib.exe array-str-stc.exe array-str-ctl.exe array-str-cmc.exe array-str-stl.exe array-str-collectionsC.exe array-str-CC.exe  \
 	   array-mpz-stb.exe array-int-stb.exe array-str-stb.exe \
 	   array-mpz-klib.exe array-int-klib.exe array-str-klib.exe \
+	   array-int-opencstl.exe array-str-opencstl.exe array-mpz-opencstl.exe \
 	   array-c23-test
 
 array-c23-test:
@@ -257,6 +258,12 @@ array-mpz-ccc.exe: array-mpz/array-ccc.c external/ccc/libccc.a
 
 array-int-opencstl.exe: array-int/array-opencstl.c external/OpenCSTL
 	$(C99) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ $(LDFLAGS)
+
+array-str-opencstl.exe: array-str/array-opencstl.c external/OpenCSTL
+	$(C99) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ $(LDFLAGS)
+
+array-mpz-opencstl.exe: array-mpz/array-opencstl.c external/OpenCSTL
+	$(C99) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ -lgmp $(LDFLAGS)
 
 ###########################################################
 # 		Build example for Unordered map
