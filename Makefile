@@ -141,7 +141,8 @@ external/bstrlib/libbstrlib.a: external/bstrlib
 array: array-mpz-mlib.exe array-mpz-stc.exe array-mpz-ctl.exe array-mpz-cmc.exe array-mpz-stl.exe array-mpz-collectionsC.exe array-mpz-CC.exe \
        array-int-mlib.exe array-int-stc.exe array-int-ctl.exe array-int-cmc.exe array-int-stl.exe array-int-collectionsC.exe array-int-CC.exe \
        array-str-mlib.exe array-str-stc.exe array-str-ctl.exe array-str-cmc.exe array-str-stl.exe array-str-collectionsC.exe array-str-CC.exe  \
-	array-mpz-klib.exe array-int-klib.exe array-str-klib.exe
+	   array-mpz-klib.exe array-int-klib.exe array-str-klib.exe \
+	   array-int-opencstl.exe array-str-opencstl.exe array-mpz-opencstl.exe
 
 array-mpz-stl.exe: array-mpz/array-stl.cc
 	$(CXX) $(CFLAGS) $< -o $@ -lgmpxx $(LDFLAGS)
@@ -226,6 +227,12 @@ array-str-stb.exe: array-str/array-stb.c external/stb
 
 array-int-opencstl.exe: array-int/array-opencstl.c external/OpenCSTL
 	$(CC) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ $(LDFLAGS)
+
+array-str-opencstl.exe: array-str/array-opencstl.c external/OpenCSTL
+	$(CC) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ $(LDFLAGS)
+
+array-mpz-opencstl.exe: array-mpz/array-opencstl.c external/OpenCSTL
+	$(CC) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ -lgmp $(LDFLAGS)
 
 ###########################################################
 # 		Build example for Unordered map
