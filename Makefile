@@ -263,7 +263,7 @@ umap-c23-test:
 	@$(RM) test.c test.exe
 
 # Tests that depend on a working C23 compiler, so that we can test the C23 implementation of the libraries.
-umap-c23: umap-int-ccc.exe
+umap-c23: umap-int-ccc.exe umap-str-ccc.exe umap-mpz-ccc.exe
 
 umap-mpz-stl.exe: umap-mpz/umap-stl.cc
 	$(CXX) $(CFLAGS) $< -o $@ -lgmpxx $(LDFLAGS)
@@ -344,6 +344,12 @@ umap-str-stb.exe: umap-str/umap-stb.c external/stb
 	$(C11) $(CFLAGS) -Iexternal/stb $< -o $@ $(LDFLAGS)
 
 umap-int-ccc.exe: umap-int/umap-ccc.c external/ccc/libccc.a
+	$(C23) $(CFLAGS) -Iexternal/ccc $< -o $@ external/ccc/libccc.a $(LDFLAGS)
+
+umap-str-ccc.exe: umap-str/umap-ccc.c external/ccc/libccc.a
+	$(C23) $(CFLAGS) -Iexternal/ccc $< -o $@ external/ccc/libccc.a $(LDFLAGS)
+
+umap-mpz-ccc.exe: umap-mpz/umap-ccc.c external/ccc/libccc.a
 	$(C23) $(CFLAGS) -Iexternal/ccc $< -o $@ external/ccc/libccc.a $(LDFLAGS)
 
 #umap-mpz-stb is not possible: there is no way to give as proper hash and comparison function.
