@@ -30,7 +30,7 @@ BENCH_DEF=
 RM=rm -rf
 LOG=--quiet --best --repeat 3| tee -a logs.txt
 
-.PHONY: all pgo container queue string plain bench-mlib bench-stl bench-qt bench-glib bench-klib bench-sparsepp bench-collectionc bench-tommyds bench-flathashmap bench-emilib bench-emhash bench-hopscotchmap bench-mlib-thread bench-liblfds bench-concurrentqueue bench-boost bench-string bench-plain bench-rigtorp-mpmc-queue bench-cmc
+.PHONY: all pgo container queue string plain bench-mlib bench-opencstl bench-stl bench-qt bench-glib bench-klib bench-sparsepp bench-collectionc bench-tommyds bench-flathashmap bench-emilib bench-emhash bench-hopscotchmap bench-mlib-thread bench-liblfds bench-concurrentqueue bench-boost bench-string bench-plain bench-rigtorp-mpmc-queue bench-cmc
 
 all: container-c container-cpp queue plain
 
@@ -40,7 +40,7 @@ pgo:
 
 #########################################################################
 
-container-c: bench-mlib bench-glib bench-klib bench-ctl bench-stc bench-CC bench-cmc bench-collectionc bench-tommyds bench-uthash bench-qlibc bench-libsrt bench-pottery bench-verstable bench-xxhash bench-bstrlib bench-sds bench-stb
+container-c: bench-mlib bench-glib bench-klib bench-ctl bench-stc bench-CC bench-cmc bench-collectionc bench-tommyds bench-uthash bench-qlibc bench-libsrt bench-pottery bench-verstable bench-xxhash bench-bstrlib bench-sds bench-stb bench-opencstl
 	@echo
 	@echo
 
@@ -263,6 +263,16 @@ bench-stb:
 	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I ../external/stb bench-stb.c common.c -o bench-stb.exe
 	@./bench-stb.exe 110 $(LOG)
 #	@./bench-stb.exe 300 $(LOG)	# Result is incorrect, so it is not run
+
+bench-opencstl:
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I ../external/OpenCSTL bench-opencstl.c common.c -o bench-opencstl.exe
+	@./bench-opencstl.exe 100 $(LOG)
+	@./bench-opencstl.exe 110 $(LOG)
+	@./bench-opencstl.exe 120 $(LOG)
+	@./bench-opencstl.exe 200 $(LOG)
+	@./bench-opencstl.exe 300 $(LOG)
+	@./bench-opencstl.exe 340 $(LOG)
+	@./bench-opencstl.exe 500 $(LOG)
 
 ############################################################################
 # C++ Libraries
