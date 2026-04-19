@@ -51,8 +51,6 @@ container-c23-test:
 	@$(RM) test.c test.exe
 
 container-c23: bench-ccc
-	@echo
-	@echo
 
 container-cpp: bench-stl bench-qt bench-sparsepp bench-densehashmap bench-flathashmap bench-emilib bench-emhash bench-hopscotchmap bench-rigtorp-hashmap bench-boost bench-rapidjson
 	@echo
