@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -5,12 +6,12 @@
 
 int main(void)
 {
-  char hello[] = "Hello";
-  char welcome[] = "Welcome";
-  char sincerely[] = "Sincerely";
-  char lib[] = "LIB";
-  char program[] = "Program";
-  char your_map[] = "Your map";
+  char *hello = "Hello";
+  char *welcome = "Welcome";
+  char *sincerely = "Sincerely";
+  char *lib = "LIB";
+  char *program = "Program";
+  char *your_map = "Your map";
 
   UNORDERED_MAP(char *) map = new_unordered_map(char *, char *);
   if (!map) {

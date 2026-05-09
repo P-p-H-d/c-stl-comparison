@@ -263,7 +263,7 @@ array-str-opencstl.exe: array-str/array-opencstl.c external/OpenCSTL
 	$(C99) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ $(LDFLAGS)
 
 array-mpz-opencstl.exe: array-mpz/array-opencstl.c external/OpenCSTL
-	$(C99) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ -lgmp $(LDFLAGS)
+	$(C99) $(CFLAGS) -iquote external/OpenCSTL/ $< -o $@ $(LDFLAGS)
 
 ###########################################################
 # 		Build example for Unordered map
