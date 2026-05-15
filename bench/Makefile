@@ -31,7 +31,7 @@ BENCH_DEF=
 RM=rm -rf
 LOG=--quiet --best --repeat 3| tee -a logs.txt
 
-.PHONY: all pgo container queue string plain bench-mlib bench-stl bench-qt bench-glib bench-klib bench-sparsepp bench-collectionc bench-tommyds bench-flathashmap bench-emilib bench-emhash bench-hopscotchmap bench-mlib-thread bench-liblfds bench-concurrentqueue bench-boost bench-string bench-plain bench-rigtorp-mpmc-queue bench-cmc bench-ccc
+.PHONY: all pgo container queue string plain bench-mlib bench-misra bench-stl bench-qt bench-glib bench-klib bench-sparsepp bench-collectionc bench-tommyds bench-flathashmap bench-emilib bench-emhash bench-hopscotchmap bench-mlib-thread bench-liblfds bench-concurrentqueue bench-boost bench-string bench-plain bench-rigtorp-mpmc-queue bench-cmc bench-ccc
 
 all: container-c container-cpp queue plain
 
@@ -41,7 +41,7 @@ pgo:
 
 #########################################################################
 
-container-c: bench-mlib bench-glib bench-klib bench-ctl bench-stc bench-CC bench-cmc container-c23-test bench-collectionc bench-tommyds bench-uthash bench-qlibc bench-libsrt bench-pottery bench-verstable bench-xxhash bench-bstrlib bench-sds bench-stb
+container-c: bench-mlib bench-misra bench-glib bench-klib bench-ctl bench-stc bench-CC bench-cmc container-c23-test bench-collectionc bench-tommyds bench-uthash bench-qlibc bench-libsrt bench-pottery bench-verstable bench-xxhash bench-bstrlib bench-sds bench-stb
 	@echo
 	@echo
 
@@ -284,6 +284,19 @@ bench-ccc:
 	@./bench-ccc.exe 320 $(LOG)
 	@./bench-ccc.exe 340 $(LOG)
 	@./bench-ccc.exe 500 $(LOG)
+
+bench-misra:
+	@cd .. && make external/MisraStdC/libMisraStdC.a
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I ../external/MisraStdC/Include bench-misra.c common.c ../external/MisraStdC/libMisraStdC.a -lm -o bench-misra.exe
+	@./bench-misra.exe 100 $(LOG)
+	#@./bench-misra.exe 110 $(LOG)	# Result is too slow, so it is not run
+	#@./bench-misra.exe 300 $(LOG)	# Result is too slow, so it is not run
+	#@./bench-misra.exe 320 $(LOG)	# Result is too slow, so it is not run
+	#@./bench-misra.exe 330 $(LOG)	# Result is too slow, so it is not run
+	#@./bench-misra.exe 340 $(LOG)	# Result is too slow, so it is not run
+	@./bench-misra.exe 500 $(LOG)
+	#@./bench-misra.exe 900 $(LOG)	# Result is too slow, so it is not run
+	#@./bench-misra.exe 910 $(LOG)	# Result is too slow, so it is not run
 
 ############################################################################
 # C++ Libraries
