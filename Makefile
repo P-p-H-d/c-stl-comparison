@@ -296,6 +296,7 @@ array-mpz-misra.exe: array-mpz/array-misra.c external/MisraStdC/libMisraStdC.a
 umap: umap-mpz-mlib.exe umap-mpz-stc.exe umap-mpz-ctl.exe umap-mpz-cmc.exe umap-mpz-stl.exe umap-mpz-collectionsC.exe umap-mpz-CC.exe \
       umap-int-mlib.exe umap-int-stc.exe umap-int-ctl.exe umap-int-cmc.exe umap-int-stl.exe umap-int-collectionsC.exe umap-int-CC.exe \
       umap-str-mlib.exe umap-str-stc.exe umap-str-ctl.exe umap-str-cmc.exe umap-str-stl.exe umap-str-collectionsC.exe umap-str-CC.exe \
+	  umap-int-misra.exe umap-str-misra.exe umap-mpz-misra.exe \
 	  umap-c23-test
 
 umap-c23-test:
@@ -394,6 +395,16 @@ umap-mpz-ccc.exe: umap-mpz/umap-ccc.c external/ccc/libccc.a
 	$(C23) $(CFLAGS) -Iexternal/ccc $< -o $@ external/ccc/libccc.a $(LDFLAGS)
 
 #umap-mpz-stb is not possible: there is no way to give as proper hash and comparison function.
+
+umap-int-misra.exe: umap-int/umap-misra.c external/MisraStdC/libMisraStdC.a
+	$(C11) $(CFLAGS) -Iexternal/MisraStdC/Include $< -o $@ external/MisraStdC/libMisraStdC.a -lm $(LDFLAGS)
+
+umap-str-misra.exe: umap-str/umap-misra.c external/MisraStdC/libMisraStdC.a
+	$(C11) $(CFLAGS) -Iexternal/MisraStdC/Include $< -o $@ external/MisraStdC/libMisraStdC.a -lm $(LDFLAGS)
+
+umap-mpz-misra.exe: umap-mpz/umap-misra.c external/MisraStdC/libMisraStdC.a
+	$(C11) $(CFLAGS) -Iexternal/MisraStdC/Include $< -o $@ external/MisraStdC/libMisraStdC.a -lm $(LDFLAGS)
+
 
 ###########################################################
 # 		Build example for system GLIB
