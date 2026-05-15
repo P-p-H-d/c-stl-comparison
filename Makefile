@@ -110,6 +110,9 @@ external/stb:
 external/ccc:
 	mkdir -p external && cd external && git clone https://github.com/SkeletOSS/ccc.git
 
+external/MisraStdC:
+	mkdir -p external && cd external && git clone https://github.com/brightprogrammer/MisraStdC
+
 ###########################################################
 # 		Build external Libraries
 ###########################################################
@@ -139,6 +142,35 @@ external/bstrlib/libbstrlib.a: external/bstrlib
 external/ccc/libccc.a: external/ccc
 	cd external/ccc && $(C23) -O2 -march=native -Wall -I . source/*.c -c
 	cd external/ccc && $(AR) $(ARFLAGS) libccc.a *.o
+
+external/MisraStdC/libMisraStdC.a: external/MisraStdC
+	echo "#define MISRA_HAVE_ALLOC_ARENA 1" > external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_ALLOC_SLAB 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_ALLOC_BUDGET 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_ALLOC_STATS 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_ALLOC_DEBUG 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_BITVEC 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_LIST 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_MAP 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_GRAPH 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_INT 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_FLOAT 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_FILE 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_ITER 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_SYS_DIR 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_SYS_PROC 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_SYS_SOCKET 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_SYS_PROCMAPS 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_SYS_SYMRESOLVE 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_SYS_BACKTRACE 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_PARSER_JSON 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_PARSER_KVCONFIG 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_PARSER_HTTP 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_PARSER_ELF 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define MISRA_HAVE_PARSER_DWARF 1" >> external/MisraStdC/Include/Misra/Config.h
+	echo "#define _GNU_SOURCE 1" >> external/MisraStdC/Include/Misra/Config.h
+	cd external/MisraStdC && $(C11) -O2 -march=native -Wall -I Include `find Source -name *.c` -c
+	cd external/MisraStdC && $(AR) $(ARFLAGS) libMisraStdC.a *.o
 
 ###########################################################
 # 		Build example for array
@@ -247,6 +279,15 @@ array-str-ccc.exe: array-str/array-ccc.c external/ccc/libccc.a
 
 array-mpz-ccc.exe: array-mpz/array-ccc.c external/ccc/libccc.a
 	$(C23) $(CFLAGS) -Iexternal/ccc $< -o $@ external/ccc/libccc.a $(LDFLAGS)
+
+array-int-misra.exe: array-int/array-misra.c external/MisraStdC/libMisraStdC.a
+	$(C11) $(CFLAGS) -Iexternal/MisraStdC/Include $< -o $@ external/MisraStdC/libMisraStdC.a -lm $(LDFLAGS)
+
+array-str-misra.exe: array-str/array-misra.c external/MisraStdC/libMisraStdC.a
+	$(C11) $(CFLAGS) -Iexternal/MisraStdC/Include $< -o $@ external/MisraStdC/libMisraStdC.a -lm $(LDFLAGS)
+
+array-mpz-misra.exe: array-mpz/array-misra.c external/MisraStdC/libMisraStdC.a
+	$(C11) $(CFLAGS) -Iexternal/MisraStdC/Include $< -o $@ external/MisraStdC/libMisraStdC.a -lm $(LDFLAGS)
 
 ###########################################################
 # 		Build example for Unordered map
