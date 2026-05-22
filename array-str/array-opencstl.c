@@ -1,3 +1,7 @@
+#define _GNU_SOURCE
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+#pragma GCC diagnostic ignored "-Wunused-function"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
