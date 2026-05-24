@@ -356,6 +356,8 @@ For a container of such library that encapsulates a collection of objects of bas
 * N*: even it appears to be type safe, it is not and it is easy to misuse it.
 * NA: the question has no meaning for this library.
 
+This information is also available as a [JSON file](lib-features.json) with more precision.
+
 | Containers                                    | STL | M*LIB | STC | CMC | CTL | CollecC | CC | GLIB | STB_DS | KLIB | CCC |
 |-----------------------------------------------|-----|-------|-----|-----|-----|---------|----|------|--------|------|-----|
 | Singly Linked Non-Intrusive list              | Y   | Y     | N   | N   | Y   | Y       | N  | Y    | N      | Y    | Y   |
@@ -418,9 +420,7 @@ For a container of such library that encapsulates a collection of objects of bas
 | Tree                        | N   | Y     | N   | N   | N   | N       | N  | N    | N      | N    | N   |
 
 
-| Algorithms                        | STL  | M*LIB | STC | CMC | CTL |CollecC| CC | GLIB |STB_DS | KLIB | CCC |
-|-----------------------------------|------|-------|-----|-----|-----|-------|----|------|-------|------|-----|
-| Sort/Min/Max/...                  | Y    | Y     | Y   | N   | Y   | Y     | Y  | Y    | N     |  Y   | Y   |
+This information is also available as a [JSON file](lib-containers.json).
 
 If you see any mistakes in this report,
 or want to include another C library,
