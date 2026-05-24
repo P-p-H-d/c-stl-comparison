@@ -193,9 +193,35 @@
       "status": "ok"
     },
     "GLIB": {
-      "repository_url": null,
-      "repository": null,
-      "status": "skipped (no GitHub URL in Makefile for this library)"
+      "repository_url": "https://github.com/GNOME/glib",
+      "repository": "GNOME/glib",
+      "Number of stars": 1733,
+      "Last commit age (days)": 2.52,
+      "Number of commits": 33024,
+      "Oldest commit date": "1998-06-10T23:21:14Z",
+      "Number of open issues": 0,
+      "Number of closed issues": 0,
+      "Average Time to answer an issue (hours)": null,
+      "Average Time to close an issue (hours)": null,
+      "Number of open pull requests": 0,
+      "Number of closed pull requests": 40,
+      "Average Time to answer a pull request (hours)": 1358.77,
+      "Average Time to close or merge a pull request (hours)": 2414.11,
+      "Number of releases": 0,
+      "Last release version": null,
+      "Last release date": null,
+      "Number of main authors": 2,
+      "CI Presence": false,
+      "Number of OS supported by CI": 0,
+      "Number of hardware architecture supported by CI": 0,
+      "Number of compilers supported by CI": 0,
+      "sampling": {
+        "issues_checked": 0,
+        "closed_issues_checked": 0,
+        "prs_checked": 40,
+        "closed_prs_checked": 40
+      },
+      "status": "ok"
     },
     "STB_DS": {
       "repository_url": "https://github.com/nothings/stb",

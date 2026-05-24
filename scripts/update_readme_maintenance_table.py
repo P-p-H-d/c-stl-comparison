@@ -12,7 +12,7 @@ import sys
 from typing import Any
 
 MAINTENANCE_TABLE_PATTERN = re.compile(
-    r"(^Maintenance \|.*\n"
+    r"(^\|?\s*Maintenance\s*\|.*\n"
     r"\|[-| ]+\n"
     r"(?:\|.*\n)*?)"
     r"(?=\n+This information is also available as a \[JSON file\]\(lib-maintenance\.json\)\.)",

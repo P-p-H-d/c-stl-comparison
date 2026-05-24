@@ -40,6 +40,7 @@ LIBRARIES_ORDER = [
 LIB_TO_EXTERNAL_DIR = {
     "M*LIB": "mlib",
     "STC": "STC",
+    "GLIB": "glib",
     "CMC": "C-Macro-Collections",
     "CTL": "ctl",
     "CollecC": "Collections-C",

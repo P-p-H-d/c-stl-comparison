@@ -49,6 +49,10 @@ clean:
 distclean: clean
 	$(RM) external
 
+# Mirror of glib as https://gitlab.gnome.org/GNOME/glib is often blocked / down, so we use GitHub instead.
+external/glib:
+	mkdir -p external && cd external && git clone https://github.com/GNOME/glib.git
+
 external/mlib:
 	mkdir -p external && cd external && git clone https://github.com/P-p-H-d/mlib.git
 
