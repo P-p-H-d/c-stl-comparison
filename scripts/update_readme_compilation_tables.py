@@ -2,6 +2,7 @@
 import argparse
 import pathlib
 import re
+import subprocess
 import sys
 from collections import defaultdict
 from decimal import Decimal
@@ -187,6 +188,21 @@ def main() -> int:
     except OSError as exc:
         print(f'error: cannot read {readme_path}: {exc}', file=sys.stderr)
         return 1
+
+    if not time_log_path.exists():
+        print(
+            f'{time_log_path} not found; running "make measure-size" to generate it...',
+            file=sys.stderr,
+        )
+        try:
+            subprocess.run(
+                ['make', 'measure-size'],
+                cwd=readme_path.parent,
+                check=True,
+            )
+        except (OSError, subprocess.CalledProcessError) as exc:
+            print(f'error: failed to run make measure-size: {exc}', file=sys.stderr)
+            return 1
 
     try:
         time_log_text = time_log_path.read_text(encoding='utf-8')
