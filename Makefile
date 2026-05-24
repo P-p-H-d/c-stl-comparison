@@ -53,7 +53,7 @@ external/mlib:
 	mkdir -p external && cd external && git clone https://github.com/P-p-H-d/mlib.git
 
 external/STC:
-	mkdir -p external && cd external && git clone https://github.com/tylov/STC.git
+	mkdir -p external && cd external && git clone https://github.com/stclib/STC.git
 
 external/ctl:
 	mkdir -p external && cd external && git clone https://github.com/rurban/ctl.git
