@@ -150,6 +150,7 @@ external/ccc/libccc.a: external/ccc
 array: array-mpz-mlib.exe array-mpz-stc.exe array-mpz-ctl.exe array-mpz-cmc.exe array-mpz-stl.exe array-mpz-collectionsC.exe array-mpz-CC.exe \
        array-int-mlib.exe array-int-stc.exe array-int-ctl.exe array-int-cmc.exe array-int-stl.exe array-int-collectionsC.exe array-int-CC.exe \
        array-str-mlib.exe array-str-stc.exe array-str-ctl.exe array-str-cmc.exe array-str-stl.exe array-str-collectionsC.exe array-str-CC.exe  \
+	   array-mpz-stb.exe array-int-stb.exe array-str-stb.exe \
 	   array-mpz-klib.exe array-int-klib.exe array-str-klib.exe \
 	   array-c23-test
 
@@ -258,6 +259,8 @@ array-mpz-ccc.exe: array-mpz/array-ccc.c external/ccc/libccc.a
 umap: umap-mpz-mlib.exe umap-mpz-stc.exe umap-mpz-ctl.exe umap-mpz-cmc.exe umap-mpz-stl.exe umap-mpz-collectionsC.exe umap-mpz-CC.exe \
       umap-int-mlib.exe umap-int-stc.exe umap-int-ctl.exe umap-int-cmc.exe umap-int-stl.exe umap-int-collectionsC.exe umap-int-CC.exe \
       umap-str-mlib.exe umap-str-stc.exe umap-str-ctl.exe umap-str-cmc.exe umap-str-stl.exe umap-str-collectionsC.exe umap-str-CC.exe \
+      umap-mpz-klib.exe umap-str-klib.exe umap-int-klib.exe \
+      umap-str-stb.exe umap-int-stb.exe \
 	  umap-c23-test
 
 umap-c23-test:
