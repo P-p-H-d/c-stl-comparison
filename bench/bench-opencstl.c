@@ -1,3 +1,6 @@
+#define _GNU_SOURCE
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+#pragma GCC diagnostic ignored "-Wunused-function"
 #define NDEBUG
 
 #include <stdlib.h>
