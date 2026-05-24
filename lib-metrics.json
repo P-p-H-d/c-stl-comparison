@@ -1,0 +1,479 @@
+{
+  "Date of analysis": "2026-05-24",
+  "programs": {
+    "array-int": {
+      "CC": {
+        "number of characters": 611,
+        "number of line of codes": 34,
+        "number of workarounds": 0,
+        "binary size (bytes)": 15856,
+        "compilation time (seconds)": 0.16
+      },
+      "CCC": {
+        "number of characters": 1395,
+        "number of line of codes": 55,
+        "number of workarounds": 0,
+        "binary size (bytes)": 16392,
+        "compilation time (seconds)": 0.07
+      },
+      "CMC": {
+        "number of characters": 1011,
+        "number of line of codes": 46,
+        "number of workarounds": 2,
+        "binary size (bytes)": 21344,
+        "compilation time (seconds)": 0.35
+      },
+      "CollecC": {
+        "number of characters": 885,
+        "number of line of codes": 46,
+        "number of workarounds": 2,
+        "binary size (bytes)": 16176,
+        "compilation time (seconds)": 0.07
+      },
+      "CTL": {
+        "number of characters": 593,
+        "number of line of codes": 25,
+        "number of workarounds": 2,
+        "binary size (bytes)": 16152,
+        "compilation time (seconds)": 0.15
+      },
+      "GLIB": {
+        "number of characters": 696,
+        "number of line of codes": 38,
+        "number of workarounds": 0,
+        "binary size (bytes)": 15800,
+        "compilation time (seconds)": 0.13
+      },
+      "KLIB": {
+        "number of characters": 783,
+        "number of line of codes": 28,
+        "number of workarounds": 2,
+        "binary size (bytes)": 16192,
+        "compilation time (seconds)": 0.25
+      },
+      "M*LIB": {
+        "number of characters": 373,
+        "number of line of codes": 18,
+        "number of workarounds": 0,
+        "binary size (bytes)": 15944,
+        "compilation time (seconds)": 0.81
+      },
+      "STB_DS": {
+        "number of characters": 817,
+        "number of line of codes": 43,
+        "number of workarounds": 1,
+        "binary size (bytes)": 20872,
+        "compilation time (seconds)": 0.42
+      },
+      "STC": {
+        "number of characters": 558,
+        "number of line of codes": 34,
+        "number of workarounds": 0,
+        "binary size (bytes)": 15768,
+        "compilation time (seconds)": 0.15
+      },
+      "STL": {
+        "number of characters": 236,
+        "number of line of codes": 13,
+        "number of workarounds": 0,
+        "binary size (bytes)": 16392,
+        "compilation time (seconds)": 0.74
+      }
+    },
+    "array-str": {
+      "CC": {
+        "number of characters": 651,
+        "number of line of codes": 33,
+        "number of workarounds": 0,
+        "binary size (bytes)": 16160,
+        "compilation time (seconds)": 0.23
+      },
+      "CCC": {
+        "number of characters": 1478,
+        "number of line of codes": 54,
+        "number of workarounds": 0,
+        "binary size (bytes)": 16440,
+        "compilation time (seconds)": 0.09
+      },
+      "CMC": {
+        "number of characters": 1053,
+        "number of line of codes": 45,
+        "number of workarounds": 2,
+        "binary size (bytes)": 21392,
+        "compilation time (seconds)": 0.33
+      },
+      "CollecC": {
+        "number of characters": 839,
+        "number of line of codes": 47,
+        "number of workarounds": 1,
+        "binary size (bytes)": 16224,
+        "compilation time (seconds)": 0.08
+      },
+      "CTL": {
+        "number of characters": 762,
+        "number of line of codes": 29,
+        "number of workarounds": 3,
+        "binary size (bytes)": 16584,
+        "compilation time (seconds)": 0.23
+      },
+      "GLIB": {
+        "number of characters": 908,
+        "number of line of codes": 44,
+        "number of workarounds": 0,
+        "binary size (bytes)": 15944,
+        "compilation time (seconds)": 0.15
+      },
+      "KLIB": {
+        "number of characters": 1497,
+        "number of line of codes": 55,
+        "number of workarounds": 3,
+        "binary size (bytes)": 16360,
+        "compilation time (seconds)": 0.33
+      },
+      "M*LIB": {
+        "number of characters": 442,
+        "number of line of codes": 19,
+        "number of workarounds": 0,
+        "binary size (bytes)": 16200,
+        "compilation time (seconds)": 0.79
+      },
+      "STB_DS": {
+        "number of characters": 881,
+        "number of line of codes": 45,
+        "number of workarounds": 1,
+        "binary size (bytes)": 20872,
+        "compilation time (seconds)": 0.4
+      },
+      "STC": {
+        "number of characters": 564,
+        "number of line of codes": 36,
+        "number of workarounds": 0,
+        "binary size (bytes)": 20752,
+        "compilation time (seconds)": 0.34
+      },
+      "STL": {
+        "number of characters": 274,
+        "number of line of codes": 14,
+        "number of workarounds": 0,
+        "binary size (bytes)": 18160,
+        "compilation time (seconds)": 0.82
+      }
+    },
+    "array-mpz": {
+      "CC": {
+        "number of characters": 1120,
+        "number of line of codes": 49,
+        "number of workarounds": 2,
+        "binary size (bytes)": 16032,
+        "compilation time (seconds)": 0.23
+      },
+      "CCC": {
+        "number of characters": 1585,
+        "number of line of codes": 61,
+        "number of workarounds": 0,
+        "binary size (bytes)": 16536,
+        "compilation time (seconds)": 0.09
+      },
+      "CMC": {
+        "number of characters": 1740,
+        "number of line of codes": 65,
+        "number of workarounds": 7,
+        "binary size (bytes)": 21624,
+        "compilation time (seconds)": 0.39
+      },
+      "CollecC": {
+        "number of characters": 1337,
+        "number of line of codes": 68,
+        "number of workarounds": 1,
+        "binary size (bytes)": 16312,
+        "compilation time (seconds)": 0.08
+      },
+      "CTL": {
+        "number of characters": 1407,
+        "number of line of codes": 42,
+        "number of workarounds": 5,
+        "binary size (bytes)": 16320,
+        "compilation time (seconds)": 0.21
+      },
+      "GLIB": {
+        "number of characters": 840,
+        "number of line of codes": 47,
+        "number of workarounds": 0,
+        "binary size (bytes)": 15936,
+        "compilation time (seconds)": 0.14
+      },
+      "KLIB": {
+        "number of characters": 1041,
+        "number of line of codes": 43,
+        "number of workarounds": 5,
+        "binary size (bytes)": 16320,
+        "compilation time (seconds)": 0.29
+      },
+      "M*LIB": {
+        "number of characters": 505,
+        "number of line of codes": 20,
+        "number of workarounds": 0,
+        "binary size (bytes)": 16096,
+        "compilation time (seconds)": 0.51
+      },
+      "STB_DS": {
+        "number of characters": 1255,
+        "number of line of codes": 61,
+        "number of workarounds": 4,
+        "binary size (bytes)": 21008,
+        "compilation time (seconds)": 0.42
+      },
+      "STC": {
+        "number of characters": 1222,
+        "number of line of codes": 44,
+        "number of workarounds": 3,
+        "binary size (bytes)": 15864,
+        "compilation time (seconds)": 0.16
+      },
+      "STL": {
+        "number of characters": 261,
+        "number of line of codes": 14,
+        "number of workarounds": 0,
+        "binary size (bytes)": 17360,
+        "compilation time (seconds)": 1.05
+      }
+    },
+    "umap-int": {
+      "CC": {
+        "number of characters": 442,
+        "number of line of codes": 26,
+        "number of workarounds": 0,
+        "binary size (bytes)": 16072,
+        "compilation time (seconds)": 0.32
+      },
+      "CCC": {
+        "number of characters": 2140,
+        "number of line of codes": 85,
+        "number of workarounds": 0,
+        "binary size (bytes)": 16848,
+        "compilation time (seconds)": 0.08
+      },
+      "CMC": {
+        "number of characters": 1640,
+        "number of line of codes": 62,
+        "number of workarounds": 1,
+        "binary size (bytes)": 17128,
+        "compilation time (seconds)": 0.37
+      },
+      "CollecC": {
+        "number of characters": 1241,
+        "number of line of codes": 54,
+        "number of workarounds": 0,
+        "binary size (bytes)": 16416,
+        "compilation time (seconds)": 0.07
+      },
+      "CTL": {
+        "number of characters": 1090,
+        "number of line of codes": 47,
+        "number of workarounds": 1,
+        "binary size (bytes)": 16424,
+        "compilation time (seconds)": 0.23
+      },
+      "GLIB": {
+        "number of characters": 984,
+        "number of line of codes": 42,
+        "number of workarounds": 0,
+        "binary size (bytes)": 15904,
+        "compilation time (seconds)": 0.14
+      },
+      "KLIB": {
+        "number of characters": 774,
+        "number of line of codes": 43,
+        "number of workarounds": 0,
+        "binary size (bytes)": 15864,
+        "compilation time (seconds)": 0.19
+      },
+      "M*LIB": {
+        "number of characters": 462,
+        "number of line of codes": 19,
+        "number of workarounds": 0,
+        "binary size (bytes)": 16040,
+        "compilation time (seconds)": 0.31
+      },
+      "STB_DS": {
+        "number of characters": 1035,
+        "number of line of codes": 50,
+        "number of workarounds": 3,
+        "binary size (bytes)": 20784,
+        "compilation time (seconds)": 0.38
+      },
+      "STC": {
+        "number of characters": 777,
+        "number of line of codes": 37,
+        "number of workarounds": 0,
+        "binary size (bytes)": 15880,
+        "compilation time (seconds)": 0.18
+      },
+      "STL": {
+        "number of characters": 359,
+        "number of line of codes": 15,
+        "number of workarounds": 0,
+        "binary size (bytes)": 17368,
+        "compilation time (seconds)": 0.76
+      }
+    },
+    "umap-str": {
+      "CC": {
+        "number of characters": 522,
+        "number of line of codes": 26,
+        "number of workarounds": 0,
+        "binary size (bytes)": 16336,
+        "compilation time (seconds)": 0.42
+      },
+      "CCC": {
+        "number of characters": 2350,
+        "number of line of codes": 93,
+        "number of workarounds": 0,
+        "binary size (bytes)": 16904,
+        "compilation time (seconds)": 0.08
+      },
+      "CMC": {
+        "number of characters": 1627,
+        "number of line of codes": 63,
+        "number of workarounds": 1,
+        "binary size (bytes)": 17200,
+        "compilation time (seconds)": 0.34
+      },
+      "CollecC": {
+        "number of characters": 929,
+        "number of line of codes": 35,
+        "number of workarounds": 0,
+        "binary size (bytes)": 16344,
+        "compilation time (seconds)": 0.07
+      },
+      "CTL": {
+        "number of characters": 1756,
+        "number of line of codes": 64,
+        "number of workarounds": 4,
+        "binary size (bytes)": 16936,
+        "compilation time (seconds)": 0.34
+      },
+      "GLIB": {
+        "number of characters": 1514,
+        "number of line of codes": 58,
+        "number of workarounds": 0,
+        "binary size (bytes)": 16048,
+        "compilation time (seconds)": 0.15
+      },
+      "KLIB": {
+        "number of characters": 837,
+        "number of line of codes": 43,
+        "number of workarounds": 0,
+        "binary size (bytes)": 15960,
+        "compilation time (seconds)": 0.19
+      },
+      "M*LIB": {
+        "number of characters": 615,
+        "number of line of codes": 20,
+        "number of workarounds": 0,
+        "binary size (bytes)": 16384,
+        "compilation time (seconds)": 0.45
+      },
+      "STB_DS": {
+        "number of characters": 991,
+        "number of line of codes": 48,
+        "number of workarounds": 2,
+        "binary size (bytes)": 20784,
+        "compilation time (seconds)": 0.42
+      },
+      "STC": {
+        "number of characters": 870,
+        "number of line of codes": 37,
+        "number of workarounds": 0,
+        "binary size (bytes)": 20912,
+        "compilation time (seconds)": 0.36
+      },
+      "STL": {
+        "number of characters": 436,
+        "number of line of codes": 16,
+        "number of workarounds": 0,
+        "binary size (bytes)": 19136,
+        "compilation time (seconds)": 0.8
+      }
+    },
+    "umap-mpz": {
+      "CC": {
+        "number of characters": 1443,
+        "number of line of codes": 62,
+        "number of workarounds": 2,
+        "binary size (bytes)": 16304,
+        "compilation time (seconds)": 0.38
+      },
+      "CCC": {
+        "number of characters": 3137,
+        "number of line of codes": 132,
+        "number of workarounds": 1,
+        "binary size (bytes)": 21128,
+        "compilation time (seconds)": 0.1
+      },
+      "CMC": {
+        "number of characters": 2387,
+        "number of line of codes": 99,
+        "number of workarounds": 2,
+        "binary size (bytes)": 21520,
+        "compilation time (seconds)": 0.46
+      },
+      "CollecC": {
+        "number of characters": 1893,
+        "number of line of codes": 87,
+        "number of workarounds": 0,
+        "binary size (bytes)": 16544,
+        "compilation time (seconds)": 0.08
+      },
+      "CTL": {
+        "number of characters": 1964,
+        "number of line of codes": 79,
+        "number of workarounds": 4,
+        "binary size (bytes)": 16552,
+        "compilation time (seconds)": 0.29
+      },
+      "GLIB": {
+        "number of characters": 1667,
+        "number of line of codes": 75,
+        "number of workarounds": 0,
+        "binary size (bytes)": 16032,
+        "compilation time (seconds)": 0.16
+      },
+      "KLIB": {
+        "number of characters": 1754,
+        "number of line of codes": 84,
+        "number of workarounds": 3,
+        "binary size (bytes)": 16032,
+        "compilation time (seconds)": 0.23
+      },
+      "M*LIB": {
+        "number of characters": 1018,
+        "number of line of codes": 39,
+        "number of workarounds": 0,
+        "binary size (bytes)": 16280,
+        "compilation time (seconds)": 0.31
+      },
+      "STB_DS": {
+        "number of characters": null,
+        "number of line of codes": null,
+        "number of workarounds": null,
+        "binary size (bytes)": null,
+        "compilation time (seconds)": null
+      },
+      "STC": {
+        "number of characters": 1849,
+        "number of line of codes": 55,
+        "number of workarounds": 4,
+        "binary size (bytes)": 15976,
+        "compilation time (seconds)": 0.18
+      },
+      "STL": {
+        "number of characters": 797,
+        "number of line of codes": 38,
+        "number of workarounds": 0,
+        "binary size (bytes)": 18592,
+        "compilation time (seconds)": 1.13
+      }
+    }
+  }
+}
