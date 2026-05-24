@@ -358,10 +358,10 @@ umap-mpz-klib.exe: umap-mpz/umap-klib.c external/klib
 	$(C11) $(CFLAGS) -Iexternal/klib $< -o $@ $(LDFLAGS)
 
 umap-int-opencstl.exe: umap-int/umap-opencstl.c external/OpenCSTL
-	$(CC) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ $(LDFLAGS)
+	$(C11) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ $(LDFLAGS)
 
 umap-str-opencstl.exe: umap-str/umap-opencstl.c external/OpenCSTL
-	$(CC) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ $(LDFLAGS)
+	$(C11) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ $(LDFLAGS)
 
 #umap-mpz-opencstl.exe is not possible: there is no way to give as proper hash function.
 
