@@ -276,17 +276,17 @@ For a container of such library that encapsulates a collection of objects of bas
 * Does it support of object like data (needing custom constructor, copy, destructor...) as basic type?
 * Does it support of C++ class as basic type?
 * Does it support of Assignment semantics? (container uses the C Assignment operators to set object in them)
-* Does it support of copy semantics? (container creates a proper copy of the object data as per the object semantic: if there is pointer in the structure, it performs a proper copy of the pointed objects)
+* Does it support of Deep Copy semantics? (container creates a proper copy of the object data as per the object semantic: if there is pointer in the structure, it performs a proper copy of the pointed objects)
 * Does it support of move semantics? (container steals the ownership of the object given as parameter as per the object semantic, rendering the original object in a destroyed or nearly destroyed state)
 * Can the container and its basic type be defined fully separately in the source code? (spatial separation: the association of the methods of the basic type to the needed operators of the container library can be defined when the basic type is defined -ensuring spatial coherency of the basic type- and not only when the container is defined)
 * Does it support of an adaptation layer? (a way to transform the interface of the provided method of the basic type to the expected interface of the operator of the container without writing explicitly a wrapper) 
-* Does it support of basic 'emplace'?
+* Does it support of basic 'emplace'? (Being able to construct an item directly within the container by givng one argument to this constructor)
 * Does it support of multiple, enhanced 'emplace' based on the initialized arguments?
 * Does it support of iterator abstraction?
 * Does it support of sort algorithm?
 * Does it support of sort algorithm with custom comparison?
 * Does it support of single definition for the whole program? (use of declaration only for all files except one that includes the container definition)
-* Does it support of full abstraction of the container type? (user shall not have to use internal fields)
+* Does it support of full abstraction of the container type? (user should not access internal fields of structures)
 * Does it support of contract violation checks? (assertions on invalid inputs, on input contract violation or error reporting)
 * Does it support of natural usage of array? (using of Array subscripting on the container)
 * Is the basic type stored in the container, not a pointer to it?
@@ -321,7 +321,7 @@ For a container of such library that encapsulates a collection of objects of bas
 | Characteristics             | STL      | M*LIB  | STC     | CMC     | CTL   | CollecC | CC     |  GLIB  | STB_DS | KLIB | CCC |
 |-----------------------------|----------|--------|---------|---------|-------|---------|--------|--------|--------|------|-----|
 | Assignment semantics        | Y        | Y      | Y       | Y       | Y     | Y       | Y      | Y      | Y      | Y    | Y   |
-| Copy semantics              | Y        | Y      | Y*      | N       | Y*    | Y       | N      | Y      | N      | N    | Y*  |
+| Deep Copy semantics         | Y        | Y      | Y*      | N       | Y*    | Y       | N      | Y      | N      | N    | Y*  |
 | Move semantics              | Y        | Y      | N       | N       | N     | N       | N      | N      | N      | N    | N   |
 | spatial separation          | Y        | Y      | N       | N       | N     | NA      | Y      | NA     | N      | N    | NA  |
 | Adaptor Layer               | N        | Y      | N       | N       | N     | N       | N      | N      | N      | N    | N   |
