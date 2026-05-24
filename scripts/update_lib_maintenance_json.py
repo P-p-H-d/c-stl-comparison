@@ -19,7 +19,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
-from typing import Any
+from typing import Any, Callable
 
 # Libraries used in README comparison tables.
 LIBRARIES_ORDER = [
@@ -64,6 +64,10 @@ def average(values: list[float]) -> float | None:
     if not values:
         return None
     return sum(values) / len(values)
+
+
+def progress_message(library: str, feature: str) -> str:
+    return f"[{library}] {feature}"
 
 
 def parse_link_header(link_header: str | None) -> dict[str, str]:
@@ -182,17 +186,24 @@ def get_total_count_from_search(client: GitHubClient, query: str) -> int:
 
 def get_commit_count_and_last_commit(
     client: GitHubClient, owner_repo: str, now: dt.datetime
-) -> tuple[int, float | None]:
+) -> tuple[int, str | None, float | None]:
     items, headers = client.get_json(f"/repos/{owner_repo}/commits?per_page=1")
     commits = items if isinstance(items, list) else []
 
     link_map = parse_link_header(headers.get("link"))
+    oldest_commit_date: str | None = None
     if "last" in link_map:
-        qs = urllib.parse.parse_qs(urllib.parse.urlparse(link_map["last"]).query)
+        last_url = link_map["last"]
+        qs = urllib.parse.parse_qs(urllib.parse.urlparse(last_url).query)
         last_page = int(qs.get("page", ["1"])[0])
         commit_count = last_page
+        oldest_commits, _ = client.get_json(last_url)
+        if isinstance(oldest_commits, list) and oldest_commits:
+            oldest_commit_date = oldest_commits[0].get("commit", {}).get("committer", {}).get("date")
     else:
         commit_count = len(commits)
+        if commits:
+            oldest_commit_date = commits[-1].get("commit", {}).get("committer", {}).get("date")
 
     last_commit_age_days: float | None = None
     if commits:
@@ -201,10 +212,17 @@ def get_commit_count_and_last_commit(
             last_dt = parse_iso8601_utc(last_date_s)
             last_commit_age_days = (now - last_dt).total_seconds() / 86400.0
 
-    return commit_count, last_commit_age_days
+    return commit_count, oldest_commit_date, last_commit_age_days
 
 
-def get_releases_info(client: GitHubClient, owner_repo: str) -> tuple[int, str | None]:
+def get_repo_stars(client: GitHubClient, owner_repo: str) -> int:
+    repo, _ = client.get_json(f"/repos/{owner_repo}")
+    if not isinstance(repo, dict):
+        return 0
+    return int(repo.get("stargazers_count", 0))
+
+
+def get_releases_info(client: GitHubClient, owner_repo: str) -> tuple[int, str | None, str | None]:
     releases, headers = client.get_json(f"/repos/{owner_repo}/releases?per_page=1")
     items = releases if isinstance(releases, list) else []
 
@@ -216,10 +234,12 @@ def get_releases_info(client: GitHubClient, owner_repo: str) -> tuple[int, str |
         count = len(items)
 
     last_release_date = None
+    last_release_version = None
     if items:
         last_release_date = items[0].get("published_at") or items[0].get("created_at")
+        last_release_version = items[0].get("tag_name") or items[0].get("name")
 
-    return count, last_release_date
+    return count, last_release_version, last_release_date
 
 
 def get_contributors_main_authors(client: GitHubClient, owner_repo: str) -> int | None:
@@ -357,16 +377,16 @@ def first_pr_response_hours(
     return hours_between(created_dt, first_dt)
 
 
-def ci_metrics(client: GitHubClient, owner_repo: str) -> tuple[bool, int, int]:
+def ci_metrics(client: GitHubClient, owner_repo: str) -> tuple[bool, int, int, int]:
     try:
         entries, _ = client.get_json(f"/repos/{owner_repo}/contents/.github/workflows")
     except RuntimeError as exc:
         if " 404 " in f" {exc} ":
-            return False, 0, 0
+            return False, 0, 0, 0
         raise
 
     if not isinstance(entries, list) or not entries:
-        return False, 0, 0
+        return False, 0, 0, 0
 
     workflow_urls = []
     for e in entries:
@@ -377,10 +397,21 @@ def ci_metrics(client: GitHubClient, owner_repo: str) -> tuple[bool, int, int]:
                 workflow_urls.append(download_url)
 
     if not workflow_urls:
-        return False, 0, 0
+        return False, 0, 0, 0
 
     os_set: set[str] = set()
+    arch_set: set[str] = set()
     compiler_set: set[str] = set()
+
+    arch_patterns = [
+        (r"\baarch64\b|\barm64\b", "aarch64"),
+        (r"\briscv64\b", "riscv64"),
+        (r"\bppc64\b|\bppc64le\b|\bpowerpc64\b|\bpowerpc64le\b", "powerpc64"),
+        (r"\bi386\b|\bi486\b|\bi586\b|\bi686\b|\blinux32\b", "i386"),
+        (r"\bamd64\b|\bx86_64\b|\bx64\b|\bx86-64\b", "amd64"),
+        (r"\barmv?6\b|\barmv?7\b|\barmhf\b|\bgnueabihf\b|\barm\b(?!64)", "arm"),
+        (r"\bs390x\b", "s390x"),
+    ]
 
     for url in workflow_urls:
         text, _ = client.get_json(url)
@@ -391,6 +422,23 @@ def ci_metrics(client: GitHubClient, owner_repo: str) -> tuple[bool, int, int]:
         for token in ("ubuntu", "windows", "macos", "linux", "self-hosted"):
             if token in low:
                 os_set.add(token)
+
+        # GitHub-hosted latest runners are x86_64/amd64 in this benchmark context.
+        if (
+            "ubuntu-latest" in low
+            or "windows-latest" in low
+            or "macos-latest" in low
+            or "macos-12" in low
+            or "macos-13" in low
+        ):
+            arch_set.add("amd64")
+
+        if "linux32" in low or "-m32" in low:
+            arch_set.add("i386")
+
+        for pat, label in arch_patterns:
+            if re.search(pat, low):
+                arch_set.add(label)
 
         patterns = [
             (r"\bgcc\b|\bg\+\+\b", "gcc"),
@@ -403,7 +451,7 @@ def ci_metrics(client: GitHubClient, owner_repo: str) -> tuple[bool, int, int]:
             if re.search(pat, low):
                 compiler_set.add(label)
 
-    return True, len(os_set), len(compiler_set)
+    return True, len(os_set), len(arch_set), len(compiler_set)
 
 
 def collect_repo_metrics(
@@ -412,14 +460,27 @@ def collect_repo_metrics(
     issue_sample: int,
     pr_sample: int,
     now: dt.datetime,
+    progress: Callable[[str], None] | None = None,
 ) -> dict[str, Any]:
-    commit_count, last_commit_age_days = get_commit_count_and_last_commit(client, owner_repo, now)
+    if progress:
+        progress("fetching commit history")
+    commit_count, oldest_commit_date, last_commit_age_days = get_commit_count_and_last_commit(
+        client, owner_repo, now
+    )
 
+    if progress:
+        progress("fetching repository stars")
+    stars_count = get_repo_stars(client, owner_repo)
+
+    if progress:
+        progress("counting issues and pull requests")
     issues_open = get_total_count_from_search(client, f"repo:{owner_repo} type:issue state:open")
     issues_closed = get_total_count_from_search(client, f"repo:{owner_repo} type:issue state:closed")
     prs_open = get_total_count_from_search(client, f"repo:{owner_repo} type:pr state:open")
     prs_closed = get_total_count_from_search(client, f"repo:{owner_repo} type:pr state:closed")
 
+    if progress:
+        progress("sampling issues")
     closed_issues = get_issues_for_sampling(client, owner_repo, "closed", issue_sample)
     all_issues = get_issues_for_sampling(client, owner_repo, "all", issue_sample)
 
@@ -442,6 +503,8 @@ def collect_repo_metrics(
             if val is not None:
                 issue_response_hours.append(val)
 
+    if progress:
+        progress("sampling pull requests")
     closed_prs = get_prs_for_sampling(client, owner_repo, "closed", pr_sample)
     all_prs = get_prs_for_sampling(client, owner_repo, "all", pr_sample)
 
@@ -464,13 +527,17 @@ def collect_repo_metrics(
             if val is not None:
                 pr_response_hours.append(val)
 
-    releases_count, last_release_date = get_releases_info(client, owner_repo)
+    if progress:
+        progress("fetching releases, contributors, and CI metadata")
+    releases_count, last_release_version, last_release_date = get_releases_info(client, owner_repo)
     main_authors = get_contributors_main_authors(client, owner_repo)
-    ci_present, ci_systems, ci_compilers = ci_metrics(client, owner_repo)
+    ci_present, ci_systems, ci_architectures, ci_compilers = ci_metrics(client, owner_repo)
 
     return {
+        "Number of stars": stars_count,
         "Last commit age (days)": round(last_commit_age_days, 2) if last_commit_age_days is not None else None,
         "Number of commits": commit_count,
+        "Oldest commit date": oldest_commit_date,
         "Number of open issues": issues_open,
         "Number of closed issues": issues_closed,
         "Average Time to answer an issue (hours)": round(average(issue_response_hours), 2)
@@ -488,10 +555,12 @@ def collect_repo_metrics(
         if average(pr_close_hours) is not None
         else None,
         "Number of releases": releases_count,
+        "Last release version": last_release_version,
         "Last release date": last_release_date,
         "Number of main authors": main_authors,
         "CI Presence": ci_present,
-        "Number of systems supported by CI": ci_systems,
+        "Number of OS supported by CI": ci_systems,
+        "Number of hardware architecture supported by CI": ci_architectures,
         "Number of compilers supported by CI": ci_compilers,
         "sampling": {
             "issues_checked": len(all_issues),
@@ -505,6 +574,12 @@ def collect_repo_metrics(
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Generate lib-maintenance.json from GitHub repositories."
+    )
+    parser.add_argument(
+        "library",
+        nargs="?",
+        default="all",
+        help="Library name to update, or 'all' to update every library (default: all)",
     )
     parser.add_argument(
         "--makefile",
@@ -546,6 +621,14 @@ def main() -> int:
     makefile_text = makefile_path.read_text(encoding="utf-8")
     target_to_url = extract_makefile_github_urls(makefile_text)
 
+    library_name = args.library
+    if library_name != "all" and library_name not in LIBRARIES_ORDER:
+        print(
+            f"error: unknown library '{library_name}'. Expected one of: all, {', '.join(LIBRARIES_ORDER)}",
+            file=sys.stderr,
+        )
+        return 1
+
     token = None
     if "GITHUB_TOKEN" in os.environ:
         token = os.environ["GITHUB_TOKEN"].strip() or None
@@ -558,7 +641,18 @@ def main() -> int:
         "libraries": {},
     }
 
-    for lib in LIBRARIES_ORDER:
+    existing_result: dict[str, Any] = {}
+    if library_name != "all" and output_path.exists():
+        try:
+            loaded = json.loads(output_path.read_text(encoding="utf-8"))
+            if isinstance(loaded, dict):
+                existing_result = loaded
+        except Exception:
+            existing_result = {}
+
+    libraries_to_update = [library_name] if library_name != "all" else LIBRARIES_ORDER
+
+    for lib in libraries_to_update:
         lib_entry: dict[str, Any] = {}
         ext_dir = LIB_TO_EXTERNAL_DIR.get(lib)
         repo_url = target_to_url.get(ext_dir, "") if ext_dir else ""
@@ -572,6 +666,7 @@ def main() -> int:
             result["libraries"][lib] = lib_entry
             continue
 
+        print(progress_message(lib, "starting"), file=sys.stderr, flush=True)
         try:
             metrics = collect_repo_metrics(
                 client=client,
@@ -579,17 +674,30 @@ def main() -> int:
                 issue_sample=args.issue_sample,
                 pr_sample=args.pr_sample,
                 now=now,
+                progress=lambda feature, lib=lib: print(
+                    progress_message(lib, feature), file=sys.stderr, flush=True
+                ),
             )
             lib_entry.update(metrics)
             lib_entry["status"] = "ok"
         except Exception as exc:
             lib_entry["status"] = "error"
             lib_entry["error"] = str(exc)
+        finally:
+            print(progress_message(lib, "done"), file=sys.stderr, flush=True)
 
         result["libraries"][lib] = lib_entry
 
         if args.sleep_seconds > 0:
             time.sleep(args.sleep_seconds)
+
+    if library_name != "all" and existing_result:
+        merged = existing_result
+        if not isinstance(merged.get("libraries"), dict):
+            merged["libraries"] = {}
+        merged["Date of analysis"] = result["Date of analysis"]
+        merged["libraries"][library_name] = result["libraries"][library_name]
+        result = merged
 
     output_path.write_text(json.dumps(result, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
     print(f"wrote {output_path}")

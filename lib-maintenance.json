@@ -9,21 +9,25 @@
     "M*LIB": {
       "repository_url": "https://github.com/P-p-H-d/mlib",
       "repository": "P-p-H-d/mlib",
-      "Last commit age (days)": 4.47,
+      "Number of stars": 1115,
+      "Last commit age (days)": 4.56,
       "Number of commits": 3940,
-      "Number of open issues": 1,
-      "Number of closed issues": 122,
+      "Oldest commit date": "2017-02-18T17:35:25Z",
+      "Number of open issues": 0,
+      "Number of closed issues": 123,
       "Average Time to answer an issue (hours)": 21.52,
-      "Average Time to close an issue (hours)": 1228.33,
+      "Average Time to close an issue (hours)": 1361.06,
       "Number of open pull requests": 0,
       "Number of closed pull requests": 21,
       "Average Time to answer a pull request (hours)": 1216.15,
       "Average Time to close or merge a pull request (hours)": 572.98,
       "Number of releases": 14,
+      "Last release version": "V0.8.0",
       "Last release date": "2025-05-12T21:06:06Z",
       "Number of main authors": 1,
       "CI Presence": true,
-      "Number of systems supported by CI": 4,
+      "Number of OS supported by CI": 4,
+      "Number of hardware architecture supported by CI": 6,
       "Number of compilers supported by CI": 4,
       "sampling": {
         "issues_checked": 50,
@@ -230,8 +234,29 @@
     "CCC": {
       "repository_url": "https://github.com/SkeletOSS/ccc",
       "repository": "SkeletOSS/ccc",
-      "status": "error",
-      "error": "IncompleteRead(377776 bytes read, 2321 more expected)"
+      "Last commit age (days)": 1.55,
+      "Number of commits": 2056,
+      "Number of open issues": 0,
+      "Number of closed issues": 0,
+      "Average Time to answer an issue (hours)": null,
+      "Average Time to close an issue (hours)": null,
+      "Number of open pull requests": 0,
+      "Number of closed pull requests": 195,
+      "Average Time to answer a pull request (hours)": null,
+      "Average Time to close or merge a pull request (hours)": 12.58,
+      "Number of releases": 150,
+      "Last release date": "2026-05-22T18:18:23Z",
+      "Number of main authors": 1,
+      "CI Presence": true,
+      "Number of systems supported by CI": 3,
+      "Number of compilers supported by CI": 2,
+      "sampling": {
+        "issues_checked": 0,
+        "closed_issues_checked": 0,
+        "prs_checked": 50,
+        "closed_prs_checked": 50
+      },
+      "status": "ok"
     }
   }
 }
