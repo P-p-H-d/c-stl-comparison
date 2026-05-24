@@ -422,6 +422,24 @@ This information is also available as a [JSON file](lib-features.json) with more
 
 This information is also available as a [JSON file](lib-containers.json).
 
+| Maintenance                                         | M*LIB      | STC        | CMC         | CTL         | CollecC     | CC          | STB_DS      | KLIB        | CCC        |
+|-----------------------------------------------------|------------|------------|-------------|-------------|-------------|-------------|-------------|-------------|------------|
+| Number of stars                                     | 1115       | 1901       | 597         | 287         | 2995        | 460         | 33730       | 4667        | 20         |
+| Last commit age                                     | 4.56 days  | 11.00 days | 696.64 days | 102.97 days | 11.88 days  | 326.56 days | 38.63 days  | 153.31 days | 1.58 days  |
+| Number of commits                                   | 3940       | 3321       | 517         | 943         | 664         | 350         | 2230        | 398         | 2056       |
+| How old is the project?                             | 9.26 years | 6.22 years | 7.17 years  | 5.66 years  | 11.77 years | 3.48 years  | 12.00 years | 15.36 years | 2.35 years |
+| Last release date                                   | 2025-05-12 | 2025-01-12 | NA          | 2021-02-22  | NA          | 2025-07-01  | NA          | NA          | 2026-05-22 |
+| Number of release per year                          | 1.51       | 2.09       | 0           | 0.35        | 0           | 4.89        | 0           | 0           | 63.94      |
+| Percent of open issues / total (open+closed) issues | 0.00%      | 5.38%      | 69.44%      | 53.85%      | 22.22%      | 30.00%      | 24.41%      | 46.67%      | NA         |
+| Average Time to answer an issue                     | 21.52 h    | 1044.45 h  | 1632.95 h   | 15839.79 h  | 857.47 h    | 47.36 h     | 85.91 h     | 886.20 h    | NA         |
+| Number of main authors                              | 1          | 1          | 1           | 2           | 3           | 1           | 2           | 3           | 1          |
+| Number of OS supported by CI                        | 4          | 4          | 1           | 4           | 3           | 1           | 1           | 0           | 3          |
+| Number of hardware architecture supported by CI     | 6          | 1          | 1           | 1           | 1           | 1           | 1           | 0           | 3          |
+| Number of compilers supported by CI                 | 4          | 3          | 1           | 3           | 3           | 1           | 0           | 0           | 2          |
+
+
+This information is also available as a [JSON file](lib-maintenance.json).
+
 If you see any mistakes in this report,
 or want to include another C library,
 or want to include another point of comparison,
