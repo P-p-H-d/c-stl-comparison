@@ -16,7 +16,7 @@ import pathlib
 import re
 import sys
 
-# Canonical left-to-right order of libraries in every table column.
+# Canonical set of libraries used in README tables.
 LIBS_ORDER = ["STL", "M*LIB", "STC", "CMC", "CTL", "CollecC", "CC", "GLIB", "STB_DS", "KLIB", "CCC"]
 
 
@@ -149,8 +149,10 @@ def main() -> int:
         containers_libs: dict = json.load(f)["libraries"]
 
     readme_text = readme_path.read_text(encoding="utf-8")
+    libs_sorted = sorted(LIBS_ORDER, key=str.casefold)
+
     updated = TABLE_RE.sub(
-        make_replacer(features_libs, containers_libs, LIBS_ORDER),
+        make_replacer(features_libs, containers_libs, libs_sorted),
         readme_text,
     )
 

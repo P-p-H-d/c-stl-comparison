@@ -89,7 +89,8 @@ def update_table(table_text: str, repo_root: pathlib.Path) -> str:
     table_kind = table_match.group(2)
     container_dir = f"{TABLE_PREFIX_TO_DIR_PREFIX[table_prefix]}-{table_kind.lower()}"
     container_prefix = TABLE_PREFIX_TO_DIR_PREFIX[table_prefix]
-    libraries = header_cells[1:]
+    libraries = sorted(header_cells[1:], key=str.casefold)
+    header_cells = [header_cells[0], *libraries]
 
     chars_row = ["number of characters"]
     lines_row = ["number of line of codes"]

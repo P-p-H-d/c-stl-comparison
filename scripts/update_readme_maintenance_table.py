@@ -190,7 +190,8 @@ def update_maintenance_table(readme_text: str, maintenance_data: dict[str, Any])
         if not header_cells or header_cells[0] != "Maintenance":
             return match.group(1)
 
-        libraries = header_cells[1:]
+        libraries = sorted(header_cells[1:], key=str.casefold)
+        header_cells = [header_cells[0], *libraries]
         body_rows = build_rows(libraries, maintenance_data, analysis_date)
         return format_table([header_cells, *body_rows])
 
