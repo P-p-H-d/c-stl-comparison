@@ -238,7 +238,7 @@ The following C libraries have been selected as their aim is to provide generic 
 
 with C++ STL used as the reference baseline.
 
-The used versions for the manual comparison are:
+The used versions for the manual comparison of the features are:
 
 COMPONENT      | VERSION
 ---------------|-----------------------------------------
@@ -252,6 +252,8 @@ ccc            | 22f8c17e863d52cad120dc9dfedbd0452f8625a9
 GLIB           | 2.74
 STB_DS         | 904aa67e1e2d1dec92959df63e700b166d5c1022
 KLIB           | 97a0fcb790b43b9e5da8994f4671021fec036f19
+
+CI uses more up-to-date versions of theses libraries for the performance comparisons (See this section for details).
 
 More specialized C libraries which provides only one kind of container are not included in this chapter.
 sglib is not included due to being abandoned.
