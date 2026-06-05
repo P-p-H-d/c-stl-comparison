@@ -645,6 +645,8 @@ NOTE: GLIB is dynamically linked instead of being statically linked which provid
 
 We can also check the compilation time:
 
+> Note: compilation time in absolute doesn't matter as it depends on the host. Only relative difference matters.
+
 | array-int compilation | time |
 |-----------------------|------|
 | CollecC               | 0.07 |
