@@ -226,32 +226,32 @@ In practice, Template headers are often the best compromise between ease of deve
 The following C libraries have been selected as their aim is to provide generic containers to the C language:
 
 * [C-Macro-Collections](https://github.com/LeoVen/C-Macro-Collections)
-* [COLLECTIONS-C](https://github.com/srdja/Collections-C)
-* CTL [by glouw](https://github.com/glouw/ctl) or [by rurban](https://github.com/rurban/ctl)
-* [M\*LIB](https://github.com/P-p-H-d/mlib)
-* [STC - Smart Template Container for C](https://github.com/tylov/STC)
 * [CC](https://github.com/JacksonAllan/CC.git)
 * [ccc](https://github.com/SkeletOSS/ccc.git)
+* [COLLECTIONS-C](https://github.com/srdja/Collections-C)
+* CTL [by glouw](https://github.com/glouw/ctl) or [by rurban](https://github.com/rurban/ctl)
 * [GLIB](https://docs.gtk.org/glib/index.html)
-* [STB_DS](https://github.com/nothings/stb)
 * [KLIB](https://github.com/attractivechaos/klib)
+* [M\*LIB](https://github.com/P-p-H-d/mlib)
+* [STB_DS](https://github.com/nothings/stb)
+* [STC - Smart Template Container for C](https://github.com/tylov/STC)
 
 with C++ STL used as the reference baseline.
 
-The used versions for the manual comparison of the features are:
+The used versions for the manual feature comparison are:
 
 COMPONENT      | VERSION
 ---------------|-----------------------------------------
 C Macro Collections | v0.23.1
-CollectionsC   | ff1be366329e2c82cd85b2c803114ef8d2115f7f
-CTL            | 3923e6776a231e5d58cf91225ca8a1d61879401b
-M\*LIB         | a0818419ab959e05517336e1bea699c1854b29f3
-STC            | 5fb5ed08250b5ad4eadd6e7a9fdc44f4519b15ff
 CC             | 2012d9d2eb8f035d7dc69f36ec03ca3199ede1bf
 ccc            | 22f8c17e863d52cad120dc9dfedbd0452f8625a9
+CollectionsC   | ff1be366329e2c82cd85b2c803114ef8d2115f7f
+CTL            | 3923e6776a231e5d58cf91225ca8a1d61879401b
 GLIB           | 2.74
-STB_DS         | 904aa67e1e2d1dec92959df63e700b166d5c1022
 KLIB           | 97a0fcb790b43b9e5da8994f4671021fec036f19
+M\*LIB         | a0818419ab959e05517336e1bea699c1854b29f3
+STB_DS         | 904aa67e1e2d1dec92959df63e700b166d5c1022
+STC            | 5fb5ed08250b5ad4eadd6e7a9fdc44f4519b15ff
 
 CI uses more up-to-date versions of theses libraries for the performance comparisons (See this section for details).
 
