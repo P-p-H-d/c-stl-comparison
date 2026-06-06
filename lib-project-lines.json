@@ -1,0 +1,155 @@
+{
+  "Date of analysis": "2026-06-06",
+  "libraries": {
+    "C-Macro-Collections": {
+      "source": 25204,
+      "tests": 27968,
+      "examples": 5427,
+      "documentation": 18668
+    },
+    "CC": {
+      "source": 9591,
+      "tests": 6795,
+      "examples": 0,
+      "documentation": 2083
+    },
+    "Collections-C": {
+      "source": 14113,
+      "tests": 11757,
+      "examples": 488,
+      "documentation": 271
+    },
+    "MisraStdC": {
+      "source": 40436,
+      "tests": 37784,
+      "examples": 0,
+      "documentation": 18960
+    },
+    "OpenCSTL": {
+      "source": 17933,
+      "tests": 8529,
+      "examples": 274,
+      "documentation": 6422
+    },
+    "STC": {
+      "source": 12563,
+      "tests": 2091,
+      "examples": 5673,
+      "documentation": 6377
+    },
+    "Verstable": {
+      "source": 2069,
+      "tests": 1752,
+      "examples": 0,
+      "documentation": 633
+    },
+    "bstrlib": {
+      "source": 10030,
+      "tests": 0,
+      "examples": 0,
+      "documentation": 34
+    },
+    "ccc": {
+      "source": 31776,
+      "tests": 33398,
+      "examples": 0,
+      "documentation": 4986
+    },
+    "ctl": {
+      "source": 9566,
+      "tests": 22495,
+      "examples": 2012,
+      "documentation": 5673
+    },
+    "glib": {
+      "source": 342116,
+      "tests": 715,
+      "examples": 0,
+      "documentation": 31207
+    },
+    "klib": {
+      "source": 11140,
+      "tests": 2910,
+      "examples": 0,
+      "documentation": 243
+    },
+    "libdynamic": {
+      "source": 998,
+      "tests": 294,
+      "examples": 338,
+      "documentation": 52
+    },
+    "liblfds7.1.1": {
+      "source": 51340,
+      "tests": 0,
+      "examples": 0,
+      "documentation": 0
+    },
+    "libsrt": {
+      "source": 16325,
+      "tests": 17221,
+      "examples": 0,
+      "documentation": 633
+    },
+    "mlib": {
+      "source": 34470,
+      "tests": 18527,
+      "examples": 7877,
+      "documentation": 11072
+    },
+    "nedtries": {
+      "source": 5699,
+      "tests": 0,
+      "examples": 0,
+      "documentation": 797
+    },
+    "pottery": {
+      "source": 37685,
+      "tests": 7735,
+      "examples": 1752,
+      "documentation": 1127
+    },
+    "qlibc": {
+      "source": 19287,
+      "tests": 2868,
+      "examples": 1074,
+      "documentation": 47716
+    },
+    "rapidjson": {
+      "source": 19062,
+      "tests": 18195,
+      "examples": 145,
+      "documentation": 13111
+    },
+    "sds": {
+      "source": 1701,
+      "tests": 0,
+      "examples": 0,
+      "documentation": 917
+    },
+    "stb": {
+      "source": 51166,
+      "tests": 31493,
+      "examples": 0,
+      "documentation": 660
+    },
+    "tommyds": {
+      "source": 8649,
+      "tests": 0,
+      "examples": 0,
+      "documentation": 28
+    },
+    "uthash": {
+      "source": 6148,
+      "tests": 13221,
+      "examples": 0,
+      "documentation": 4733
+    },
+    "xxHash": {
+      "source": 8501,
+      "tests": 50326,
+      "examples": 0,
+      "documentation": 1311
+    }
+  }
+}

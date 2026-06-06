@@ -442,6 +442,18 @@ This information is also available as a [JSON file](lib-containers.json).
 
 This information is also available as a [JSON file](lib-maintenance.json).
 
+| Project Sizes               | CC     | CCC     | CMC     | CollecC | CTL     | GLIB   | KLIB   | M*LIB  | STB_DS | STC    |
+|-----------------------------|--------|---------|---------|---------|---------|--------|--------|--------|--------|--------|
+| Number of source lines      | 9591   | 31776   | 25204   | 14113   | 9566    | 342116 | 11140  | 34470  | 51166  | 12563  |
+| % of examples / source      | 0.00%  | 0.00%   | 21.53%  | 3.46%   | 21.03%  | 0.00%  | 0.00%  | 22.85% | 0.00%  | 45.16% |
+| % of documentation / source | 21.72% | 15.69%  | 74.07%  | 1.92%   | 59.30%  | 9.12%  | 2.18%  | 32.12% | 1.29%  | 50.76% |
+| % of tests / source         | 70.85% | 105.10% | 110.97% | 83.31%  | 235.16% | 0.21%  | 26.12% | 53.75% | 61.55% | 16.64% |
+
+> Note: STB_DS is included in the source directly.
+
+This information is also available as a [JSON file](lib-project-lines.json).
+
+
 If you see any mistakes in this report,
 or want to include another C library,
 or want to include another point of comparison,
@@ -804,4 +816,6 @@ This project includes all sources used for this comparison and provides continuo
 * perform the run of the benchmark,
 * automated validation
 * regression detection
+
+
 
