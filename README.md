@@ -449,7 +449,7 @@ This information is also available as a [JSON file](lib-maintenance.json).
 | % of documentation / source | 21.72% | 15.69%  | 74.07%  | 1.92%   | 59.30%  | 9.12%  | 2.18%  | 32.12% | 1.29%  | 50.76% |
 | % of tests / source         | 70.85% | 105.10% | 110.97% | 83.31%  | 235.16% | 0.21%  | 26.12% | 53.75% | 61.55% | 16.64% |
 
-> Note: STB_DS is included in the source directly.
+> Note: STB_DS and GLIB documentation are included in the source directly which explains their low %.
 
 > Limitation: this doesn't measure the quality of the documentation or the quality of the test suite.
 
