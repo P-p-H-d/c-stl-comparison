@@ -451,6 +451,8 @@ This information is also available as a [JSON file](lib-maintenance.json).
 
 > Note: STB_DS is included in the source directly.
 
+> Limitation: this doesn't measure the quality of the documentation or the quality of the test suite.
+
 This information is also available as a [JSON file](lib-project-lines.json).
 
 
