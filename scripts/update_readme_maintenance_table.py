@@ -19,6 +19,20 @@ MAINTENANCE_TABLE_PATTERN = re.compile(
     re.MULTILINE,
 )
 
+LIBRARIES_ORDER = [
+    "CC",
+    "CCC",
+    "CMC",
+    "CollecC",
+    "CTL",
+    "GLIB",
+    "KLIB",
+    "M*LIB",
+    "OpenCSTL",
+    "STB_DS",
+    "STC",
+]
+
 
 def parse_header_cells(line: str) -> list[str]:
     text = line.strip()
@@ -123,6 +137,19 @@ def format_hours(value: Any) -> str:
     return f"{value} h"
 
 
+def ordered_libraries(libraries_data: dict[str, Any]) -> list[str]:
+    present = {lib for lib, value in libraries_data.items() if isinstance(value, dict) and lib != "STL"}
+    ordered: list[str] = []
+
+    for lib in LIBRARIES_ORDER:
+        if lib in present:
+            ordered.append(lib)
+            present.remove(lib)
+
+    ordered.extend(sorted(present, key=str.casefold))
+    return ordered
+
+
 def build_rows(libraries: list[str], data: dict[str, Any], analysis_date: dt.datetime) -> list[list[str]]:
     rows: list[list[str]] = [
         ["Number of stars"],
@@ -190,7 +217,14 @@ def update_maintenance_table(readme_text: str, maintenance_data: dict[str, Any])
         if not header_cells or header_cells[0] != "Maintenance":
             return match.group(1)
 
-        libraries = sorted(header_cells[1:], key=str.casefold)
+        libraries_data = maintenance_data.get("libraries", {})
+        if not isinstance(libraries_data, dict):
+            libraries_data = {}
+
+        libraries = ordered_libraries(libraries_data)
+        if not libraries:
+            libraries = sorted(header_cells[1:], key=str.casefold)
+
         header_cells = [header_cells[0], *libraries]
         body_rows = build_rows(libraries, maintenance_data, analysis_date)
         return format_table([header_cells, *body_rows])
