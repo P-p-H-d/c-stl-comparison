@@ -1,5 +1,5 @@
 {
-  "Date of analysis": "2026-06-06",
+  "Date of analysis": "2026-06-07",
   "libraries": {
     "STL": {
       "repository_url": null,
@@ -313,6 +313,37 @@
         "closed_issues_checked": 0,
         "prs_checked": 50,
         "closed_prs_checked": 50
+      },
+      "status": "ok"
+    },
+    "OpenCSTL": {
+      "repository_url": "https://github.com/springkim/OpenCSTL",
+      "repository": "springkim/OpenCSTL",
+      "Number of stars": 26,
+      "Last commit age (days)": 0.06,
+      "Number of commits": 187,
+      "Oldest commit date": "2018-08-03T01:52:31Z",
+      "Number of open issues": 0,
+      "Number of closed issues": 1,
+      "Average Time to answer an issue (hours)": null,
+      "Average Time to close an issue (hours)": 66846.13,
+      "Number of open pull requests": 0,
+      "Number of closed pull requests": 3,
+      "Average Time to answer a pull request (hours)": null,
+      "Average Time to close or merge a pull request (hours)": 8.24,
+      "Number of releases": 0,
+      "Last release version": null,
+      "Last release date": null,
+      "Number of main authors": 1,
+      "CI Presence": true,
+      "Number of OS supported by CI": 4,
+      "Number of hardware architecture supported by CI": 1,
+      "Number of compilers supported by CI": 4,
+      "sampling": {
+        "issues_checked": 1,
+        "closed_issues_checked": 1,
+        "prs_checked": 3,
+        "closed_prs_checked": 3
       },
       "status": "ok"
     }

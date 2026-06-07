@@ -418,7 +418,7 @@
       "Iterator support": "Y",
       "Sort algorithm": "N",
       "Enhanced Sort algorithm": "N",
-      "single linkage definition": "Y",
+      "single linkage definition": "N",
       "Full abstraction": "Y",
       "Contract violation checks": "N",
       "Natural usage": "Y",
