@@ -42,19 +42,19 @@ Rank|Library|Container|Mem|Best Rank|Worst Rank
 
 Rank|Library|Container|Time|Best Rank|Worst Rank
 ----|-------|---------|----|---------|----------
-1 |  STC |           Seq(Array)    |   617.01 ms | 1 | 2
-2 |  KLIB |           Seq(Array)    |   617.18 ms | 1 | 5
-3 |  M*LIB |           Seq(Array)    |   638.03 ms | 1 | 4
-4 |  CTL |           Seq(Array)    |   672.52 ms | 1 | 4
+1 |  KLIB |           Seq(Array)    |   617.18 ms | 1 | 5
+2 |  M*LIB |           Seq(Array)    |   638.03 ms | 1 | 4
+3 |  CTL |           Seq(Array)    |   672.52 ms | 1 | 4
+4 |  STC |           Seq(Array)    |   676.58 ms | 1 | 2
 5 |  UT-HASH |           Seq(Array)    |   712.38 ms | 4 | 5
 6 |  M*LIB |           Seq(Deque)    |   938.22 ms | 6 | 6
 7 |  STB-DS |        Seq(DynArray)    |   1272.37 ms | 7 | 7
 8 |  POTTERY |            Seq(List)    |   1432.48 ms | 8 | 13
 9 |  CTL |            Seq(List)    |   1447.56 ms | 9 | 12
 10 |  UT-HASH |            Seq(List)    |   1457.96 ms | 8 | 11
-11 |  STC |            Seq(List)    |   1463.47 ms | 9 | 13
-12 |  M*LIB |            Seq(List)    |   1479.90 ms | 8 | 20
-13 |  M*LIB |          Seq(DPList)    |   1480.44 ms | 10 | 13
+11 |  M*LIB |            Seq(List)    |   1479.90 ms | 8 | 20
+12 |  M*LIB |          Seq(DPList)    |   1480.44 ms | 10 | 13
+13 |  STC |            Seq(List)    |   1488.71 ms | 9 | 13
 14 |  STL |           Seq(Array)    |   1562.62 ms | 14 | 16
 15 |  GLIB |            Seq(List)    |   1582.51 ms | 7 | 15
 16 |  STL |            Seq(List)    |   1612.63 ms | 15 | 17
@@ -84,9 +84,9 @@ Rank|Library|Container|Mem|Best Rank|Worst Rank
 2 |  POTTERY |            Seq(List)   |   1.28G| 2 | 6
 3 |  CTL |            Seq(List)   |   1.28G| 3 | 5
 4 |  UT-HASH |            Seq(List)   |   1.28G| 2 | 4
-5 |  STC |            Seq(List)   |   1.28G| 3 | 6
-6 |  M*LIB |            Seq(List)   |   1.28G| 6 | 11
-7 |  M*LIB |          Seq(DPList)   |   1.28G| 4 | 7
+5 |  M*LIB |            Seq(List)   |   1.28G| 6 | 11
+6 |  M*LIB |          Seq(DPList)   |   1.28G| 4 | 7
+7 |  STC |            Seq(List)   |   1.28G| 3 | 6
 8 |  STL |            Seq(List)   |   1.28G| 8 | 9
 9 |  CC |            Seq(List)   |   1.28G| 9 | 10
 10 |  CollectionC |            Seq(List)   |   1.28G| 7 | 10
@@ -97,10 +97,10 @@ Rank|Library|Container|Mem|Best Rank|Worst Rank
 15 |  CC |           Seq(Array)   |   1.60G| 13 | 15
 16 |  OpenCSTL |           Seq(Array)   |   1.60G| 16 | 16
 17 |  LIBSRT |           Seq(Array)   |   1.60G| 14 | 17
-18 |  STC |           Seq(Array)   |   1.60G| 16 | 18
-19 |  KLIB |           Seq(Array)   |   1.60G| 19 | 19
-20 |  M*LIB |           Seq(Array)   |   1.60G| 15 | 20
-21 |  CTL |           Seq(Array)   |   1.60G| 17 | 21
+18 |  KLIB |           Seq(Array)   |   1.60G| 19 | 19
+19 |  M*LIB |           Seq(Array)   |   1.60G| 15 | 20
+20 |  CTL |           Seq(Array)   |   1.60G| 17 | 21
+21 |  STC |           Seq(Array)   |   1.60G| 16 | 18
 22 |  UT-HASH |           Seq(Array)   |   1.60G| 18 | 22
 23 |  QLIBC |           Seq(Array)   |   1.60G| 14 | 23
 24 |  CCC |           Seq(Array)   |   1.60G| 24 | 24
@@ -122,8 +122,8 @@ Note: Performance test: Array based containers work on dataset 10x bigger than t
 
 Rank|Library|Container|Time|Best Rank|Worst Rank
 ----|-------|---------|----|---------|----------
-1 |  STC |                 Sort    |   917.35 ms | 1 | 2
-2 |  STL |                 Sort    |   921.35 ms | 1 | 2
+1 |  STL |                 Sort    |   921.35 ms | 1 | 2
+2 |  STC |                 Sort    |   1039.70 ms | 1 | 2
 3 |  KLIB |                 Sort    |   1056.49 ms | 3 | 6
 4 |  STL |          Stable Sort    |   1087.41 ms | 4 | 5
 5 |  POTTERY |                 Sort    |   1117.91 ms | 3 | 5
@@ -139,8 +139,8 @@ Rank|Library|Container|Time|Best Rank|Worst Rank
 
 Rank|Library|Container|Mem|Best Rank|Worst Rank
 ----|-------|---------|----|---------|----------
-1 |  KLIB |                 Sort   |   41.41M| 1 | 2
-2 |  STC |                 Sort   |   41.69M| 1 | 2
+1 |  STC |                 Sort   |   41.19M| 1 | 2
+2 |  KLIB |                 Sort   |   41.41M| 1 | 2
 3 |  CTL |                 Sort   |   41.71M| 3 | 3
 4 |  CCC |                 Sort   |   42.02M| 4 | 4
 5 |  STL |                 Sort   |   70.03M| 4 | 5
@@ -161,10 +161,10 @@ Rank|Library|Container|Time|Best Rank|Worst Rank
 1 |  M*LIB |         SSet(B+tree)    |   1215.77 ms | 1 | 1
 2 |  KLIB |          SSet(Btree)    |   1697.20 ms | 2 | 2
 3 |  OpenCSTL |            SSet(Set)    |   2922.63 ms | 3 | 3
-4 |  STC |           SSet(sset)    |   3269.81 ms | 3 | 5
-5 |  M*LIB |         SSet(Rbtree)    |   3337.86 ms | 3 | 5
-6 |  CTL |            SSet(set)    |   3400.13 ms | 5 | 6
-7 |  STL |         SSet(Rbtree)    |   3584.04 ms | 4 | 7
+4 |  M*LIB |         SSet(Rbtree)    |   3337.86 ms | 3 | 5
+5 |  CTL |            SSet(set)    |   3400.13 ms | 5 | 6
+6 |  STL |         SSet(Rbtree)    |   3584.04 ms | 4 | 7
+7 |  STC |           SSet(sset)    |   3641.82 ms | 3 | 5
 8 |  CCC |           SSet(Tree)    |   3817.05 ms | 8 | 8
 9 |  TommyDS |         SSet(Rbtree)    |   3907.60 ms | 8 | 9
 10 |  CMC |           SSet(tree)    |   3931.56 ms | 7 | 10
@@ -175,7 +175,7 @@ Rank|Library|Container|Time|Best Rank|Worst Rank
 Rank|Library|Container|Mem|Best Rank|Worst Rank
 ----|-------|---------|----|---------|----------
 1 |  KLIB |          SSet(Btree)   |   30.79M| 1 | 1
-2 |  STC |           SSet(sset)   |   50.39M| 2 | 2
+2 |  STC |           SSet(sset)   |   48.51M| 2 | 2
 3 |  M*LIB |         SSet(B+tree)   |   58.18M| 3 | 3
 4 |  CCC |           SSet(Tree)   |   96.08M| 4 | 4
 5 |  CMC |           SSet(tree)   |   96.19M| 4 | 7
@@ -193,7 +193,7 @@ Rank|Library|Container|Mem|Best Rank|Worst Rank
 Rank|Library|Container|Time|Best Rank|Worst Rank
 ----|-------|---------|----|---------|----------
 1 |  M*LIB |        String Concat    |   504.32 ms | 1 | 1
-2 |  STC |        String Concat    |   566.17 ms | 2 | 2
+2 |  STC |        String Concat    |   670.92 ms | 2 | 2
 3 |  STL |        String Concat    |   1029.16 ms | 3 | 3
 4 |  POTTERY |        String Concat    |   2370.01 ms | 4 | 4
 5 |  SDS |        String Concat    |   3831.00 ms | 5 | 5
@@ -217,14 +217,14 @@ Rank|Library|Container|Mem|Best Rank|Worst Rank
 Rank|Library|Container|Time|Best Rank|Worst Rank
 ----|-------|---------|----|---------|----------
 1 |  M*LIB |       String Replace    |   624.25 ms | 1 | 1
-2 |  STC |       String Replace    |   2508.44 ms | 2 | 2
+2 |  STC |       String Replace    |   2518.94 ms | 2 | 2
 3 |  STL |       String Replace    |   3040.92 ms | 3 | 3
 4 |  BSTRLIB |       String Replace    |   3189.24 ms | 4 | 4
 
 Rank|Library|Container|Mem|Best Rank|Worst Rank
 ----|-------|---------|----|---------|----------
 1 |  M*LIB |       String Replace   |   238.48M| 1 | 1
-2 |  STC |       String Replace   |   384.56M| 2 | 2
+2 |  STC |       String Replace   |   383.65M| 2 | 2
 3 |  STL |       String Replace   |   416.40M| 3 | 3
 4 |  BSTRLIB |       String Replace   |   688.07M| 4 | 4
 
@@ -236,15 +236,17 @@ Rank|Library|Container|Time|Best Rank|Worst Rank
 ----|-------|---------|----|---------|----------
 1 |  M*LIB |       UMap Str(dict)    |   976.21 ms | 1 | 2
 2 |  BOOST |  UMap Str(uflat_map)    |   1110.59 ms | 1 | 2
-3 |  STL |       UMap Str(umap)    |   3087.35 ms | 2 | 3
-4 |  STL |        UMap Str(map)    |   8095.60 ms | 3 | 4
+3 |  STC |       UMap Str(hmap)    |   1994.99 ms | - | -
+4 |  STL |       UMap Str(umap)    |   3087.35 ms | 2 | 3
+5 |  STL |        UMap Str(map)    |   8095.60 ms | 3 | 4
 
 Rank|Library|Container|Mem|Best Rank|Worst Rank
 ----|-------|---------|----|---------|----------
 1 |  M*LIB |       UMap Str(dict)   |   168.80M| 1 | 1
 2 |  STL |        UMap Str(map)   |   336.97M| 2 | 2
-3 |  STL |       UMap Str(umap)   |   354.22M| 3 | 3
-4 |  BOOST |  UMap Str(uflat_map)   |   384.86M| 4 | 4
+3 |  STC |       UMap Str(hmap)   |   352.80M| - | -
+4 |  STL |       UMap Str(umap)   |   354.22M| 3 | 3
+5 |  BOOST |  UMap Str(uflat_map)   |   384.86M| 4 | 4
 
 # Performance test: unordered map U64 container
 
@@ -259,7 +261,7 @@ Rank|Library|Container|Time|Best Rank|Worst Rank
 7 |  VERSTABLE |             UMap U64    |   2958.11 ms | 5 | 8
 8 |  CC |        UMap U64(map)    |   2981.42 ms | 6 | 8
 9 |  KLIB |     UMap U64(khashl)    |   2991.56 ms | 9 | 9
-10 |  STC |       UMap U64(hmap)    |   3114.77 ms | 7 | 10
+10 |  STC |       UMap U64(hmap)    |   3113.53 ms | 7 | 10
 11 |  OpenCSTL |             UMap U64    |   4631.83 ms | 11 | 11
 12 |  CCC |      UMap U64(FHash)    |   5437.92 ms | 12 | 12
 13 |  TommyDS |       UMap U64(dict)    |   6000.75 ms | 8 | 13
@@ -279,8 +281,8 @@ Rank|Library|Container|Mem|Best Rank|Worst Rank
 6 |  BOOST |  UMap U64(uflat_map)   |   806.26M| 5 | 6
 7 |  OpenCSTL |             UMap U64   |   872.70M| 7 | 7
 8 |  VERSTABLE |             UMap U64   |   906.41M| 6 | 8
-9 |  CC |        UMap U64(map)   |   906.44M| 6 | 9
-10 |  STC |       UMap U64(hmap)   |   906.50M| 8 | 10
+9 |  STC |       UMap U64(hmap)   |   906.42M| 8 | 10
+10 |  CC |        UMap U64(map)   |   906.44M| 6 | 9
 11 |  STL |       UMap U64(umap)   |   934.56M| 9 | 11
 12 |  CollectionC |  UMap U64(HashTable)   |   1.36G| 10 | 12
 13 |  CCC |      UMap U64(FHash)   |   1.45G| 13 | 13
@@ -303,7 +305,7 @@ Rank|Library|Container|Time|Best Rank|Worst Rank
 5 |  CC |        UMap Big(map)    |   2399.11 ms | 2 | 5
 6 |  M*LIB |    UMap Big(dict OA)    |   2653.68 ms | 4 | 8
 7 |  TommyDS |       UMap Big(dict)    |   2856.85 ms | 5 | 7
-8 |  STC |       UMap Big(hmap)    |   2902.89 ms | 5 | 8
+8 |  STC |       UMap Big(hmap)    |   2872.14 ms | 5 | 8
 9 |  POTTERY |  UMap Big(open hash)    |   2932.27 ms | 8 | 9
 10 |  KLIB |      UMap Big(khash)    |   3062.85 ms | 7 | 10
 11 |  GLIB | UMap Big(GHashTable)    |   3838.54 ms | 9 | 11
@@ -341,7 +343,7 @@ Rank|Library|Container|Time|Best Rank|Worst Rank
 5 |  CC |   USet Longest(hset)    |   1536.18 ms | 4 | 5
 6 |  VERSTABLE |   USet Longest(hset)    |   1560.62 ms | 4 | 6
 7 |  KLIB | USet Longest(khashl)    |   1702.07 ms | 7 | 7
-8 |  STC |   USet Longest(hset)    |   1912.68 ms | 6 | 8
+8 |  STC |   USet Longest(hset)    |   1743.07 ms | 6 | 8
 9 |  OpenCSTL |         USet Longest    |   2343.25 ms | 9 | 9
 10 |  CCC |  USet Longest(FHash)    |   2757.22 ms | 10 | 10
 11 |  STL | USet Longest(dict oa    |   7314.16 ms | 7 | 11
@@ -358,7 +360,7 @@ Rank|Library|Container|Mem|Best Rank|Worst Rank
 7 |  VERSTABLE |   USet Longest(hset)   |   191.42M| 4 | 7
 8 |  CC |   USet Longest(hset)   |   191.46M| 3 | 8
 9 |  M*LIB |   USet Longest(dict)   |   216.56M| 5 | 9
-10 |  STC |   USet Longest(hset)   |   219.14M| 6 | 10
+10 |  STC |   USet Longest(hset)   |   219.25M| 6 | 10
 11 |  STL | USet Longest(dict oa   |   457.62M| 7 | 11
 12 |  CTL |   USet Longest(hset)   |   480.78M| 8 | 12
 
