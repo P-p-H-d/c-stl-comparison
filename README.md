@@ -233,6 +233,7 @@ The following C libraries have been selected as their aim is to provide generic 
 * [GLIB](https://docs.gtk.org/glib/index.html)
 * [KLIB](https://github.com/attractivechaos/klib)
 * [M\*LIB](https://github.com/P-p-H-d/mlib)
+* [OpenCSTL](https://github.com/springkim/OpenCSTL)
 * [STB_DS](https://github.com/nothings/stb)
 * [STC - Smart Template Container for C](https://github.com/tylov/STC)
 
@@ -250,6 +251,7 @@ CTL            | 3923e6776a231e5d58cf91225ca8a1d61879401b
 GLIB           | 2.74
 KLIB           | 97a0fcb790b43b9e5da8994f4671021fec036f19
 M\*LIB         | a0818419ab959e05517336e1bea699c1854b29f3
+OpenCSTL       | 8b5b4c6f3f0f5bb81b5111c4ec2d52ff9300e19a
 STB_DS         | 904aa67e1e2d1dec92959df63e700b166d5c1022
 STC            | 5fb5ed08250b5ad4eadd6e7a9fdc44f4519b15ff
 
