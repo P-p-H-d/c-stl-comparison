@@ -220,6 +220,40 @@ static void test_sort(size_t n)
 #define STC_CSTR_IO
 #include "stc/cstr.h"
 
+#define i_tag str
+#define i_key cstr
+#define i_val cstr
+#define i_pro_key cstr
+#define i_pro_val cstr
+#include <stc/hmap.h>
+
+static void
+test_dict_str(size_t  n)
+{
+  hmap_str dict = hmap_str_init();
+
+  for (size_t i = 0; i < n; i++) {
+    char s1[32], s2[32];
+    sprintf(s1, "%u", rand_get());
+    sprintf(s2, "%u", rand_get());
+    hmap_str_emplace_or_assign(&dict, s1, s2);
+  }
+  rand_init();
+  unsigned int s = 0;
+  for (size_t i = 0; i < n; i++) {
+    char s1[32];
+    sprintf(s1, "%u", rand_get());
+    const hmap_str_value *val = hmap_str_get(&dict, s1);
+    if (val != NULL)
+      s ++;
+  }
+  g_result = s;
+
+  hmap_str_drop(&dict);
+}
+
+/********************************************************************************************/
+
 unsigned *permutation_tab = NULL;
 
 static void bench_string_replace_init(size_t n)
@@ -296,6 +330,7 @@ const config_func_t table[] = {
   { 200,  "SSet(sset)", C_N_SSET, 0, test_rbtree, 0},
   { 300,    "UMap U64(hmap)", C_N_UMAP_U64, 0, test_dict, 0},
   { 320, "UMap Big(hmap)", C_N_UMAP_BIG, 0, test_dict_big, 0},
+  { 330, "UMap Str(hmap)", C_N_UMAP_BIG, 0, test_dict_str, 0},
   { 340, "USet Longest(hset)", C_N_FIND_SEQ, 0, bench_find_longest, 0},
   { 500,    "Sort", C_N_SORT, 0, test_sort, 0},
   { 900, "String Replace", C_N_STR_REPLACE, bench_string_replace_init, bench_string_replace, bench_string_replace_clear},

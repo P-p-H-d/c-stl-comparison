@@ -178,6 +178,7 @@ bench-stc:
 	@./bench-stc.exe 200 $(LOG)
 	@./bench-stc.exe 300 $(LOG)
 	@./bench-stc.exe 320 $(LOG)
+	@./bench-stc.exe 330 $(LOG)
 	@./bench-stc.exe 340 $(LOG)
 	@./bench-stc.exe 500 $(LOG)
 	@./bench-stc.exe 900 $(LOG)
