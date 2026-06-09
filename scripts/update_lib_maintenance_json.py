@@ -25,6 +25,7 @@ from typing import Any, Callable
 LIBRARIES_ORDER = [
     "STL",
     "M*LIB",
+    "OpenCSTL",
     "STC",
     "CMC",
     "CTL",
@@ -39,6 +40,7 @@ LIBRARIES_ORDER = [
 # Map library labels to Makefile external directory names.
 LIB_TO_EXTERNAL_DIR = {
     "M*LIB": "mlib",
+    "OpenCSTL": "OpenCSTL",
     "STC": "STC",
     "GLIB": "glib",
     "CMC": "C-Macro-Collections",

@@ -15,6 +15,21 @@ COMP_HEADER_PATTERN = re.compile(
     re.IGNORECASE,
 )
 
+LIBRARIES_ORDER = [
+    "CC",
+    "CCC",
+    "CMC",
+    "CollecC",
+    "CTL",
+    "GLIB",
+    "KLIB",
+    "M*LIB",
+    "OpenCSTL",
+    "STB_DS",
+    "STC",
+    "STL",
+]
+
 
 def parse_row(line: str) -> list[str]:
     return [cell.strip() for cell in line.strip().strip("|").split("|")]
@@ -52,6 +67,30 @@ def to_cell(value: Any) -> str:
     return str(value)
 
 
+def sort_numeric_rows_ascending(rows: list[list[str]]) -> list[list[str]]:
+    def key(row: list[str]) -> tuple[int, float, str]:
+        value = row[1] if len(row) > 1 else "NA"
+        try:
+            return (0, float(value), row[0].casefold())
+        except (TypeError, ValueError):
+            return (1, float("inf"), row[0].casefold())
+
+    return sorted(rows, key=key)
+
+
+def ordered_program_libraries(program_data: dict[str, Any]) -> list[str]:
+    ordered: list[str] = []
+    present = {lib for lib, value in program_data.items() if isinstance(value, dict)}
+
+    for lib in LIBRARIES_ORDER:
+        if lib in present:
+            ordered.append(lib)
+            present.remove(lib)
+
+    ordered.extend(sorted(present, key=str.casefold))
+    return ordered
+
+
 def update_metrics_table(table_text: str, programs_data: dict[str, Any]) -> str:
     lines = table_text.splitlines()
     header_cells = parse_row(lines[0])
@@ -66,7 +105,8 @@ def update_metrics_table(table_text: str, programs_data: dict[str, Any]) -> str:
     if not isinstance(program_data, dict):
         program_data = {}
 
-    libraries = header_cells[1:]
+    libraries = ordered_program_libraries(program_data)
+    header_cells = [header_cells[0], *libraries]
     chars_row = ["number of characters"]
     loc_row = ["number of line of codes"]
     wa_row = ["number of workarounds"]
@@ -96,16 +136,15 @@ def update_size_table(table_text: str, programs_data: dict[str, Any]) -> str:
     if not isinstance(program_data, dict):
         program_data = {}
 
-    rows: list[tuple[str, int]] = []
-    for lib, lib_data in program_data.items():
-        if not isinstance(lib_data, dict):
-            continue
-        value = lib_data.get("binary size (bytes)")
-        if isinstance(value, int):
-            rows.append((lib, value))
+    libraries = ordered_program_libraries(program_data)
+    body_rows: list[list[str]] = []
+    for lib in libraries:
+        lib_data = program_data.get(lib, {})
+        value = lib_data.get("binary size (bytes)") if isinstance(lib_data, dict) else None
+        body_rows.append([lib, to_cell(value)])
 
-    rows.sort(key=lambda item: (item[1], item[0].casefold()))
-    body_rows = [[lib, str(size)] for lib, size in rows]
+    body_rows = sort_numeric_rows_ascending(body_rows)
+
     if not body_rows:
         body_rows = [["NA", "NA"]]
 
@@ -126,16 +165,18 @@ def update_compilation_table(table_text: str, programs_data: dict[str, Any]) -> 
     if not isinstance(program_data, dict):
         program_data = {}
 
-    rows: list[tuple[str, float]] = []
-    for lib, lib_data in program_data.items():
-        if not isinstance(lib_data, dict):
-            continue
-        value = lib_data.get("compilation time (seconds)")
+    libraries = ordered_program_libraries(program_data)
+    body_rows: list[list[str]] = []
+    for lib in libraries:
+        lib_data = program_data.get(lib, {})
+        value = lib_data.get("compilation time (seconds)") if isinstance(lib_data, dict) else None
         if isinstance(value, (int, float)):
-            rows.append((lib, float(value)))
+            body_rows.append([lib, f"{float(value):.2f}"])
+        else:
+            body_rows.append([lib, "NA"])
 
-    rows.sort(key=lambda item: (item[1], item[0].casefold()))
-    body_rows = [[lib, f"{seconds:.2f}"] for lib, seconds in rows]
+    body_rows = sort_numeric_rows_ascending(body_rows)
+
     if not body_rows:
         body_rows = [["NA", "NA"]]
 

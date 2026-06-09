@@ -14,8 +14,7 @@ from typing import Any
 PROJECT_SIZES_TABLE_PATTERN = re.compile(
     r"(^\|\s*Project Sizes\s*\|.*\n"
     r"\|[-| ]+\n"
-    r"(?:\|.*\n)*?)"
-    r"(?=\n+This information is also available as a \[JSON file\]\(lib-project-lines\.json\)\.)",
+    r"(?:\|.*\n)*)",
     re.MULTILINE,
 )
 
@@ -28,9 +27,24 @@ LIBRARY_LABEL_TO_JSON_KEY = {
     "GLIB": "glib",
     "KLIB": "klib",
     "M*LIB": "mlib",
+    "OpenCSTL": "OpenCSTL",
     "STB_DS": "stb",
     "STC": "STC",
 }
+
+LIBRARIES_ORDER = [
+    "CC",
+    "CCC",
+    "CMC",
+    "CollecC",
+    "CTL",
+    "GLIB",
+    "KLIB",
+    "M*LIB",
+    "OpenCSTL",
+    "STB_DS",
+    "STC",
+]
 
 
 def parse_header_cells(line: str) -> list[str]:
@@ -66,6 +80,22 @@ def format_percent(part: Any, total: Any) -> str:
     if float(total) <= 0:
         return "NA"
     return f"{(100.0 * float(part) / float(total)):.2f}%"
+
+
+def ordered_libraries(libraries_data: dict[str, Any]) -> list[str]:
+    present: set[str] = set()
+    for label, json_key in LIBRARY_LABEL_TO_JSON_KEY.items():
+        if isinstance(libraries_data.get(json_key), dict):
+            present.add(label)
+
+    ordered: list[str] = []
+    for lib in LIBRARIES_ORDER:
+        if lib in present:
+            ordered.append(lib)
+            present.remove(lib)
+
+    ordered.extend(sorted(present, key=str.casefold))
+    return ordered
 
 
 def build_rows(libraries: list[str], data: dict[str, Any]) -> list[list[str]]:
@@ -110,7 +140,14 @@ def update_project_sizes_table(readme_text: str, project_lines_data: dict[str, A
         if not header_cells or header_cells[0] != "Project Sizes":
             return match.group(1)
 
-        libraries = header_cells[1:]
+        libraries_data = project_lines_data.get("libraries", {})
+        if not isinstance(libraries_data, dict):
+            libraries_data = {}
+
+        libraries = ordered_libraries(libraries_data)
+        if not libraries:
+            libraries = header_cells[1:]
+
         body_rows = build_rows(libraries, project_lines_data)
         return format_table([[header_cells[0], *libraries], *body_rows])
 

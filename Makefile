@@ -116,6 +116,9 @@ external/stb:
 external/ccc:
 	mkdir -p external && cd external && git clone https://github.com/SkeletOSS/ccc.git
 
+external/OpenCSTL:
+	mkdir -p external && cd external && git clone https://github.com/springkim/OpenCSTL.git
+
 ###########################################################
 # 		Build external Libraries
 ###########################################################
@@ -152,6 +155,7 @@ array: array-mpz-mlib.exe array-mpz-stc.exe array-mpz-ctl.exe array-mpz-cmc.exe 
        array-str-mlib.exe array-str-stc.exe array-str-ctl.exe array-str-cmc.exe array-str-stl.exe array-str-collectionsC.exe array-str-CC.exe  \
 	   array-mpz-stb.exe array-int-stb.exe array-str-stb.exe \
 	   array-mpz-klib.exe array-int-klib.exe array-str-klib.exe \
+	   array-int-opencstl.exe array-str-opencstl.exe array-mpz-opencstl.exe \
 	   array-c23-test
 
 array-c23-test:
@@ -252,6 +256,15 @@ array-str-ccc.exe: array-str/array-ccc.c external/ccc/libccc.a
 array-mpz-ccc.exe: array-mpz/array-ccc.c external/ccc/libccc.a
 	$(C23) $(CFLAGS) -Iexternal/ccc $< -o $@ external/ccc/libccc.a $(LDFLAGS)
 
+array-int-opencstl.exe: array-int/array-opencstl.c external/OpenCSTL
+	$(C99) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ $(LDFLAGS)
+
+array-str-opencstl.exe: array-str/array-opencstl.c external/OpenCSTL
+	$(C99) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ $(LDFLAGS)
+
+array-mpz-opencstl.exe: array-mpz/array-opencstl.c external/OpenCSTL
+	$(C99) $(CFLAGS) -iquote external/OpenCSTL/ $< -o $@ $(LDFLAGS)
+
 ###########################################################
 # 		Build example for Unordered map
 ###########################################################
@@ -261,6 +274,7 @@ umap: umap-mpz-mlib.exe umap-mpz-stc.exe umap-mpz-ctl.exe umap-mpz-cmc.exe umap-
       umap-str-mlib.exe umap-str-stc.exe umap-str-ctl.exe umap-str-cmc.exe umap-str-stl.exe umap-str-collectionsC.exe umap-str-CC.exe \
       umap-mpz-klib.exe umap-str-klib.exe umap-int-klib.exe \
       umap-str-stb.exe umap-int-stb.exe \
+	  umap-int-opencstl.exe umap-str-opencstl.exe \
 	  umap-c23-test
 
 umap-c23-test:
@@ -342,6 +356,14 @@ umap-str-klib.exe: umap-str/umap-klib.c external/klib
 
 umap-mpz-klib.exe: umap-mpz/umap-klib.c external/klib
 	$(C11) $(CFLAGS) -Iexternal/klib $< -o $@ $(LDFLAGS)
+
+umap-int-opencstl.exe: umap-int/umap-opencstl.c external/OpenCSTL
+	$(C11) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ $(LDFLAGS)
+
+umap-str-opencstl.exe: umap-str/umap-opencstl.c external/OpenCSTL
+	$(C11) $(CFLAGS) -Iexternal/OpenCSTL/ $< -o $@ $(LDFLAGS)
+
+#umap-mpz-opencstl.exe is not possible: there is no way to give as proper hash function.
 
 umap-int-stb.exe: umap-int/umap-stb.c external/stb
 	$(C11) $(CFLAGS) -Iexternal/stb $< -o $@ $(LDFLAGS)

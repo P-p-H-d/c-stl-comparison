@@ -17,7 +17,19 @@ import re
 import sys
 
 # Canonical set of libraries used in README tables.
-LIBS_ORDER = ["STL", "M*LIB", "STC", "CMC", "CTL", "CollecC", "CC", "GLIB", "STB_DS", "KLIB", "CCC"]
+LIBS_ORDER = [
+    "CC",
+    "CCC",
+    "CMC",
+    "CollecC",
+    "CTL",
+    "GLIB",
+    "KLIB",
+    "M*LIB",
+    "OpenCSTL",
+    "STB_DS",
+    "STC",
+]
 
 
 # ---------------------------------------------------------------------------
