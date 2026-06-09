@@ -67,6 +67,17 @@ def to_cell(value: Any) -> str:
     return str(value)
 
 
+def sort_numeric_rows_ascending(rows: list[list[str]]) -> list[list[str]]:
+    def key(row: list[str]) -> tuple[int, float, str]:
+        value = row[1] if len(row) > 1 else "NA"
+        try:
+            return (0, float(value), row[0].casefold())
+        except (TypeError, ValueError):
+            return (1, float("inf"), row[0].casefold())
+
+    return sorted(rows, key=key)
+
+
 def ordered_program_libraries(program_data: dict[str, Any]) -> list[str]:
     ordered: list[str] = []
     present = {lib for lib, value in program_data.items() if isinstance(value, dict)}
@@ -132,6 +143,8 @@ def update_size_table(table_text: str, programs_data: dict[str, Any]) -> str:
         value = lib_data.get("binary size (bytes)") if isinstance(lib_data, dict) else None
         body_rows.append([lib, to_cell(value)])
 
+    body_rows = sort_numeric_rows_ascending(body_rows)
+
     if not body_rows:
         body_rows = [["NA", "NA"]]
 
@@ -161,6 +174,8 @@ def update_compilation_table(table_text: str, programs_data: dict[str, Any]) -> 
             body_rows.append([lib, f"{float(value):.2f}"])
         else:
             body_rows.append([lib, "NA"])
+
+    body_rows = sort_numeric_rows_ascending(body_rows)
 
     if not body_rows:
         body_rows = [["NA", "NA"]]
