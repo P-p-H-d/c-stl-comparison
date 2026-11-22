@@ -1,9 +1,9 @@
 #include <stdio.h>
 
-#define i_static
+#define i_implement
 #include <stc/cstr.h>
 
-#define i_keypro cstr
+#define i_pro_key cstr
 #define i_cmp(a,b)     strcmp(*a,*b)
 #include <stc/vec.h>
 

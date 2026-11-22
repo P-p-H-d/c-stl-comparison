@@ -1,10 +1,14 @@
 #include <stdio.h>
+#include <string.h>
 
-#define i_static
+#define i_implement
 #include <stc/cstr.h>
 #include <stc/algorithm.h>
 
-#define T umap_str, cstr, cstr, (c_keypro | c_valpro)
+#define T umap_str, cstr, cstr, (c_pro_key | c_pro_val)
+#define i_keyfrom cstr_from
+#define i_keytoraw cstr_str
+#define i_eq(x, y) (strcmp(*x, *y) == 0)
 #include <stc/hashmap.h>
 
 int main(void)
