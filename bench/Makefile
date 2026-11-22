@@ -23,6 +23,7 @@
 CC=cc -std=c11
 C23=cc -std=c23
 CXX=c++ -std=c++11
+CXX14=c++ -std=c++14
 CFLAGS=-O2 -march=native -Wall
 XCFLAGS=
 CPPFLAGS=
@@ -335,7 +336,7 @@ bench-qt0:
 bench-boost:
 	@if test -n "$${BOOST}" ; then $(MAKE) bench-boost0 ; else echo "Nothing to be done for BOOST." ; fi
 bench-boost0:
-	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -I "$${BOOST}" bench-boost.cpp common.c -o bench-boost.exe -lpthread
+	$(CXX14) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -I "$${BOOST}" bench-boost.cpp common.c -o bench-boost.exe -lpthread
 	@./bench-boost.exe 300 $(LOG)
 	@./bench-boost.exe 310 $(LOG)
 	@./bench-boost.exe 320 $(LOG)
@@ -345,7 +346,7 @@ bench-boost0:
 bench-boost-queue:
 	@if test -n "$${BOOST}" ; then $(MAKE) bench-boost-queue0 ; else echo "Nothing to be done for BOOST." ; fi
 bench-boost-queue0:
-	$(CXX) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -I "$${BOOST}" bench-boost.cpp common.c -DMULTI_THREAD_MEASURE -o bench-boost-thread.exe -lpthread
+	$(CXX14) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I $(MLIB) -I "$${BOOST}" bench-boost.cpp common.c -DMULTI_THREAD_MEASURE -o bench-boost-thread.exe -lpthread
 	@./bench-boost-thread.exe 600 $(LOG)
 
 # SPARSEPP shall point to the directory where the headers are
