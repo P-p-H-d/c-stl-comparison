@@ -19,7 +19,7 @@ import json
 from pathlib import Path
 
 
-SOURCE_DIR_NAMES = {"src", "source", "sources", "include", "headers", "header"}
+SOURCE_DIR_NAMES = {"src", "source", "sources", "include", "headers", "header", "cmc"}
 TEST_DIR_NAMES = {"tests", "test", "check", "checks"}
 EXAMPLE_DIR_NAMES = {"examples", "example"}
 DOC_DIR_NAMES = {"doc", "docs", "documentation", "documentations"}
