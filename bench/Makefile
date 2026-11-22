@@ -219,7 +219,7 @@ bench-glib0:
 
 bench-tommyds:
 	@cd .. && make external/tommyds
-	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I "../external/tommyds" bench-tommyds.c ../external/tommyds/tommyds/tommyarray.c ../external/tommyds/tommyds/tommylist.c ../external/tommyds/tommyds/tommytree.c ../external/tommyds/tommyds/tommyhashlin.c common.c -o bench-tommyds.exe
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) -I "../external/tommyds" bench-tommyds.c common.c ../external/tommyds/tommyds/tommy.c -o bench-tommyds.exe
 	@./bench-tommyds.exe 100 $(LOG)
 	@./bench-tommyds.exe 110 $(LOG)
 	@./bench-tommyds.exe 200 $(LOG)

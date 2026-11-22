@@ -19,9 +19,9 @@ static void test_array(size_t n)
   tommy_array_init(&a2);
   for(size_t i = 0; i < n; i++) {
     unsigned int v = rand_get();
-    tommy_array_insert(&a1, (void*)(uintptr_t) v);
+    tommy_array_insert_tail(&a1, (void*)(uintptr_t) v);
     v = rand_get();
-    tommy_array_insert(&a2, (void*)(uintptr_t) v);
+    tommy_array_insert_tail(&a2, (void*)(uintptr_t) v);
   }
   unsigned int s = 0;
   for(unsigned long i = 0; i < n; i++) {
