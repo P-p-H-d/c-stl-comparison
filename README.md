@@ -426,20 +426,20 @@ This information is also available as a [JSON file](lib-features.json) with more
 
 This information is also available as a [JSON file](lib-containers.json).
 
-| Maintenance                                         | CC          | CCC        | CMC         | CollecC     | CTL         | GLIB        | KLIB        | M*LIB      | OpenCSTL   | STB_DS      | STC        |
-|-----------------------------------------------------|-------------|------------|-------------|-------------|-------------|-------------|-------------|------------|------------|-------------|------------|
-| Number of stars                                     | 480         | 24         | 598         | 3004        | 289         | 1756        | 4712        | 1151       | 27         | 34367       | 1948       |
-| Last commit age                                     | 403.91 days | 10.76 days | 773.99 days | 89.23 days  | 180.33 days | 0.30 days   | 230.67 days | 18.01 days | 53.97 days | 7.58 days   | 51.11 days |
-| Number of commits                                   | 350         | 2151       | 517         | 664         | 943         | 33241       | 398         | 4022       | 199        | 2232        | 3333       |
-| How old is the project?                             | 3.69 years  | 2.56 years | 7.38 years  | 11.98 years | 5.87 years  | 28.16 years | 15.57 years | 9.47 years | 8.02 years | 12.21 years | 6.43 years |
-| Last release date                                   | 2025-07-01  | 2026-07-27 | NA          | NA          | 2021-02-22  | NA          | NA          | 2026-07-10 | NA         | NA          | 2025-01-12 |
-| Number of release per year                          | 4.61        | 62.58      | 0           | 0           | 0.34        | 0           | 0           | 1.58       | 0          | 0           | 2.02       |
-| Percent of open issues / total (open+closed) issues | 30.00%      | NA         | 69.44%      | 22.22%      | 55.56%      | NA          | 47.17%      | 0.00%      | 0.00%      | 25.23%      | 5.38%      |
-| Average Time to answer an issue                     | 47.36 h     | NA         | 1632.95 h   | 857.47 h    | 15839.79 h  | NA          | 928.21 h    | 17.05 h    | NA         | 97.16 h     | 1044.45 h  |
-| Number of main authors                              | 1           | 1          | 1           | 3           | 2           | 2           | 3           | 1          | 1          | 2           | 1          |
-| Number of OS supported by CI                        | 1           | 3          | 1           | 3           | 4           | 0           | 0           | 4          | 4          | 1           | 4          |
-| Number of hardware architecture supported by CI     | 1           | 3          | 1           | 1           | 1           | 0           | 0           | 6          | 1          | 1           | 1          |
-| Number of compilers supported by CI                 | 1           | 2          | 1           | 3           | 3           | 0           | 0           | 4          | 4          | 0           | 3          |
+| Maintenance                                         | CC          | CCC        | CMC         | CollecC     | CTL        | GLIB        | KLIB        | M*LIB      | OpenCSTL    | STB_DS      | STC        |
+|-----------------------------------------------------|-------------|------------|-------------|-------------|------------|-------------|-------------|------------|-------------|-------------|------------|
+| Number of stars                                     | 509         | 26         | 601         | 3010        | 292        | 1777        | 4752        | 1162       | 28          | 35109       | 2019       |
+| Last commit age                                     | 508.86 days | 39.29 days | 878.94 days | 194.19 days | 58.24 days | 2.20 days   | 335.62 days | 35.34 days | 158.93 days | 3.03 days   | 7.18 days  |
+| Number of commits                                   | 350         | 2158       | 517         | 664         | 973        | 33762       | 398         | 4024       | 199         | 2583        | 3387       |
+| How old is the project?                             | 3.98 years  | 2.84 years | 7.67 years  | 12.26 years | 6.15 years | 28.45 years | 15.86 years | 9.76 years | 8.30 years  | 12.49 years | 6.72 years |
+| Last release date                                   | 2025-07-01  | 2026-07-27 | NA          | NA          | 2021-02-22 | NA          | NA          | 2026-07-10 | NA          | NA          | 2025-01-12 |
+| Number of release per year                          | 4.28        | 56.25      | 0           | 0           | 0.32       | 0           | 0           | 1.54       | 0           | 0           | 1.93       |
+| Percent of open issues / total (open+closed) issues | 33.33%      | NA         | 69.44%      | 24.32%      | 0.00%      | NA          | 47.17%      | 0.00%      | 0.00%       | 1.31%       | 8.00%      |
+| Average Time to answer an issue                     | 46.07 h     | NA         | 1632.95 h   | 882.67 h    | 18102.60 h | NA          | 928.21 h    | 17.05 h    | NA          | 385.64 h    | 463.36 h   |
+| Number of main authors                              | 1           | 1          | 1           | 3           | 2          | 1           | 3           | 1          | 1           | 3           | 1          |
+| Number of OS supported by CI                        | 1           | 3          | 1           | 3           | 4          | 0           | 0           | 4          | 4           | 1           | 4          |
+| Number of hardware architecture supported by CI     | 1           | 3          | 1           | 1           | 1          | 0           | 0           | 6          | 1           | 1           | 1          |
+| Number of compilers supported by CI                 | 1           | 2          | 1           | 3           | 3          | 0           | 0           | 4          | 4           | 0           | 3          |
 
 
 This information is also available as a [JSON file](lib-maintenance.json).
