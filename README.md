@@ -243,7 +243,7 @@ The used versions for the manual feature comparison are:
 
 COMPONENT      | VERSION
 ---------------|-----------------------------------------
-C Macro Collections | v0.23.1
+C Macro Collections | 99f08e2b6e446e03fa3c7321b58e40ff3796d747
 CC             | 2012d9d2eb8f035d7dc69f36ec03ca3199ede1bf
 ccc            | 22f8c17e863d52cad120dc9dfedbd0452f8625a9
 CollectionsC   | ff1be366329e2c82cd85b2c803114ef8d2115f7f
@@ -311,7 +311,7 @@ For a container of such library that encapsulates a collection of objects of bas
 | C language        | >=C11* | >=C23  | >=C99 | >=C99   | >=C99 | >=C89   | >=C99 | >=C99 | >=C99*   | >=C99* | >=C99 |
 | Pure C            | Y      | Y      | Y     | Y       | Y     | Y       | Y     | Y     | Y        | Y      | Y     |
 | Header only       | Y      | N      | Y     | N       | Y     | N       | Y     | Y     | Y        | Y      | Y*    |
-| Generic mechanism | M+GO   | VP     | TM    | VP      | TH    | VP      | TM    | TM    | VP+M     | M      | TH    |
+| Generic mechanism | M+GO   | VP     | TH    | VP      | TH    | VP      | TM    | TM    | VP+M     | M      | TH    |
 | type safe         | Y*     | N      | Y     | N       | Y     | N       | Y     | Y     | N*       | N*     | Y     |
 
 | Characteristics       | CC | CCC | CMC | CollecC | CTL | GLIB | KLIB | M*LIB | OpenCSTL | STB_DS | STC |
@@ -365,7 +365,7 @@ This information is also available as a [JSON file](lib-features.json) with more
 | Containers                                    | CC | CCC | CMC | CollecC | CTL | GLIB | KLIB | M*LIB | OpenCSTL | STB_DS | STC |
 |-----------------------------------------------|----|-----|-----|---------|-----|------|------|-------|----------|--------|-----|
 | Singly Linked Non-Intrusive list              | N  | Y   | N   | Y       | Y   | Y    | Y    | Y     | N        | N      | N   |
-| Doubly Linked Non-Intrusive list              | Y  | N   | N   | Y       | Y   | Y    | N    | N     | Y        | N      | N   |
+| Doubly Linked Non-Intrusive list              | Y  | N   | Y   | Y       | Y   | Y    | N    | N     | Y        | N      | N   |
 | Singly Linked, Dually Push Non-Intrusive list | N  | N   | N   | N       | N   | N    | N    | Y     | N        | N      | Y   |
 | Singly Linked Intrusive list                  | N  | Y   | N   | N       | N   | N    | N    | N     | N        | N      | N   |
 | Doubly Linked Intrusive list                  | N  | Y   | N   | N       | N   | N    | N    | Y     | N        | N      | N   |
@@ -384,23 +384,23 @@ This information is also available as a [JSON file](lib-features.json) with more
 | deque                    | N  | Y   | Y   | Y       | Y   | Y    | N    | Y     | Y        | N      | Y   |
 | queue                    | N  | N   | Y   | Y       | Y   | Y    | N    | Y     | Y        | N      | Y   |
 | priority queue           | N  | Y   | Y   | Y       | Y   | N    | N    | Y     | N        | N      | Y   |
-| stack                    | N  | N   | N   | Y       | Y   | N    | N    | Y     | Y        | N      | Y   |
+| stack                    | N  | N   | Y   | Y       | Y   | N    | N    | Y     | Y        | N      | Y   |
 | Bounded Queue            | N  | Y   | N   | N       | N   | Y    | N    | Y     | N        | N      | N   |
 
 | Containers         | CC | CCC | CMC | CollecC | CTL | GLIB | KLIB | M*LIB | OpenCSTL | STB_DS | STC |
 |--------------------|----|-----|-----|---------|-----|------|------|-------|----------|--------|-----|
-| set                | N  | Y   | N   | Y       | N   | Y    | Y    | Y     | Y        | N      | Y   |
-| multiset           | N  | N   | N   | N       | N   | N    | N    | Y     | N        | N      | N   |
-| map                | N  | N   | N   | Y       | Y   | N    | Y    | Y     | Y        | N      | N   |
-| multimap           | N  | N   | N   | N       | N   | N    | N    | Y     | N        | N      | N   |
+| set                | N  | Y   | Y   | Y       | N   | Y    | Y    | Y     | Y        | N      | Y   |
+| multiset           | N  | N   | Y   | N       | N   | N    | N    | Y     | N        | N      | N   |
+| map                | N  | N   | Y   | Y       | Y   | N    | Y    | Y     | Y        | N      | N   |
+| multimap           | N  | N   | Y   | N       | N   | N    | N    | Y     | N        | N      | N   |
 | unordered_set      | Y  | Y   | Y   | Y       | Y   | N    | Y    | Y     | Y        | Y      | Y   |
 | unordered_multiset | N  | N   | Y   | N       | N   | N    | N    | N     | N        | N      | N   |
 | unordered_map      | Y  | N   | Y   | Y       | Y   | N    | Y    | Y     | Y        | Y      | Y   |
 | unordered_multimap | N  | N   | Y   | N       | N   | Y    | N    | N     | N        | N      | N   |
-| flat_set           | N  | N   | Y   | N       | N   | N    | N    | N     | N        | N      | N   |
-| flat_multiset      | N  | N   | Y   | N       | N   | N    | N    | N     | N        | N      | N   |
-| flat_map           | N  | Y   | Y   | N       | N   | N    | N    | N     | Y        | N      | N   |
-| flat_multimap      | N  | N   | Y   | N       | N   | N    | N    | N     | N        | N      | N   |
+| flat_set           | N  | N   | N   | N       | N   | N    | N    | N     | N        | N      | N   |
+| flat_multiset      | N  | N   | N   | N       | N   | N    | N    | N     | N        | N      | N   |
+| flat_map           | N  | Y   | N   | N       | N   | N    | N    | N     | Y        | N      | N   |
+| flat_multimap      | N  | N   | N   | N       | N   | N    | N    | N     | N        | N      | N   |
 
 | Containers          | CC | CCC | CMC | CollecC | CTL | GLIB | KLIB | M*LIB | OpenCSTL | STB_DS | STC |
 |---------------------|----|-----|-----|---------|-----|------|------|-------|----------|--------|-----|
@@ -419,7 +419,7 @@ This information is also available as a [JSON file](lib-features.json) with more
 | Atomic Shared Register MPSC | N  | N   | N   | N       | N   | N    | N    | Y     | N        | N      | N   |
 | Atomic Shared Register SPMC | N  | N   | N   | N       | N   | N    | N    | Y     | N        | N      | N   |
 | Atomic Shared Register MPMC | N  | N   | N   | N       | N   | N    | N    | Y     | N        | N      | N   |
-| Skip List                   | N  | N   | Y   | N       | N   | N    | N    | N     | N        | N      | N   |
+| Skip List                   | N  | N   | N   | N       | N   | N    | N    | N     | N        | N      | N   |
 | Sorted Bidirectional Map    | N  | N   | Y   | N       | N   | N    | N    | N     | N        | N      | N   |
 | Tree                        | N  | N   | N   | N       | N   | N    | N    | Y     | N        | N      | N   |
 
@@ -444,12 +444,12 @@ This information is also available as a [JSON file](lib-containers.json).
 
 This information is also available as a [JSON file](lib-maintenance.json).
 
-| Project Sizes               | CC     | CCC     | CMC     | CollecC | CTL     | GLIB   | KLIB   | M*LIB  | OpenCSTL | STB_DS | STC    |
-|-----------------------------|--------|---------|---------|---------|---------|--------|--------|--------|----------|--------|--------|
-| Number of source lines      | 9591   | 31776   | 25204   | 14113   | 9566    | 342116 | 11140  | 34470  | 17933    | 51166  | 12563  |
-| % of examples / source      | 0.00%  | 0.00%   | 21.53%  | 3.46%   | 21.03%  | 0.00%  | 0.00%  | 22.85% | 1.53%    | 0.00%  | 45.16% |
-| % of documentation / source | 21.72% | 15.69%  | 74.07%  | 1.92%   | 59.30%  | 9.12%  | 2.18%  | 32.12% | 35.81%   | 1.29%  | 50.76% |
-| % of tests / source         | 70.85% | 105.10% | 110.97% | 83.31%  | 235.16% | 0.21%  | 26.12% | 53.75% | 47.56%   | 61.55% | 16.64% |
+| Project Sizes               | CC     | CCC     | CMC    | CollecC | CTL     | KLIB   | M*LIB  | OpenCSTL | STB_DS | STC    |
+|-----------------------------|--------|---------|--------|---------|---------|--------|--------|----------|--------|--------|
+| Number of source lines      | 9591   | 32916   | 28498  | 14113   | 9566    | 11140  | 34728  | 22609    | 51166  | 14512  |
+| % of examples / source      | 0.00%  | 0.00%   | 2.18%  | 3.46%   | 21.03%  | 0.00%  | 22.77% | 1.21%    | 0.00%  | 41.61% |
+| % of documentation / source | 21.72% | 15.36%  | 65.28% | 1.92%   | 59.30%  | 2.18%  | 32.17% | 57.91%   | 1.29%  | 44.74% |
+| % of tests / source         | 70.85% | 102.00% | 52.84% | 83.31%  | 235.16% | 26.12% | 55.85% | 41.81%   | 61.55% | 16.10% |
 
 > Note: STB_DS and GLIB documentation are included in the source directly which explains their low %.
 
@@ -521,41 +521,41 @@ and generate the different executables.
 
 What can be objectively compared is the size of the programs:
 
-| Array-Int programs      | CC  | CCC  | CMC  | CollecC | CTL | GLIB | KLIB | M*LIB | OpenCSTL | STB_DS | STC | STL |
-|-------------------------|-----|------|------|---------|-----|------|------|-------|----------|--------|-----|-----|
-| number of characters    | 611 | 1391 | 1011 | 885     | 593 | 696  | 783  | 373   | 726      | 817    | 558 | 236 |
-| number of line of codes | 34  | 55   | 46   | 46      | 25  | 38   | 28   | 18    | 37       | 43     | 34  | 13  |
-| number of workarounds   | 0   | 0    | 2    | 2       | 2   | 0    | 2    | 0     | 1        | 1      | 0   | 0   |
+| Array-Int programs      | CC  | CCC  | CMC | CollecC | CTL | GLIB | KLIB | M*LIB | OpenCSTL | STB_DS | STC | STL |
+|-------------------------|-----|------|-----|---------|-----|------|------|-------|----------|--------|-----|-----|
+| number of characters    | 611 | 1391 | 868 | 885     | 593 | 696  | 783  | 373   | 726      | 817    | 558 | 236 |
+| number of line of codes | 34  | 55   | 44  | 46      | 25  | 38   | 28   | 18    | 37       | 43     | 34  | 13  |
+| number of workarounds   | 0   | 0    | 0   | 2       | 2   | 0    | 2    | 0     | 1        | 1      | 0   | 0   |
 
-| Array-Str programs      | CC  | CCC  | CMC  | CollecC | CTL | GLIB | KLIB | M*LIB | OpenCSTL | STB_DS | STC | STL |
-|-------------------------|-----|------|------|---------|-----|------|------|-------|----------|--------|-----|-----|
-| number of characters    | 651 | 1474 | 1053 | 839     | 762 | 908  | 1497 | 442   | 773      | 881    | 568 | 274 |
-| number of line of codes | 33  | 54   | 45   | 47      | 29  | 44   | 55   | 19    | 38       | 45     | 36  | 14  |
-| number of workarounds   | 0   | 0    | 2    | 1       | 3   | 0    | 3    | 0     | 1        | 1      | 0   | 0   |
+| Array-Str programs      | CC  | CCC  | CMC | CollecC | CTL | GLIB | KLIB | M*LIB | OpenCSTL | STB_DS | STC | STL |
+|-------------------------|-----|------|-----|---------|-----|------|------|-------|----------|--------|-----|-----|
+| number of characters    | 651 | 1474 | 924 | 839     | 762 | 908  | 1497 | 442   | 773      | 881    | 568 | 274 |
+| number of line of codes | 33  | 54   | 45  | 47      | 29  | 44   | 55   | 19    | 38       | 45     | 36  | 14  |
+| number of workarounds   | 0   | 0    | 0   | 1       | 3   | 0    | 3    | 0     | 1        | 1      | 0   | 0   |
 
 | Array-mpz programs      | CC   | CCC  | CMC  | CollecC | CTL  | GLIB | KLIB | M*LIB | OpenCSTL | STB_DS | STC  | STL |
 |-------------------------|------|------|------|---------|------|------|------|-------|----------|--------|------|-----|
-| number of characters    | 1120 | 1581 | 1740 | 1337    | 1407 | 840  | 1041 | 505   | 1162     | 1255   | 1222 | 261 |
-| number of line of codes | 49   | 61   | 65   | 68      | 42   | 47   | 43   | 20    | 46       | 61     | 44   | 14  |
-| number of workarounds   | 2    | 0    | 7    | 1       | 5    | 0    | 5    | 0     | 3        | 4      | 3    | 0   |
+| number of characters    | 1120 | 1581 | 1437 | 1337    | 1407 | 840  | 1041 | 505   | 1162     | 1255   | 1222 | 261 |
+| number of line of codes | 49   | 61   | 77   | 68      | 42   | 47   | 43   | 20    | 46       | 61     | 44   | 14  |
+| number of workarounds   | 2    | 0    | 0    | 1       | 5    | 0    | 5    | 0     | 3        | 4      | 3    | 0   |
 
-| UMap-Int programs       | CC  | CCC  | CMC  | CollecC | CTL  | GLIB | KLIB | M*LIB | OpenCSTL | STB_DS | STC | STL |
-|-------------------------|-----|------|------|---------|------|------|------|-------|----------|--------|-----|-----|
-| number of characters    | 442 | 2140 | 1640 | 1241    | 1090 | 984  | 774  | 462   | 647      | 1035   | 777 | 359 |
-| number of line of codes | 26  | 85   | 62   | 54      | 47   | 42   | 43   | 19    | 32       | 50     | 37  | 15  |
-| number of workarounds   | 0   | 0    | 1    | 0       | 1    | 0    | 0    | 0     | 0        | 3      | 0   | 0   |
+| UMap-Int programs       | CC  | CCC  | CMC | CollecC | CTL  | GLIB | KLIB | M*LIB | OpenCSTL | STB_DS | STC | STL |
+|-------------------------|-----|------|-----|---------|------|------|------|-------|----------|--------|-----|-----|
+| number of characters    | 442 | 2140 | 991 | 1241    | 1090 | 984  | 774  | 462   | 647      | 1035   | 777 | 359 |
+| number of line of codes | 26  | 85   | 53  | 54      | 47   | 42   | 43   | 19    | 32       | 50     | 37  | 15  |
+| number of workarounds   | 0   | 0    | 0   | 0       | 1    | 0    | 0    | 0     | 0        | 3      | 0   | 0   |
 
 | UMap-Str programs       | CC  | CCC  | CMC  | CollecC | CTL  | GLIB | KLIB | M*LIB | OpenCSTL | STB_DS | STC | STL |
 |-------------------------|-----|------|------|---------|------|------|------|-------|----------|--------|-----|-----|
-| number of characters    | 522 | 2350 | 1627 | 929     | 1756 | 1514 | 837  | 615   | 868      | 991    | 992 | 436 |
-| number of line of codes | 26  | 93   | 63   | 35      | 64   | 58   | 43   | 20    | 39       | 48     | 41  | 16  |
-| number of workarounds   | 0   | 0    | 1    | 0       | 4    | 0    | 0    | 0     | 0        | 2      | 0   | 0   |
+| number of characters    | 522 | 2350 | 1226 | 929     | 1756 | 1514 | 837  | 615   | 868      | 991    | 992 | 436 |
+| number of line of codes | 26  | 93   | 64   | 35      | 64   | 58   | 43   | 20    | 39       | 48     | 41  | 16  |
+| number of workarounds   | 0   | 0    | 0    | 0       | 4    | 0    | 0    | 0     | 0        | 2      | 0   | 0   |
 
 | UMap-mpz programs       | CC   | CCC  | CMC  | CollecC | CTL  | GLIB | KLIB | M*LIB | OpenCSTL | STB_DS | STC  | STL |
 |-------------------------|------|------|------|---------|------|------|------|-------|----------|--------|------|-----|
-| number of characters    | 1443 | 3137 | 2387 | 1893    | 1964 | 1667 | 1754 | 1018  | NA       | NA     | 1849 | 797 |
-| number of line of codes | 62   | 132  | 99   | 87      | 79   | 75   | 84   | 39    | NA       | NA     | 55   | 38  |
-| number of workarounds   | 2    | 1    | 2    | 0       | 4    | 0    | 3    | 0     | NA       | NA     | 4    | 0   |
+| number of characters    | 1443 | 3137 | 1862 | 1893    | 1964 | 1667 | 1754 | 1018  | NA       | NA     | 1849 | 797 |
+| number of line of codes | 62   | 132  | 104  | 87      | 79   | 75   | 84   | 39    | NA       | NA     | 55   | 38  |
+| number of workarounds   | 2    | 1    | 0    | 0       | 4    | 0    | 3    | 0     | NA       | NA     | 4    | 0   |
 
 
 As ergonomic is a personal judgement, no conclusion will be provided.
@@ -584,7 +584,7 @@ Compiler used is GCC 16.1
 | CCC            | 16392 |
 | STL            | 16392 |
 | STB_DS         | 20872 |
-| CMC            | 21344 |
+| CMC            | 21600 |
 | OpenCSTL       | 38176 |
 
 | array-str size | bytes |
@@ -599,7 +599,7 @@ Compiler used is GCC 16.1
 | STL            | 18160 |
 | STC            | 20760 |
 | STB_DS         | 20872 |
-| CMC            | 21392 |
+| CMC            | 21640 |
 | OpenCSTL       | 38176 |
 
 | array-mpz size | bytes |
@@ -614,7 +614,7 @@ Compiler used is GCC 16.1
 | CCC            | 16536 |
 | STL            | 17360 |
 | STB_DS         | 21008 |
-| CMC            | 21624 |
+| CMC            | 21848 |
 | OpenCSTL       | 38368 |
 
 | umap-int size | bytes |
@@ -626,8 +626,8 @@ Compiler used is GCC 16.1
 | CC            | 16072 |
 | CollecC       | 16416 |
 | CTL           | 16424 |
-| CMC           | 17128 |
 | STL           | 17368 |
+| CMC           | 17496 |
 | STB_DS        | 20784 |
 | CCC           | 20904 |
 | OpenCSTL      | 46688 |
@@ -640,11 +640,11 @@ Compiler used is GCC 16.1
 | CollecC       | 16344 |
 | M*LIB         | 16384 |
 | CTL           | 16936 |
-| CMC           | 17200 |
 | STL           | 19136 |
 | STB_DS        | 20784 |
 | STC           | 20864 |
 | CCC           | 20952 |
+| CMC           | 21632 |
 | OpenCSTL      | 46688 |
 
 | umap-mpz size | bytes |
@@ -658,7 +658,7 @@ Compiler used is GCC 16.1
 | CTL           | 16552 |
 | STL           | 18592 |
 | CCC           | 21088 |
-| CMC           | 21520 |
+| CMC           | 21840 |
 | OpenCSTL      | NA    |
 | STB_DS        | NA    |
 
@@ -672,91 +672,91 @@ We can also check the compilation time:
 
 | array-int compilation | time |
 |-----------------------|------|
-| CollecC               | 0.07 |
+| CollecC               | 0.06 |
 | CCC                   | 0.08 |
 | CTL                   | 0.13 |
 | GLIB                  | 0.13 |
 | STC                   | 0.13 |
-| CC                    | 0.16 |
-| KLIB                  | 0.26 |
-| CMC                   | 0.30 |
+| CC                    | 0.17 |
+| KLIB                  | 0.25 |
+| CMC                   | 0.31 |
 | STB_DS                | 0.38 |
 | M*LIB                 | 0.50 |
-| STL                   | 0.69 |
-| OpenCSTL              | 1.10 |
+| STL                   | 0.67 |
+| OpenCSTL              | 1.12 |
 
 | array-str compilation | time |
 |-----------------------|------|
 | CCC                   | 0.08 |
-| CollecC               | 0.08 |
-| GLIB                  | 0.13 |
-| CC                    | 0.20 |
+| CollecC               | 0.10 |
+| GLIB                  | 0.14 |
+| CC                    | 0.21 |
 | CTL                   | 0.23 |
 | KLIB                  | 0.29 |
-| CMC                   | 0.30 |
-| STC                   | 0.31 |
-| STB_DS                | 0.37 |
+| STC                   | 0.29 |
+| CMC                   | 0.32 |
+| STB_DS                | 0.39 |
 | M*LIB                 | 0.61 |
-| STL                   | 0.75 |
-| OpenCSTL              | 1.18 |
+| STL                   | 0.82 |
+| OpenCSTL              | 1.32 |
 
 | array-mpz compilation | time |
 |-----------------------|------|
+| CollecC               | 0.08 |
 | CCC                   | 0.09 |
-| CollecC               | 0.09 |
-| CTL                   | 0.13 |
+| CTL                   | 0.14 |
 | GLIB                  | 0.14 |
 | STC                   | 0.14 |
 | CC                    | 0.19 |
 | KLIB                  | 0.29 |
-| CMC                   | 0.33 |
+| CMC                   | 0.32 |
 | STB_DS                | 0.39 |
-| M*LIB                 | 0.41 |
-| STL                   | 1.11 |
-| OpenCSTL              | 1.17 |
+| M*LIB                 | 0.43 |
+| STL                   | 1.00 |
+| OpenCSTL              | 1.41 |
 
 | umap-int compilation | time |
 |----------------------|------|
 | CollecC              | 0.07 |
-| CCC                  | 0.09 |
+| CCC                  | 0.08 |
 | GLIB                 | 0.13 |
 | STC                  | 0.15 |
 | KLIB                 | 0.17 |
 | CTL                  | 0.21 |
 | M*LIB                | 0.28 |
-| CC                   | 0.32 |
-| CMC                  | 0.32 |
-| STB_DS               | 0.39 |
+| CC                   | 0.30 |
+| CMC                  | 0.35 |
+| STB_DS               | 0.38 |
 | STL                  | 0.69 |
-| OpenCSTL             | 1.41 |
+| OpenCSTL             | 1.51 |
 
 | umap-str compilation | time |
 |----------------------|------|
 | CollecC              | 0.07 |
 | CCC                  | 0.09 |
 | GLIB                 | 0.13 |
-| KLIB                 | 0.18 |
-| CMC                  | 0.32 |
-| CTL                  | 0.33 |
+| KLIB                 | 0.19 |
+| CTL                  | 0.32 |
 | STC                  | 0.33 |
-| CC                   | 0.37 |
-| STB_DS               | 0.38 |
+| CMC                  | 0.37 |
+| STB_DS               | 0.39 |
 | M*LIB                | 0.44 |
+| CC                   | 0.47 |
 | STL                  | 0.76 |
-| OpenCSTL             | 1.41 |
+| OpenCSTL             | 1.51 |
 
 | umap-mpz compilation | time |
 |----------------------|------|
-| CollecC              | 0.09 |
+| CollecC              | 0.10 |
 | CCC                  | 0.11 |
 | GLIB                 | 0.14 |
 | STC                  | 0.16 |
 | KLIB                 | 0.21 |
-| CTL                  | 0.25 |
-| M*LIB                | 0.31 |
-| CC                   | 0.34 |
-| CMC                  | 0.35 |
-| STL                  | 1.06 |
+| CTL                  | 0.26 |
+| M*LIB                | 0.32 |
+| CC                   | 0.36 |
+| CMC                  | 0.39 |
+| STL                  | 1.09 |
 | OpenCSTL             | NA   |
 | STB_DS               | NA   |
 
@@ -834,6 +834,7 @@ This project includes all sources used for this comparison and provides continuo
 * perform the run of the benchmark,
 * automated validation
 * regression detection
+
 
 
 

@@ -113,7 +113,7 @@
       "C language": ">=C99",
       "Pure C": "Y",
       "Header only": "Y",
-      "Generic mechanism": "TM",
+      "Generic mechanism": "TH",
       "type safe": "Y",
       "integer/float support": "Y",
       "struct POD support": "Y",
