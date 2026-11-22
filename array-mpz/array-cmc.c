@@ -1,65 +1,77 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <gmp.h>
 
-#include "macro_collections.h"
+// Encapsulate mpz_t within a struct
+typedef struct {
+  mpz_t Z;
+} mpz_z;
 
-// WORKAROUND: Needs to encapsulate mpz_t within a struct
-typedef struct { mpz_t Z; } mpz_z;
-// WORKAROUND: needs to use functions for encapsulation (no macro)
-static mpz_z mpz_z_copy(mpz_z z)
+// Define comparison and copy functions
+static int mpz_z_cmp(mpz_z a, mpz_z b)
 {
-  mpz_z Z;
-  mpz_init_set(Z.Z, z.Z);
-  return Z;
-}
-static void mpz_z_clear(mpz_z z)
-{
-  mpz_clear(z.Z);
-}
-// WORKAROUND: Needs to cast void * to type (lost of type)
-static int mpz_z_cmp(const void *a, const void *b)
-{
-  const mpz_z *ap = a;
-  const mpz_z *bp = b;
-  return mpz_cmp(ap->Z, bp->Z);
+  return mpz_cmp(a.Z, b.Z);
 }
 
-#define MY_LIST_PARAMS (array_mpz, array_mpz_t, , , mpz_z)
-C_MACRO_COLLECTIONS_EXTENDED(CMC, LIST, MY_LIST_PARAMS, (STR))
-  
+static mpz_z mpz_z_cpy(mpz_z a)
+{
+  mpz_z result;
+  mpz_init_set(result.Z, a.Z);
+  return result;
+}
+
+static void mpz_z_free(mpz_z a)
+{
+  mpz_clear(a.Z);
+}
+
+#define V mpz_z
+#define PFX mpzl
+#define SNAME mpz_list
+#define CMC_EXT_ITER
+#include "cmc/list.h"
+
 int main(void)
 {
-  struct array_mpz_t *list = array_mpz_new(4, &(struct array_mpz_t_fval){ .free = mpz_z_clear, .cpy = mpz_z_copy, NULL });
+  struct mpz_list *list = mpzl_new(32, &(struct mpz_list_fval){ 
+    .cmp = mpz_z_cmp,
+    .cpy = mpz_z_cpy,
+    .free = mpz_z_free,
+    NULL 
+  });
   if (!list) {
     return 1;
   }
   
-  mpz_z z;                                         //WORKAROUND: we shall not clear the z object, as its ownership has been lost.
+  mpz_z z;
   mpz_init_set_ui(z.Z, 17);
-  int err = array_mpz_push_back(list, z);          //WORKAROUND: We need to provide a fresh new initialized object for each push
-  if (!err) {
+  if (!mpzl_push_back(list, z)) {
     abort();
-  }
-  mpz_init_set_ui(z.Z, 42);
-  err = array_mpz_push_back(list, z);
-  if (!err) {
-    abort();
-  }
-  mpz_init_set_ui(z.Z, 9);
-  err = array_mpz_push_back(list, z);
-  if (!err) {
-    abort();
-  }
-
-  //WORKAROUND: Needs to hack in the structure to perform a sort
-  qsort( list->buffer, array_mpz_count(list), sizeof (mpz_z), mpz_z_cmp);
-
-  //WORKAROUND: No iterator abstraction available
-  for(int i = 0; i < array_mpz_count(list); i++) {
-    mpz_z *ptr = array_mpz_get_ref(list, i);
-    gmp_printf("%Zd\n", ptr->Z);
   }
   
-  array_mpz_free(list);
+  mpz_init_set_ui(z.Z, 42);
+  if (!mpzl_push_back(list, z)) {
+    abort();
+  }
+  
+  mpz_init_set_ui(z.Z, 9);
+  if (!mpzl_push_back(list, z)) {
+    abort();
+  }
+
+  // Use qsort for sorting (convert function pointer)
+  if (mpzl_count(list) > 0) {
+    qsort(list->buffer, mpzl_count(list), sizeof(mpz_z), 
+          (int (*)(const void *, const void *))
+          ((int (*)(const void *, const void *))mpz_z_cmp));
+  }
+
+  struct mpz_list_iter iter = mpzl_iter_start(list);
+  for (; !mpzl_iter_at_end(&iter); mpzl_iter_next(&iter)) {
+    mpz_z val = mpzl_iter_value(&iter);
+    gmp_printf("%Zd\n", val.Z);
+  }
+  
+  mpzl_free(list);
   return 0;
 }

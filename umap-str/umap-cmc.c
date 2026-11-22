@@ -1,10 +1,16 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "macro_collections.h"
+#define K char *
+#define V char *
+#define PFX hmstr
+#define SNAME hm_str
+#define CMC_EXT_ITER
+#include "cmc/hashmap.h"
 
-static size_t hash_int(char *x)
+static size_t hash_str(char *x)
 {
+  if (x == NULL) return 0;
   size_t r = 0;
   char *ptr = x;
   while (*ptr) {
@@ -14,50 +20,45 @@ static size_t hash_int(char *x)
   return r;
 }
 
-static int cmp_int(char *a, char *b)
+static int cmp_str(char *a, char *b)
 {
+  if (a == NULL && b == NULL) return 0;
+  if (a == NULL) return -1;
+  if (b == NULL) return 1;
   return strcmp(a, b);
 }
 
-#define MY_DICT_PARAMS (hmap, hmap_s, , char *, char *)
-C_MACRO_COLLECTIONS_EXTENDED(CMC, HASHMAP, MY_DICT_PARAMS, (STR))
-
-// WORKAROUDN: Cannot define theses structures as const
-static struct hmap_s_fkey hmap_fkey = { .cmp = cmp_int,
-                                        .cpy = NULL,
-                                        .str = NULL,
-                                        .free = NULL,
-                                        .hash = hash_int,
-                                        .pri = NULL };
-
-static struct hmap_s_fval hmap_fval = { .cmp = NULL,
-                                        .cpy = NULL,
-                                        .str = NULL,
-                                        .free = NULL,
-                                        .hash = NULL,
-                                        .pri = NULL };
-
 int main(void)
 {
-  struct hmap_s *dict = hmap_new(16, 0.7, &hmap_fkey, &hmap_fval);
+  struct hm_str *dict = hmstr_new(16, 0.7, &(struct hm_str_fkey){
+    .hash = hash_str,
+    .cmp = cmp_str
+  }, &(struct hm_str_fval){
+  });
   if (!dict) {
     abort();
   }
-  if (!hmap_insert(dict, "Hello", "LIB")) {
+  
+  if (!hmstr_insert(dict, "Hello", "LIB")) {
     abort();
   }
-  if (!hmap_insert(dict, "Welcome", "Program")) {
+  if (!hmstr_insert(dict, "Welcome", "Program")) {
     abort();
   }
-  if (!hmap_insert(dict, "Sincerely", "Your map")) {
+  if (!hmstr_insert(dict, "Sincerely", "Your map")) {
     abort();
   }
-  char * *it = hmap_get_ref(dict, "Hello");
+  
+  char **it = hmstr_get_ref(dict, "Hello");
   if (it != NULL) {
-    printf("Value of Hello is %s\n", *it);
+    printf("Value of 'Hello' is %s\n", *it);
   }
-  // WORKAROUND: No iterator for hashmap
-  // No way to do it!
-  hmap_free(dict);
+  
+  struct hm_str_iter iter = hmstr_iter_start(dict);
+  for (; !hmstr_iter_at_end(&iter); hmstr_iter_next(&iter)) {
+    printf("%s -> %s\n", hmstr_iter_key(&iter), hmstr_iter_value(&iter));
+  }
+  
+  hmstr_free(dict);
   return 0;
 }

@@ -63,7 +63,7 @@ external/ctl:
 	mkdir -p external && cd external && git clone https://github.com/rurban/ctl.git
 
 external/C-Macro-Collections:
-	mkdir -p external && cd external && git clone https://github.com/LeoVen/C-Macro-Collections.git -b v0.25.0
+	mkdir -p external && cd external && git clone https://github.com/LeoVen/C-Macro-Collections.git
 
 external/Collections-C:
 	mkdir -p external && cd external && git clone https://github.com/srdja/Collections-C.git
@@ -203,13 +203,13 @@ array-str-ctl.exe: array-str/array-ctl.c external/ctl
 	$(C99) $(CFLAGS) -Iexternal/ctl/ $< -o $@ $(LDFLAGS)
 
 array-mpz-cmc.exe: array-mpz/array-cmc.c external/C-Macro-Collections 
-	$(C99) $(CFLAGS) -Iexternal/C-Macro-Collections/src $< -o $@ $(LDFLAGS)
+	$(C99) $(CFLAGS) -Iexternal/C-Macro-Collections $< -o $@ $(LDFLAGS)
 
 array-int-cmc.exe: array-int/array-cmc.c external/C-Macro-Collections 
-	$(C99) $(CFLAGS) -Iexternal/C-Macro-Collections/src $< -o $@ $(LDFLAGS)
+	$(C99) $(CFLAGS) -Iexternal/C-Macro-Collections $< -o $@ $(LDFLAGS)
 
 array-str-cmc.exe: array-str/array-cmc.c external/C-Macro-Collections 
-	$(C99) $(CFLAGS) -Iexternal/C-Macro-Collections/src $< -o $@ $(LDFLAGS)
+	$(C99) $(CFLAGS) -Iexternal/C-Macro-Collections $< -o $@ $(LDFLAGS)
 
 array-mpz-collectionsC.exe: array-mpz/array-collectionsC.c external/Collections-C/src/libCollections-C.a 
 	$(C99) $(CFLAGS) -Iexternal/Collections-C/src/include $< -o $@ $(LDFLAGS) external/Collections-C/src/libCollections-C.a
@@ -322,13 +322,13 @@ umap-str-ctl.exe: umap-str/umap-ctl.c external/ctl
 	$(C99) $(CFLAGS) -Iexternal/ctl/ $< -o $@ $(LDFLAGS)
 
 umap-mpz-cmc.exe: umap-mpz/umap-cmc.c external/C-Macro-Collections 
-	$(C99) $(CFLAGS) -Iexternal/C-Macro-Collections/src $< -o $@ $(LDFLAGS)
+	$(C99) $(CFLAGS) -Iexternal/C-Macro-Collections $< -o $@ $(LDFLAGS)
 
 umap-int-cmc.exe: umap-int/umap-cmc.c external/C-Macro-Collections 
-	$(C99) $(CFLAGS) -Iexternal/C-Macro-Collections/src $< -o $@ $(LDFLAGS)
+	$(C99) $(CFLAGS) -Iexternal/C-Macro-Collections $< -o $@ $(LDFLAGS)
 
 umap-str-cmc.exe: umap-str/umap-cmc.c external/C-Macro-Collections 
-	$(C99) $(CFLAGS) -Iexternal/C-Macro-Collections/src $< -o $@ $(LDFLAGS)
+	$(C99) $(CFLAGS) -Iexternal/C-Macro-Collections $< -o $@ $(LDFLAGS)
 
 umap-mpz-collectionsC.exe: umap-mpz/umap-collectionsC.c external/Collections-C/src/libCollections-C.a 
 	$(C99) $(CFLAGS) -Iexternal/Collections-C/src/include $< -o $@ $(LDFLAGS) external/Collections-C/src/libCollections-C.a

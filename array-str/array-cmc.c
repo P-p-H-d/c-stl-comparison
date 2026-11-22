@@ -1,45 +1,45 @@
 #include <stdio.h>
-#include "macro_collections.h"
+#include <string.h>
+#include <stdlib.h>
 
-#define MY_LIST_PARAMS (array_str, array_str_t, , , const char *)
-C_MACRO_COLLECTIONS_EXTENDED(CMC, LIST, MY_LIST_PARAMS, (STR))
+#define V const char *
+#define PFX strl
+#define SNAME str_list
+#define CMC_EXT_ITER
+#include "cmc/list.h"
 
-static int my_strcmp(const void *a, const void *b)
+static int cmp_str(const char *a, const char *b)
 {
-  const char *const* ap = a;
-  const char *const* bp = b;
-  return strcmp(*ap, *bp);
+  return strcmp(a, b);
 }
 
 int main(void)
 {
-  struct array_str_t *list = array_str_new(4, &(struct array_str_t_fval){ NULL });
+  struct str_list *list = strl_new(32, &(struct str_list_fval){ .cmp = cmp_str, NULL });
   if (!list) {
     return 1;
   }
   
-  int err = array_str_push_back(list, "World");
-  if (!err) {
+  if (!strl_push_back(list, "World")) {
     abort();
   }
-  err = array_str_push_back(list, "Hello");
-  if (!err) {
+  if (!strl_push_back(list, "Hello")) {
     abort();
   }
-  err = array_str_push_back(list, "!");
-  if (!err) {
+  if (!strl_push_back(list, "!")) {
     abort();
   }
 
-  //WORKAROUND: Needs to hack in the structure to perform a sort
-  qsort( list->buffer, array_str_count(list), sizeof (const char *), my_strcmp);
+  // Use qsort for sorting
+  if (strl_count(list) > 0) {
+    qsort(list->buffer, strl_count(list), sizeof(const char *), (int (*)(const void *, const void *))cmp_str);
+  }
 
-  //WORKAROUND: No iterator abstraction available
-  for(int i = 0; i < array_str_count(list); i++) {
-    const char *ptr = *array_str_get_ref(list, i);
-    printf("%s\n", ptr);
+  struct str_list_iter iter = strl_iter_start(list);
+  for (; !strl_iter_at_end(&iter); strl_iter_next(&iter)) {
+    printf("%s\n", strl_iter_value(&iter));
   }
   
-  array_str_free(list);
+  strl_free(list);
   return 0;
 }

@@ -1,46 +1,44 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-#include "macro_collections.h"
+#define V int
+#define PFX intl
+#define SNAME int_list
+#define CMC_EXT_ITER
+#include "cmc/list.h"
 
-static int int_cmp(const void *a, const void *b)
+static int cmp_int(int a, int b)
 {
-  const int *ap = a;
-  const int *bp = b;
-  return (*ap < *bp) ? -1 : *ap > *bp;
+  return (a < b) ? -1 : (a > b);
 }
 
-#define MY_LIST_PARAMS (array_int, array_int_t, , , int)
-C_MACRO_COLLECTIONS_EXTENDED(CMC, LIST, MY_LIST_PARAMS, (STR))
-  
 int main(void)
 {
-  struct array_int_t *list = array_int_new(4, &(struct array_int_t_fval){ NULL });
+  struct int_list *list = intl_new(32, &(struct int_list_fval){ .cmp = cmp_int, NULL });
   if (!list) {
     return 1;
   }
   
-  int err = array_int_push_back(list, 17);
-  if (!err) {
+  if (!intl_push_back(list, 17)) {
     abort();
   }
-  err = array_int_push_back(list, 42);
-  if (!err) {
+  if (!intl_push_back(list, 42)) {
     abort();
   }
-  err = array_int_push_back(list, 9);
-  if (!err) {
+  if (!intl_push_back(list, 9)) {
     abort();
   }
 
-  //WORKAROUND: Needs to hack in the structure to perform a sort
-  qsort( list->buffer, array_int_count(list), sizeof (int), int_cmp);
+  // Use qsort for sorting
+  if (intl_count(list) > 0) {
+    qsort(list->buffer, intl_count(list), sizeof(int), (int (*)(const void *, const void *))cmp_int);
+  }
 
-  //WORKAROUND: No iterator abstraction available
-  for(int i = 0; i < array_int_count(list); i++) {
-    int *ptr = array_int_get_ref(list, i);
-    printf("%d\n", *ptr);
+  struct int_list_iter iter = intl_iter_start(list);
+  for (; !intl_iter_at_end(&iter); intl_iter_next(&iter)) {
+    printf("%d\n", intl_iter_value(&iter));
   }
   
-  array_int_free(list);
+  intl_free(list);
   return 0;
 }
