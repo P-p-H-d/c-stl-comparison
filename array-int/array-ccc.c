@@ -40,7 +40,7 @@ int main(void)
     if (!CCC_flat_buffer_push_back(&buf, &(int){9}, &alloc))
         abort();
 
-    CCC_sort_heapsort(&buf, &(int){0}, CCC_ORDER_LESSER,
+    CCC_sort_heap(&buf, &(int){0}, CCC_ORDER_LESSER,
                       &(CCC_Comparator){.compare = int_cmp});
 
     for (int *i = CCC_flat_buffer_begin(&buf);

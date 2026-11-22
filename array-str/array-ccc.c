@@ -40,7 +40,7 @@ int main(void)
     if (!CCC_flat_buffer_push_back(&buf, &(const char *){"!"}, &alloc))
         abort();
 
-    CCC_sort_heapsort(&buf, &(const char *){0}, CCC_ORDER_LESSER, &(CCC_Comparator){.compare = str_cmp});
+    CCC_sort_heap(&buf, &(const char *){0}, CCC_ORDER_LESSER, &(CCC_Comparator){.compare = str_cmp});
 
     for (const char **i = CCC_flat_buffer_begin(&buf);
          i != CCC_flat_buffer_end(&buf);

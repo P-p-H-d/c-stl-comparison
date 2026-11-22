@@ -44,7 +44,7 @@ int main(void)
     if (!CCC_flat_buffer_push_back(&buf, &z3, &alloc))
         abort();
 
-    CCC_sort_heapsort(&buf, &z0, CCC_ORDER_LESSER, &(CCC_Comparator){.compare = mpz_cmp_wrapper});
+    CCC_sort_heap(&buf, &z0, CCC_ORDER_LESSER, &(CCC_Comparator){.compare = mpz_cmp_wrapper});
 
     for (mpz_t *i = CCC_flat_buffer_begin(&buf);
          i != CCC_flat_buffer_end(&buf);
