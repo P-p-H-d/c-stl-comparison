@@ -523,19 +523,19 @@ What can be objectively compared is the size of the programs:
 
 | Array-Int programs      | CC  | CCC  | CMC  | CollecC | CTL | GLIB | KLIB | M*LIB | OpenCSTL | STB_DS | STC | STL |
 |-------------------------|-----|------|------|---------|-----|------|------|-------|----------|--------|-----|-----|
-| number of characters    | 611 | 1395 | 1011 | 885     | 593 | 696  | 783  | 373   | 726      | 817    | 558 | 236 |
+| number of characters    | 611 | 1391 | 1011 | 885     | 593 | 696  | 783  | 373   | 726      | 817    | 558 | 236 |
 | number of line of codes | 34  | 55   | 46   | 46      | 25  | 38   | 28   | 18    | 37       | 43     | 34  | 13  |
 | number of workarounds   | 0   | 0    | 2    | 2       | 2   | 0    | 2    | 0     | 1        | 1      | 0   | 0   |
 
 | Array-Str programs      | CC  | CCC  | CMC  | CollecC | CTL | GLIB | KLIB | M*LIB | OpenCSTL | STB_DS | STC | STL |
 |-------------------------|-----|------|------|---------|-----|------|------|-------|----------|--------|-----|-----|
-| number of characters    | 651 | 1478 | 1053 | 839     | 762 | 908  | 1497 | 442   | 773      | 881    | 564 | 274 |
+| number of characters    | 651 | 1474 | 1053 | 839     | 762 | 908  | 1497 | 442   | 773      | 881    | 568 | 274 |
 | number of line of codes | 33  | 54   | 45   | 47      | 29  | 44   | 55   | 19    | 38       | 45     | 36  | 14  |
 | number of workarounds   | 0   | 0    | 2    | 1       | 3   | 0    | 3    | 0     | 1        | 1      | 0   | 0   |
 
 | Array-mpz programs      | CC   | CCC  | CMC  | CollecC | CTL  | GLIB | KLIB | M*LIB | OpenCSTL | STB_DS | STC  | STL |
 |-------------------------|------|------|------|---------|------|------|------|-------|----------|--------|------|-----|
-| number of characters    | 1120 | 1585 | 1740 | 1337    | 1407 | 840  | 1041 | 505   | 1162     | 1255   | 1222 | 261 |
+| number of characters    | 1120 | 1581 | 1740 | 1337    | 1407 | 840  | 1041 | 505   | 1162     | 1255   | 1222 | 261 |
 | number of line of codes | 49   | 61   | 65   | 68      | 42   | 47   | 43   | 20    | 46       | 61     | 44   | 14  |
 | number of workarounds   | 2    | 0    | 7    | 1       | 5    | 0    | 5    | 0     | 3        | 4      | 3    | 0   |
 
@@ -547,8 +547,8 @@ What can be objectively compared is the size of the programs:
 
 | UMap-Str programs       | CC  | CCC  | CMC  | CollecC | CTL  | GLIB | KLIB | M*LIB | OpenCSTL | STB_DS | STC | STL |
 |-------------------------|-----|------|------|---------|------|------|------|-------|----------|--------|-----|-----|
-| number of characters    | 522 | 2350 | 1627 | 929     | 1756 | 1514 | 837  | 615   | 868      | 991    | 870 | 436 |
-| number of line of codes | 26  | 93   | 63   | 35      | 64   | 58   | 43   | 20    | 39       | 48     | 37  | 16  |
+| number of characters    | 522 | 2350 | 1627 | 929     | 1756 | 1514 | 837  | 615   | 868      | 991    | 992 | 436 |
+| number of line of codes | 26  | 93   | 63   | 35      | 64   | 58   | 43   | 20    | 39       | 48     | 41  | 16  |
 | number of workarounds   | 0   | 0    | 1    | 0       | 4    | 0    | 0    | 0     | 0        | 2      | 0   | 0   |
 
 | UMap-mpz programs       | CC   | CCC  | CMC  | CollecC | CTL  | GLIB | KLIB | M*LIB | OpenCSTL | STB_DS | STC  | STL |
@@ -581,8 +581,8 @@ Compiler used is GCC 16.1
 | CTL            | 16152 |
 | CollecC        | 16176 |
 | KLIB           | 16192 |
+| CCC            | 16392 |
 | STL            | 16392 |
-| CCC            | 16400 |
 | STB_DS         | 20872 |
 | CMC            | 21344 |
 | OpenCSTL       | 38176 |
@@ -594,10 +594,10 @@ Compiler used is GCC 16.1
 | M*LIB          | 16200 |
 | CollecC        | 16224 |
 | KLIB           | 16360 |
-| CCC            | 16448 |
+| CCC            | 16440 |
 | CTL            | 16584 |
 | STL            | 18160 |
-| STC            | 20752 |
+| STC            | 20760 |
 | STB_DS         | 20872 |
 | CMC            | 21392 |
 | OpenCSTL       | 38176 |
@@ -619,17 +619,17 @@ Compiler used is GCC 16.1
 
 | umap-int size | bytes |
 |---------------|-------|
+| STC           | 15832 |
 | KLIB          | 15864 |
-| STC           | 15880 |
 | GLIB          | 15904 |
 | M*LIB         | 16040 |
 | CC            | 16072 |
 | CollecC       | 16416 |
 | CTL           | 16424 |
-| CCC           | 16848 |
 | CMC           | 17128 |
 | STL           | 17368 |
 | STB_DS        | 20784 |
+| CCC           | 20904 |
 | OpenCSTL      | 46688 |
 
 | umap-str size | bytes |
@@ -639,17 +639,17 @@ Compiler used is GCC 16.1
 | CC            | 16336 |
 | CollecC       | 16344 |
 | M*LIB         | 16384 |
-| CCC           | 16904 |
 | CTL           | 16936 |
 | CMC           | 17200 |
 | STL           | 19136 |
 | STB_DS        | 20784 |
-| STC           | 20912 |
+| STC           | 20864 |
+| CCC           | 20952 |
 | OpenCSTL      | 46688 |
 
 | umap-mpz size | bytes |
 |---------------|-------|
-| STC           | 15976 |
+| STC           | 15928 |
 | GLIB          | 16032 |
 | KLIB          | 16032 |
 | M*LIB         | 16280 |
@@ -657,7 +657,7 @@ Compiler used is GCC 16.1
 | CollecC       | 16544 |
 | CTL           | 16552 |
 | STL           | 18592 |
-| CCC           | 21128 |
+| CCC           | 21088 |
 | CMC           | 21520 |
 | OpenCSTL      | NA    |
 | STB_DS        | NA    |
@@ -674,88 +674,88 @@ We can also check the compilation time:
 |-----------------------|------|
 | CollecC               | 0.07 |
 | CCC                   | 0.08 |
-| STC                   | 0.12 |
 | CTL                   | 0.13 |
-| GLIB                  | 0.14 |
+| GLIB                  | 0.13 |
+| STC                   | 0.13 |
 | CC                    | 0.16 |
-| KLIB                  | 0.23 |
+| KLIB                  | 0.26 |
 | CMC                   | 0.30 |
-| STB_DS                | 0.37 |
-| M*LIB                 | 0.59 |
-| STL                   | 0.66 |
-| OpenCSTL              | 1.12 |
+| STB_DS                | 0.38 |
+| M*LIB                 | 0.50 |
+| STL                   | 0.69 |
+| OpenCSTL              | 1.10 |
 
 | array-str compilation | time |
 |-----------------------|------|
-| CCC                   | 0.07 |
+| CCC                   | 0.08 |
 | CollecC               | 0.08 |
-| GLIB                  | 0.12 |
-| CC                    | 0.19 |
+| GLIB                  | 0.13 |
+| CC                    | 0.20 |
 | CTL                   | 0.23 |
 | KLIB                  | 0.29 |
 | CMC                   | 0.30 |
-| STC                   | 0.30 |
-| STB_DS                | 0.38 |
-| M*LIB                 | 0.74 |
-| STL                   | 0.76 |
-| OpenCSTL              | 1.13 |
+| STC                   | 0.31 |
+| STB_DS                | 0.37 |
+| M*LIB                 | 0.61 |
+| STL                   | 0.75 |
+| OpenCSTL              | 1.18 |
 
 | array-mpz compilation | time |
 |-----------------------|------|
-| CollecC               | 0.08 |
-| CCC                   | 0.10 |
-| GLIB                  | 0.13 |
-| CTL                   | 0.14 |
-| STC                   | 0.15 |
-| CC                    | 0.18 |
-| KLIB                  | 0.28 |
+| CCC                   | 0.09 |
+| CollecC               | 0.09 |
+| CTL                   | 0.13 |
+| GLIB                  | 0.14 |
+| STC                   | 0.14 |
+| CC                    | 0.19 |
+| KLIB                  | 0.29 |
 | CMC                   | 0.33 |
 | STB_DS                | 0.39 |
-| M*LIB                 | 0.53 |
-| STL                   | 1.05 |
-| OpenCSTL              | 1.13 |
+| M*LIB                 | 0.41 |
+| STL                   | 1.11 |
+| OpenCSTL              | 1.17 |
 
 | umap-int compilation | time |
 |----------------------|------|
 | CollecC              | 0.07 |
-| CCC                  | 0.08 |
+| CCC                  | 0.09 |
 | GLIB                 | 0.13 |
 | STC                  | 0.15 |
 | KLIB                 | 0.17 |
-| CTL                  | 0.19 |
-| M*LIB                | 0.27 |
-| CC                   | 0.31 |
+| CTL                  | 0.21 |
+| M*LIB                | 0.28 |
+| CC                   | 0.32 |
 | CMC                  | 0.32 |
-| STB_DS               | 0.38 |
+| STB_DS               | 0.39 |
 | STL                  | 0.69 |
-| OpenCSTL             | 1.37 |
+| OpenCSTL             | 1.41 |
 
 | umap-str compilation | time |
 |----------------------|------|
 | CollecC              | 0.07 |
 | CCC                  | 0.09 |
 | GLIB                 | 0.13 |
-| KLIB                 | 0.17 |
+| KLIB                 | 0.18 |
 | CMC                  | 0.32 |
-| CTL                  | 0.32 |
+| CTL                  | 0.33 |
 | STC                  | 0.33 |
-| STB_DS               | 0.37 |
-| CC                   | 0.38 |
+| CC                   | 0.37 |
+| STB_DS               | 0.38 |
 | M*LIB                | 0.44 |
-| STL                  | 0.77 |
-| OpenCSTL             | 1.40 |
+| STL                  | 0.76 |
+| OpenCSTL             | 1.41 |
 
 | umap-mpz compilation | time |
 |----------------------|------|
-| CollecC              | 0.08 |
-| CCC                  | 0.10 |
+| CollecC              | 0.09 |
+| CCC                  | 0.11 |
 | GLIB                 | 0.14 |
-| STC                  | 0.15 |
+| STC                  | 0.16 |
 | KLIB                 | 0.21 |
-| CTL                  | 0.26 |
+| CTL                  | 0.25 |
 | M*LIB                | 0.31 |
 | CC                   | 0.34 |
-| CMC                  | 0.36 |
+| CMC                  | 0.35 |
 | STL                  | 1.06 |
 | OpenCSTL             | NA   |
 | STB_DS               | NA   |
