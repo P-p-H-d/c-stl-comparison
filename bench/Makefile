@@ -76,7 +76,7 @@ pre-bench:
 # Directories of the checkout libraries
 # There are always present (no environment option to set)
 MLIB=../external/mlib
-CMC=../external/C-Macro-Collections/src/
+CMC=../external/C-Macro-Collections/
 STC=../external/STC/
 CTL=../external/ctl
 CCLIB=../external/CC
