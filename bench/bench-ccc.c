@@ -343,7 +343,7 @@ test_sort(size_t n)
       abort();
   }
 
-  if (CCC_sort_heapsort(
+  if (CCC_sort_heap(
           &a1,
           &(float){0},
           CCC_ORDER_LESSER,
